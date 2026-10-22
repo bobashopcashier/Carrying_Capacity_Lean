@@ -89,12 +89,19 @@ conclusions of Lemma 5.2 are now supplied for the actual constructed nonlinear
 arrays by `NonlinearParticleArray` and `NonlinearParticleEmpirical`. The exact
 product input law and original-noise identities come from `ParticleInputRecords`
 and `ParticleNoiseProjection`; genuine integrability is proved before both the
-fixed-time and real time-integrated error limits. This does not establish the
-complete stopped interacting-particle comparison of Proposition 5.3. Its actual
-compensated averaged stopped-cost inequality, derived finite expectation and real
-integrability, uniform common-exit tail, and cutoff-removal probability bound are
-now proved by the population coupling modules. The sharp Gronwall estimate and
-its convergence consequence remain to be assembled. Proposition 3.3's actual
+fixed-time and real time-integrated error limits. The population coupling modules
+now prove Proposition 5.3's actual uniform common-exit tail, sharp stopped
+Gronwall estimate and vanishing stopped expectation for the canonical coupled
+systems. All error integrability and comparison estimates are derived.
+`PopulationSynchronousApproximation.exists_synchronous_approximation` combines
+these with the original initialization assumptions: it constructs paired initial
+laws with the exact original and iid vector marginals, then proves the first
+two conclusions of Theorem 5.4 for their actual shared-noise paths. Averaged path
+discrepancy and uniform empirical transport discrepancy between the paired
+systems tend to zero in probability. Fixed-focal comparison still requires the
+paired-path exchangeability bridge. The headline preserves initial vector laws;
+it does not separately export a whole-trajectory pushforward identity to a
+previously supplied process on another initial-record space. Proposition 3.3's actual
 frozen Lyapunov expectation and reciprocal exit estimates are now proved,
 including their empirical configuration specialization. The exhaustion,
 measurable adapted patch, cadlag regularity and finite activity parts of
@@ -137,8 +144,8 @@ construction horizons. This does not assert that separately constructed paths
 agree on overlaps or provide one all-time nonlinear realization. Proposition
 4.2 and Corollary 4.4 still retain their arbitrary supplied PRM-space and
 completed right-continuous filtration obligations. Weighted-activity variation
-estimates, interacting-particle comparison and both papers' mean-field and
-path-space chaos conclusions remain open.
+estimates, fixed-focal comparison and both papers' full empirical limit to the
+nonlinear law and path-space chaos conclusions remain open.
 
 ## Dependency order
 
@@ -156,8 +163,10 @@ path-space chaos conclusions remain open.
    weak solution with the Bielecki fixed curve. The exact envelope and
    consistency of laws across construction horizons are proved; pathwise
    all-horizon and arbitrary external-PRM realization remain separate.
-7. Formalize initial matching, uniform-integrability upgrades, empirical LLNs,
-   localized population coupling, and the successive N-then-R limit.
+7. Initial matching, uniform-integrability upgrades, empirical LLNs,
+   localized population coupling, and the successive N-then-R limit are proved
+   for the canonical systems; derive the fixed-focal result using paired-path
+   exchangeability.
 8. Formalize the time-grid argument, Skorokhod transfer, and independence of
    fixed collections; assemble the main theorem and model corollaries.
 
@@ -188,7 +197,7 @@ any subsequent edits.
 | `EmpiricalMeanError.lean` | Common marginals imply exact empirical Ψ expectations; derived uniform integrability and expected Wκ convergence; βN≤2Mκ; jointly measurable errors and time-integrated convergence under a continuous law curve and uniform Ψ integral bound | Uses initial segments of an infinite sample family; the finite-array transfer is supplied below |
 | `EmpiricalArrayError.lean` | Constructed canonical iid sequence; exact finite-vector product law; empirical errors are identically distributed with canonical errors; integrability, βN≤2Mκ, expected-error limit and time-integrated limit for arbitrary N-dependent iid arrays | Matches the independent empirical-error conclusions of Lemma 5.2; assumes measurable samples and continuous target laws, and does not construct nonlinear trajectories |
 | `ExchangeableMatching.lean` | Actual law obtained from optimal matching and an independent uniform common permutation; preservation of both full exchangeable vector laws; joint paired exchangeability; exact optimal cost; cost distribution, integrability and expectation identities; iid-target specialization | Supplies the finite-population construction used by the fully assembled initial lemma below |
-| `InitialCoupling.lean` | Lemma 5.1: exact original and iid full-vector marginals, joint exchangeability, integrable optimal cost, and expected cost tending to zero, derived from probability convergence and the uniform expected empirical Ψ bound | Produces coupling laws on paired arrays; `CommonInitialNoise` supplies independent future noise, while interacting-particle versus nonlinear trajectory comparison remains open |
+| `InitialCoupling.lean` | Lemma 5.1: exact original and iid full-vector marginals, joint exchangeability, integrable optimal cost, and expected cost tending to zero, derived from probability convergence and the uniform expected empirical Ψ bound | Produces coupling laws on paired arrays; `CommonInitialNoise` supplies independent future noise, while the population comparison is supplied by the later population modules |
 | `Symmetrization.lean` | Generator equivariance; uniform permutation average; equal empirical measures iff a relabeling exists; genuine exchangeable symmetrized measure with deterministic empirical state | Stochastic exchangeability still needs process construction and uniqueness |
 | `EmpiricalGenerator.lean` | Countable space of actual empirical measures; representative-independent symmetrization Markov kernel; pushforward is the prescribed Dirac law; quotient generator; Bα=αA intertwining | Does not assert the empirical process is Markov or supply a Feller semigroup |
 | `LyapunovTails.lean` | Actual uniform integral tails from superlinear Ψ; affine-envelope uniform integrability; empirical-transport in-measure to L1 upgrade using expected empirical Ψ bound | Common probability space; explicit integrability is required to avoid totalized-integral loopholes; the initial in-probability convergence is an input |
@@ -225,9 +234,13 @@ any subsequent edits.
 | `DeterministicEnvironmentConfiguration.lean`, `ConfigurationTimeDependent.lean`, `NonlinearParticleConfiguration.lean` | Actual interacting/configuration constructions use the common time-dependent framework; the constructed independent nonlinear array equals the prescribed-environment configuration and its pre-states on one full-probability event | Genuine input laws and scalar equations discharge the identification; full population convergence remains separate |
 | `ExitTimeMeasurability.lean`, `StoppedPathMeasurability.lean` | Actual exit attainment and AE measurability from rational observations; jointly AE measurable stopped paths and measurable running-cost versions | No usual-filtration or optional-sampling assertion |
 | `SynchronousStoppedCompensation.lean`, `SynchronousStoppedRunningSupremum.lean` | Genuine joint-exit compensation and actual expected stopped supremum inequality; includes the exit jump and derives supremum measurability | Extended integrals need not yet be finite; the population specialization establishes finiteness |
-| `PopulationCouplingAlgebra.lean`, `PopulationStoppedCoupling.lean`, `PopulationStoppedIntegrability.lean` | Exact averaged coupling activity with N-independent coefficient, actual stopped expected-cost inequality, finite extended expectation and genuine real integrability from initial Lyapunov hypotheses | Proposition 5.3's sharp Gronwall estimate and convergence remain to be assembled |
+| `PopulationCouplingAlgebra.lean`, `PopulationStoppedCoupling.lean`, `PopulationStoppedIntegrability.lean` | Exact averaged coupling activity with N-independent coefficient, actual stopped expected-cost inequality, finite extended expectation and genuine real integrability from initial Lyapunov hypotheses | Sharp Gronwall and convergence are supplied by the following modules |
 | `GlobalLyapunovExit.lean`, `PopulationCouplingExit.lean`, `PopulationCouplingRemoval.lean` | Genuine whole-horizon joint exit tail C/R uniform in N under uniform initial moments; pointwise stopped/unstopped agreement and actual probability bound by exit plus stopped Markov term | Supplies the cutoff-removal inequality; no final convergence or focal exchangeability theorem is asserted |
-| `IntegrableGronwall.lean` | Exponential comparison for integrable subsolutions and integrable nonnegative forcing, without continuity hypotheses | The actual population subsolution must still be connected |
+| `IntegrableGronwall.lean`, `PopulationCouplingTime.lean` | Exponential comparison for integrable subsolutions; actual stopped expected-cost horizon monotonicity, measurable real version and genuine time integrability | Does not require continuity of the expected stopped cost |
+| `PopulationNonlinearError.lean`, `PopulationStoppedVolterra.lean`, `PopulationStoppedGronwall.lean` | Actual configuration error equals independent-array error; genuine fixed-time and product integrability, actual sharp real Volterra inequality, and N-independent stopped Gronwall factor | Proposition 5.3's canonical stochastic estimate, without assumed comparison, error moment or candidate continuity |
+| `PopulationCouplingInitialization.lean` | Full vector marginals transfer original left moments and exact iid right mean; initial-coupling theorem supplies uniform paired Lyapunov expectations and vanishing meanDistance expectation | Does not assume expected initial-error convergence |
+| `PopulationCouplingProbability.lean`, `PopulationCouplingConvergence.lean` | Actual real probability bound; fixed-R stopped expectation converges to zero, then reciprocal actual exit tails give vanishing unstopped running-cost event probabilities | Family version takes genuine initial expected pairing-error convergence; final wrapper discharges it |
+| `PopulationEmpiricalCoupling.lean`, `PopulationSynchronousApproximation.lean` | Actual uniform empirical discrepancy bounded by averaged coordinate running suprema; original initialization implies canonical coupled systems with both discrepancy limits and exact initial vector marginals | First two conclusions of Theorem 5.4; paired-path exchangeability, fixed-focal comparison and Section 6 remain open |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -294,7 +307,7 @@ any subsequent edits.
 | `CommonFrozenExit.lean` | Genuine extended first-exit infimum and pre-exit membership; almost-sure finite attainment, zero/infinite boundary cases, nested-exit monotonicity, and stopped larger path equals smaller path including its exit jump | Exit probability estimates and stopping-time properties are supplied below |
 | `CommonNoiseFiltration.lean` | Actual observation filtration from arrived labelled marks, independent of the process; monotonicity and ambient measurability; all-sample history factorization; measurable time evaluations and adaptedness for deterministic or time-zero-measurable initial states | No full-σ-algebra shortcut or process-generated filtration; marked-future independence and predictable compensation are proved in dedicated modules |
 | `CommonFrozenStopping.lean` | Actual completed ambient probability law; minimal augmentation of each raw history by ambient null sets; exact original first exit is a stopping time, completed-measurable and raw AE-measurable; raw time-zero-measurable initial states included | Infinity uses only the supremum of finite histories; right continuity and optional sampling are not claimed; the arbitrary-initial product extension is supplied below |
-| `CommonInitialNoise.lean` | Actual arbitrary initial-record/noise product law, exact full marginals and independence, including measurable initial-state maps; initial-plus-observed-noise filtration; exact process initial law; joint measurability, adaptedness, and almost-sure regularity and stopped compatibility | Accepts the paired-array laws from Lemma 5.1; frozen generator identification is supplied below, while interacting-particle versus nonlinear trajectory estimates remain open |
+| `CommonInitialNoise.lean` | Actual arbitrary initial-record/noise product law, exact full marginals and independence, including measurable initial-state maps; initial-plus-observed-noise filtration; exact process initial law; joint measurability, adaptedness, and almost-sure regularity and stopped compatibility | Accepts the paired-array laws from Lemma 5.1; frozen generator identification is supplied below, while the population comparison is supplied by the population modules |
 | `CommonInitialStopping.lean` | Minimal augmentation of the actual initial-record/noise product histories by ambient product-law null sets; actual completed law; exact first exit is a stopping time, completed-measurable and raw AE-measurable; truncated exits are history-measurable and the initialized paths remain adapted | The terminal sigma algebra is the supremum of finite nonnegative histories; no right continuity, optional sampling, predictable compensation, or Lyapunov exit estimate is asserted |
 | `PredictableStepApproximation.lean`, `FrozenPredictableIntegrand.lean`, `InitialFrozenPredictable.lean` | Strict-past grids and measurable limit versions; genuine predictable pre-jump state and marked test-function increments; common-event identification with actual left limits for base and initial-product paths | Exceptional paths need no regularity hypothesis; a fixed nonpositive-time fallback preserves predictability |
 | `FrozenJumpIdentity.lean`, `FrozenCountingIdentity.lean`, `InitialFrozenCountingIdentity.lean` | Actual chronological telescoping, finite atomic integrability and signed test-function counting equation, retaining the exit jump; actual initialized equation follows by the common-event lift | Finite cutoffs and autonomous rates; no assumed stochastic integral equation |
@@ -813,12 +826,13 @@ right continuity of the completed filtration remain open.
    augmented filtration. General prescribed-environment output-law continuity,
    full moment-bounded nonlinear law uniqueness, the exact envelope and
    consistency of laws across horizons are proved.
-4. Assemble the sharp stopped Gronwall estimate from the actual compensated
-   population inequality and the derived finite expectation. The N-independent
-   common-exit tail and exact cutoff-removal event estimate are now proved.
-   Use these bounds to remove stopping and prove population convergence, then
-   establish focal exchangeability,
-   time-grid convergence and Skorokhod/path-space chaos. The grouped-input law,
+4. Prove actual paired-path equivariance under simultaneous initial/noise
+   relabeling and derive equal coordinate stopped-cost expectations. This supplies
+   the fixed-focal conclusion of Theorem 5.4 from the already-proved stopped
+   expectation limit. Proposition 5.3 and the averaged-path and paired-empirical
+   conclusions of Theorem 5.4 are now assembled for canonical systems under the
+   original initialization assumptions. Then establish time-grid convergence
+   to the nonlinear law and Skorokhod/path-space chaos. The grouped-input law,
    actual iid trajectories, their exact noise identities and the real
    time-integrated independent empirical-error limit are now proved. Preserve
    the original theorem's weaker initialization as a distinct target.

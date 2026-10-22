@@ -234,6 +234,15 @@ import CarryingCapacity.PopulationStoppedCoupling
 import CarryingCapacity.PopulationStoppedIntegrability
 import CarryingCapacity.PopulationCouplingExit
 import CarryingCapacity.PopulationCouplingRemoval
+import CarryingCapacity.PopulationCouplingInitialization
+import CarryingCapacity.PopulationCouplingTime
+import CarryingCapacity.PopulationNonlinearError
+import CarryingCapacity.PopulationStoppedVolterra
+import CarryingCapacity.PopulationStoppedGronwall
+import CarryingCapacity.PopulationCouplingProbability
+import CarryingCapacity.PopulationCouplingConvergence
+import CarryingCapacity.PopulationEmpiricalCoupling
+import CarryingCapacity.PopulationSynchronousApproximation
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -258,7 +267,10 @@ past observations justify compensation through the genuine first-exit jump.
 The actual population comparison now has a measurable stopped averaged running
 cost, a compensated expected-activity inequality, derived finite expectation,
 uniform common-exit tails and a cutoff-removal probability estimate. The sharp
-stopped Gronwall estimate and the subsequent convergence remain to be assembled.
+stopped Gronwall estimate and independent empirical-error limit prove vanishing
+averaged path discrepancy and uniform empirical transport discrepancy between
+the paired systems under the manuscript's initialization assumptions. Fixed-focal
+approximation still requires the paired-path exchangeability bridge.
 Arbitrary external-space realization, global pathwise horizon consistency,
 mean-field limits and chaos theorems remain open; see README.md and
 docs/PAPER_MAP.md for exact coverage.
