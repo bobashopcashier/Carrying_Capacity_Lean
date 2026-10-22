@@ -145,23 +145,28 @@ The fixed law curves and actual process marginals are also consistent across
 construction horizons. This does not assert that separately constructed paths
 agree on overlaps or provide one all-time nonlinear realization. Proposition
 4.2 and Corollary 4.4 still retain their arbitrary supplied PRM-space and
-completed right-continuous filtration obligations. Weighted-activity variation
-estimates and both papers' full empirical limit to the
-nonlinear law and path-space chaos conclusions remain open.
+completed right-continuous filtration obligations. The canonical expected
+weighted jump-variation estimate and independent uniform empirical limit
+are proved. Interacting empirical convergence and path-space chaos remain separate.
 
 For Section 6, `NonlinearEmpiricalSupremum.runningError` is the actual
 independent-array error supremum over every real time in `[0,T]`; its AE
 measurability is proved from particle path regularity and the continuous law
 curve. `IndependentArrayLLN` proves centered empirical-mean limits for any
 integrable statistic of the iid particle inputs, and `EmpiricalTimeGrid`
-supplies the exact deterministic cell and grid inequalities. The missing
-stochastic bridge is the actual accepted weighted jump variation on `(s,t]`:
-derive its expectation bound `C_activity * (1 + K(T))^2 * (t-s)` by predictable
-compensation, prove that it bounds same-path displacement, and obtain the
-law's time modulus. These results will discharge the grid theorem's variation
-premises and the scalar LLN's integrability premise. Neither the integrated
-empirical-error limit nor these deterministic bridges alone proves uniform
-empirical convergence.
+supplies the exact deterministic cell and grid inequalities.
+`NonlinearPathVariation` constructs the actual accepted weighted jump variation
+on `(s,t]` and proves exact nonnegative compensation. `NonlinearActivityBound`
+uses genuine marginal identities and the moment envelope to bound expected
+current activity. `NonlinearVariationDisplacement` proves that actual variation
+bounds every same-path displacement on one event, using a countable family of
+distance tests in the genuine counting equations. `NonlinearVariationBounds`
+derives the expectation estimate `C_activity * (1 + K(T))^2 * (t-s)`, almost-sure
+finiteness, real integrability and the law's time modulus. These results discharge
+all stochastic premises of `NonlinearEmpiricalUniform`, which proves Proposition
+6.2's actual uniform independent empirical convergence. Each error threshold
+selects one finite grid before the population limit; exact iid record laws give
+the centered variation LLN, with no independence across times or population sizes.
 
 ## Dependency order
 
@@ -256,12 +261,15 @@ any subsequent edits.
 | `PopulationNonlinearError.lean`, `PopulationStoppedVolterra.lean`, `PopulationStoppedGronwall.lean` | Actual configuration error equals independent-array error; genuine fixed-time and product integrability, actual sharp real Volterra inequality, and N-independent stopped Gronwall factor | Proposition 5.3's canonical stochastic estimate, without assumed comparison, error moment or candidate continuity |
 | `PopulationCouplingInitialization.lean` | Full vector marginals transfer original left moments and exact iid right mean; initial-coupling theorem supplies uniform paired Lyapunov expectations and vanishing meanDistance expectation | Does not assume expected initial-error convergence |
 | `PopulationCouplingProbability.lean`, `PopulationCouplingConvergence.lean` | Actual real probability bound; fixed-R stopped expectation converges to zero, then reciprocal actual exit tails give vanishing unstopped running-cost event probabilities | Family version takes genuine initial expected pairing-error convergence; final wrapper discharges it |
-| `PopulationEmpiricalCoupling.lean`, `PopulationSynchronousApproximation.lean` | Actual uniform empirical discrepancy bounded by averaged coordinate running suprema; original initialization implies canonical coupled systems with both discrepancy limits and exact initial vector marginals | First two conclusions of Theorem 5.4; the focal conclusion is supplied below and Section 6 remains open |
+| `PopulationEmpiricalCoupling.lean`, `PopulationSynchronousApproximation.lean` | Actual uniform empirical discrepancy bounded by averaged coordinate running suprema; original initialization implies canonical coupled systems with both discrepancy limits and exact initial vector marginals | First two conclusions of Theorem 5.4; the focal conclusion is supplied below and Section 6 is tracked separately |
 | `ParticleRelabeling.lean`, `ConfigurationRelabeling.lean`, `PopulationStoppedExchangeability.lean` | Full paired-input measure preservation and exact noise identities; counting equations and pathwise uniqueness give actual configuration relabeling; genuine common exit invariance and equal coordinate stopped expectations | Initial exchangeability is the only symmetry premise; arbitrary localization cap choices need not be equivariant. No external whole-trajectory law identification |
-| `PopulationFocalProbability.lean`, `PopulationFocalConvergence.lean`, `PopulationFocalApproximation.lean` | Actual focal event probability is bounded by one C/R exit term plus k times the stopped expectation divided by the threshold; successive limits prove fixed-focal comparison; one initialization family satisfies all three canonical Theorem 5.4 conclusions | Exact first-k event when N is at least k; Section 6 uniform empirical convergence to the nonlinear law and Skorokhod chaos are still separate |
-| `IndependentArrayLLN.lean` | Exact product-law transfer from a constructed infinite iid sequence yields centered scalar empirical-mean probability limits for arbitrary integrable observables, including merely AE-measurable ones | Applies to varying row spaces without any across-row premise; the actual accepted-jump variation must still be defined and proved integrable |
-| `EmpiricalTimeGrid.lean`, `RightContinuousSupremum.lean` | Actual empirical-law cell and finite-grid inequalities; exact equal mesh; right-continuous costs have rational-plus-terminal suprema and derived AE measurability | The deterministic grid bridge assumes explicit displacement and law-modulus bounds; it does not assume or prove the missing stochastic variation estimate |
-| `NonlinearEmpiricalSupremum.lean` | Genuine nonlinear particle path regularity and continuity of the environment give simultaneous right continuity of the actual independent empirical error; its exact uncountable running supremum is AE measurable | No assumed error continuity or supremum measurability; genuine expected jump variation and uniform empirical convergence still remain |
+| `PopulationFocalProbability.lean`, `PopulationFocalConvergence.lean`, `PopulationFocalApproximation.lean` | Actual focal event probability is bounded by one C/R exit term plus k times the stopped expectation divided by the threshold; successive limits prove fixed-focal comparison; one initialization family satisfies all three canonical Theorem 5.4 conclusions | Exact first-k event when N is at least k; Section 6's nonlinear-law limit and Skorokhod chaos are separate results |
+| `IndependentArrayLLN.lean` | Exact product-law transfer from a constructed infinite iid sequence yields centered scalar empirical-mean probability limits for arbitrary integrable observables, including merely AE-measurable ones | Applies to varying row spaces without any across-row premise; actual interval-variation integrability is supplied below |
+| `EmpiricalTimeGrid.lean`, `RightContinuousSupremum.lean` | Actual empirical-law cell and finite-grid inequalities; exact equal mesh; right-continuous costs have rational-plus-terminal suprema and derived AE measurability | The deterministic grid bridge has explicit displacement and law-modulus premises; the actual stochastic application below discharges them |
+| `NonlinearEmpiricalSupremum.lean` | Genuine nonlinear particle path regularity and continuity of the environment give simultaneous right continuity of the actual independent empirical error; its exact uncountable running supremum is AE measurable | No assumed error continuity or supremum measurability; uniform convergence is supplied below |
+| `NonlinearActivityBound.lean`, `NonlinearPathVariation.lean` | Genuine integrable current activity and its marginal-moment bound; actual predictable accepted-jump variation, measurability, interval monotonicity and exact compensation | Finiteness is not assumed in compensation; its derivation follows below |
+| `NonlinearVariationDisplacement.lean`, `NonlinearVariationBounds.lean` | All-time same-path displacement bound on one event, finite expected interval variation with explicit coefficient, AE finiteness, ordinary integrability and Wasserstein time modulus | Lemma 6.1 estimates for actual canonical paths; includes the right-endpoint jump and derives all integrability |
+| `NonlinearEmpiricalUniform.lean` | Finite-grid error bounds and exact record-product LLN prove the true uniform independent empirical probability limit, including the zero horizon | Proposition 6.2 under the manuscript assumptions; no stochastic variation, uniform convergence or across-row independence premise |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -847,14 +855,14 @@ right continuity of the completed filtration remain open.
    augmented filtration. General prescribed-environment output-law continuity,
    full moment-bounded nonlinear law uniqueness, the exact envelope and
    consistency of laws across horizons are proved.
-4. Prove the actual expected weighted jump-variation bound, then apply iid
-   interval-variation laws and a time grid to obtain uniform convergence to the
-   nonlinear law and Skorokhod/path-space chaos. Proposition 5.3 and all three
+4. Transfer the proved uniform independent empirical convergence to the
+   interacting system, then establish Skorokhod/path-space chaos. Proposition 5.3 and all three
    canonical Theorem 5.4 comparison conclusions are now assembled under the
    original initialization assumptions, using proved paired-path relabeling
    and equal coordinate stopped expectations. The deterministic grid bridge,
-   generic integrable-observable iid-row LLN, and actual empirical-supremum
-   measurability are proved, ready for the variation estimate. The grouped-input law,
+   generic integrable-observable iid-row LLN, actual empirical-supremum
+   measurability and genuine expected variation estimate now prove Proposition 6.2.
+   The grouped-input law,
    actual iid trajectories, their exact noise identities and the real
    time-integrated independent empirical-error limit are now proved. Preserve
    the original theorem's weaker initialization as a distinct target.

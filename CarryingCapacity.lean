@@ -253,6 +253,11 @@ import CarryingCapacity.EmpiricalTimeGrid
 import CarryingCapacity.IndependentArrayLLN
 import CarryingCapacity.RightContinuousSupremum
 import CarryingCapacity.NonlinearEmpiricalSupremum
+import CarryingCapacity.NonlinearActivityBound
+import CarryingCapacity.NonlinearPathVariation
+import CarryingCapacity.NonlinearVariationDisplacement
+import CarryingCapacity.NonlinearVariationBounds
+import CarryingCapacity.NonlinearEmpiricalUniform
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -284,9 +289,11 @@ initial/noise relabeling and pathwise uniqueness give equal stopped-coordinate
 expectations; the same cutoff limit proves fixed-focal approximation. All three
 canonical synchronous conclusions are assembled on the same paired laws.
 The actual independent empirical running error is AE measurable through its
-right-continuous paths. Deterministic grid bounds and an integrable-observable
-iid-row law of large numbers are proved; the actual expected weighted
-jump-variation estimate is still required for the uniform nonlinear-law limit.
+right-continuous paths. Predictable compensation and the actual nonlinear
+marginals give finite expected weighted jump variation, integrable real
+variation and a Wasserstein time modulus. A finite time grid and the
+integrable-observable iid-row law of large numbers then prove uniform
+independent empirical convergence to the nonlinear law.
 Arbitrary external-space realization, global pathwise horizon consistency,
 mean-field limits and chaos theorems remain open; see README.md and
 docs/PAPER_MAP.md for exact coverage.
