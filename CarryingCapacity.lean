@@ -194,6 +194,19 @@ import CarryingCapacity.SynchronousRunningSupremum
 import CarryingCapacity.TimeDependentGlobalPreStateTime
 import CarryingCapacity.VolterraGronwall
 
+import CarryingCapacity.DeterministicEnvironmentFiniteSupport
+import CarryingCapacity.DeterministicEnvironmentForward
+import CarryingCapacity.DeterministicEnvironmentForwardUniqueness
+import CarryingCapacity.DeterministicEnvironmentFrozenForward
+import CarryingCapacity.DeterministicEnvironmentGeneralForward
+import CarryingCapacity.FiniteForwardComparison
+import CarryingCapacity.FiniteJumpForward
+import CarryingCapacity.FiniteJumpRestriction
+import CarryingCapacity.FrozenForwardMinimality
+import CarryingCapacity.TimeDependentForwardUniqueness
+import CarryingCapacity.TimeDependentFrozenForward
+import CarryingCapacity.TimeDependentFrozenLawLimit
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
@@ -205,6 +218,9 @@ including arbitrary independent initial laws. The actual prescribed-environment
 evolution is a continuous, moment-envelope-preserving self-map of the manuscript
 curve space. Synchronous coupling proves its Volterra estimate and constructs a
 unique fixed curve there, with an actual self-consistent common-noise realization
-on each selected finite horizon. Full forward-law uniqueness, mean-field limits
-and chaos theorems remain open; see README.md and docs/PAPER_MAP.md for exact coverage.
+on each selected finite horizon. Actual finite-support forward equations and
+linear forward-law uniqueness identify the unique nonlinear weak solution within
+that curve space. Uniqueness in the broader moment-bounded class, mean-field
+limits and chaos theorems remain open; see README.md and docs/PAPER_MAP.md for
+exact coverage.
 -/
