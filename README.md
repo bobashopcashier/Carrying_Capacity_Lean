@@ -45,7 +45,7 @@ rejects proof placeholders. The permitted foundational axioms are Lean's
 the stochastic processes.
 
 The complete build passed without warnings, and the exhaustive audit checked
-**1,472 theorem declarations and 1,884 safe declarations across 71 modules**.
+**1,784 theorem declarations and 2,234 safe declarations across 96 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. Separate negative
 checks confirmed that the audit rejects
@@ -91,7 +91,7 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [PoissonSuperposition](CarryingCapacity/PoissonSuperposition.lean) | Independent vectors with product Poisson laws sum to a product Poisson vector with summed coordinate rates; exact transform and integrability | Full-vector independence and each component law are explicit hypotheses, discharged for actual strips below |
 | [PoissonPastIndependence](CarryingCapacity/PoissonPastIndependence.lean) | Future clock increment independent of the entire past count filtration, proved from finite-vector laws and a directed union; exact conditional increment expectation | This is the clock's raw natural filtration; the larger marked-noise history still needs its own independence proof |
 | [PoissonMartingale](CarryingCapacity/PoissonMartingale.lean) | Actual compensated clock N_t−rt is an integrable adapted martingale with zero mean; stopping at a deterministic horizon preserves it | Does not assert random optional sampling or a marked-process compensator |
-| [MarkedNoise](CarryingCapacity/MarkedNoise.lean) | One actual counting-measure family for every cutoff, built from independent unit strips; measurable noise; simultaneous local finiteness and absence of coincident arrival times | Full marked PRM characterization and compensation remain open |
+| [MarkedNoise](CarryingCapacity/MarkedNoise.lean) | One actual counting-measure family for every cutoff, built from independent unit strips; measurable noise; simultaneous local finiteness and absence of coincident arrival times | Full marked PRM characterization remains separate; compensation is supplied below |
 | [MarkedIntensity](CarryingCapacity/MarkedIntensity.lean) | Exact expected counting measure equals product Lebesgue measure on the nonnegative quadrant; counts have the correct expected area on every measurable set; full nonnegative deterministic Campbell identity | Does not prove the marked Poisson law or compensation for random predictable integrands |
 | [MarkedProducts](CarryingCapacity/MarkedProducts.lean) | Exact iid uniform-mark product integrals; integration over marks reduces the actual bounded clock-product expectation to a power of the single-mark mean | One common horizon; no random predictable-integrand formula |
 | [MarkedStripCounts](CarryingCapacity/MarkedStripCounts.lean) | Measurable category prefix and window counts; finite disjoint-union additivity; actual translated strip and common-noise rectangle masses identified with those counts almost surely | Identifications alone do not establish their distributions or time independence |
@@ -110,16 +110,30 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [CountRestriction](CarryingCapacity/CountRestriction.lean), [CylinderIndependence](CarryingCapacity/CylinderIndependence.lean) | Power transforms identify restricted count laws, including zero-mass events; finite-cylinder factorization generates independence of the whole product-valued observation | Generic bridge lemmas with explicit transform or event-factorization hypotheses, applied to the actual strip below |
 | [MarkedPastIndependence](CarryingCapacity/MarkedPastIndependence.lean) | The actual future category count has its Poisson law and is independent of the full indexed history of censored arrival times and marks in one strip | One future category count and one strip; the common-noise lift is supplied below, while joint future windows/categories within a strip remain separate |
 | [IndependentProductHistory](CarryingCapacity/IndependentProductHistory.lean) | Coordinatewise past/future independence lifts through the actual infinite product law to independence of complete observation and future arrays | Uses proved coordinate independence and measurable coordinate functions; does not infer joint independence from pairwise independence |
-| [CommonMarkedPastIndependence](CarryingCapacity/CommonMarkedPastIndependence.lean) | Future strip-category arrays, bounded strip sums, and actual bounded rectangle masses are independent of the full existing common-noise history, including its null augmentation and completed law | One deterministic window and one category per strip; joint future windows/categories within a strip and predictable compensation remain separate |
+| [CommonMarkedPastIndependence](CarryingCapacity/CommonMarkedPastIndependence.lean) | Future strip-category arrays, bounded strip sums, and actual bounded rectangle masses are independent of the full existing common-noise history, including its null augmentation and completed law | One deterministic window and one category per strip; joint future windows/categories within a strip remain separate |
+| [InitialMarkedPastIndependence](CarryingCapacity/InitialMarkedPastIndependence.lean) | Actual future rectangle counts are independent of the complete initial-record plus marked-noise history, also under null augmentation and the completed law | One future window and bounded measurable height category |
+| [MarkedCountMoments](CarryingCapacity/MarkedCountMoments.lean), [MarkedCountAdapted](CarryingCapacity/MarkedCountAdapted.lean), [MarkedCountMartingale](CarryingCapacity/MarkedCountMartingale.lean) | Actual count finiteness, integrability and first moments; adaptedness to the full marked history; conditional window means and compensated-count martingale | Bounded measurable height categories; raw noise filtration for the martingale |
+| [MarkedElementaryCompensation](CarryingCapacity/MarkedElementaryCompensation.lean), [InitialElementaryCompensation](CarryingCapacity/InitialElementaryCompensation.lean) | Past-measurable nonnegative coefficients times actual future counts; elementary predictable compensation, including completed initial-product histories | Full predictable extension is supplied below for raw histories |
+| [PredictableSets](CarryingCapacity/PredictableSets.lean), [PredictableCompensation](CarryingCapacity/PredictableCompensation.lean) | Positive-time predictable sigma algebra; actual Campbell measure equals product intensity on it; compensation for every nonnegative predictable integrand, allowing infinite expectations | No arbitrary-planar Poisson law or optional sampling is assumed or asserted |
+| [MarkedCountingKernel](CarryingCapacity/MarkedCountingKernel.lean), [PredictableIntegral](CarryingCapacity/PredictableIntegral.lean) | Actual s-finite counting kernel; Bochner Fubini; predictable integrability equivalence and signed or vector-valued compensation | Explicit integrability under the deterministic sample-time-height measure is required |
+| [InitialPredictableCompensation](CarryingCapacity/InitialPredictableCompensation.lean) | Fixing any initial record preserves predictability; full nonnegative compensation under the actual initial-record/noise product law | Raw product filtration; arbitrary completed predictable integrands remain separate |
 | [FrozenCompatibility](CarryingCapacity/FrozenCompatibility.lean) | Nested frozen recursions agree through their actual first exit, including the exit jump; exit indices are monotone; stopped continuous-time paths agree under a common locally finite clock | This module uses a common proposal sequence; actual cutoff-list compatibility is supplied below |
 | [ChronologicalEvents](CarryingCapacity/ChronologicalEvents.lean) | Jointly measurable chronological lists from actual time-height boxes; strict ordering, exact membership, time prefixes, and height filtering simultaneously for all cutoffs almost surely | Local finiteness and distinct times come from the constructed common noise |
-| [RejectedProposals](CarryingCapacity/RejectedProposals.lean), [CommonFrozenProcess](CarryingCapacity/CommonFrozenProcess.lean) | Actual shared-noise frozen paths; joint measurability and finite range; almost-sure invariance under changing a valid rate bound, permanent freezing, and nested-path agreement through the exit jump | Countable state space, finitely many directions, deterministic initial state, and time-homogeneous rates; generator identification still needs compensation |
+| [RejectedProposals](CarryingCapacity/RejectedProposals.lean), [CommonFrozenProcess](CarryingCapacity/CommonFrozenProcess.lean) | Actual shared-noise frozen paths; joint measurability and finite range; almost-sure invariance under changing a valid rate bound, permanent freezing, and nested-path agreement through the exit jump | Countable state space, finitely many directions and autonomous rates; the generator expectation identity is supplied below |
 | [CommonFrozenRegularity](CarryingCapacity/CommonFrozenRegularity.lean), [CommonFrozenExit](CarryingCapacity/CommonFrozenExit.lean) | Genuine first exits as infima; almost-sure càdlàg paths, initial interval, finite-exit attainment, monotone exits, and stopped-larger-path equality with the smaller frozen path | Exit probability estimates remain open; stopping-time properties are supplied below |
-| [CommonNoiseFiltration](CarryingCapacity/CommonNoiseFiltration.lean) | Genuine filtration of arrived labelled noise points; exact all-sample factorization of frozen paths through observed history; adaptedness, including initial information measurable at time zero | Independence of marked future increments remains open |
-| [CommonFrozenStopping](CarryingCapacity/CommonFrozenStopping.lean) | Minimal augmentation of noise histories by ambient null sets; actual completed probability law; exact first exits are stopping times and measurable in the completed space, AE-measurable in the original space | No right-continuity or optional-stopping theorem is asserted; Lyapunov exit estimates still require compensation |
-| [CommonInitialNoise](CarryingCapacity/CommonInitialNoise.lean) | Actual product of an arbitrary initial-record law and the full noise law; exact marginals and independence; prescribed initial-state law; joint measurability, adaptedness, and almost-sure càdlàg paths and stopped compatibility | Accepts the constructed paired initial laws through measurable projections; continuous-time generator and comparison estimates remain open |
+| [CommonNoiseFiltration](CarryingCapacity/CommonNoiseFiltration.lean) | Genuine filtration of arrived labelled noise points; exact all-sample factorization of frozen paths through observed history; adaptedness, including initial information measurable at time zero | Full-past independence and predictable compensation are supplied by the modules above |
+| [CommonFrozenStopping](CarryingCapacity/CommonFrozenStopping.lean) | Minimal augmentation of noise histories by ambient null sets; actual completed probability law; exact first exits are stopping times and measurable in the completed space, AE-measurable in the original space | No right-continuity or optional-stopping theorem is asserted; Lyapunov exit estimates remain to be derived from the proved Dynkin identity |
+| [CommonInitialNoise](CarryingCapacity/CommonInitialNoise.lean) | Actual product of an arbitrary initial-record law and the full noise law; exact marginals and independence; prescribed initial-state law; joint measurability, adaptedness, and almost-sure càdlàg paths and stopped compatibility | Accepts constructed paired initial laws through measurable projections; Dynkin is supplied below, while trajectory comparison estimates remain open |
 | [CommonInitialStopping](CarryingCapacity/CommonInitialStopping.lean) | Minimal null augmentation of the actual initial-record/noise product histories; exact first exits are stopping times, completed-measurable and raw AE-measurable; measurable truncated exits and adapted paths | The terminal history is the supremum of finite histories; no right continuity, optional sampling, or compensator is asserted |
-| [ThinningKernel](CarryingCapacity/ThinningKernel.lean) | Exact accepted-label probabilities; mean one-proposal increment; clock-rate normalization equals the frozen generator; finite active sets admit positive rate bounds | One-step expectation identities do not replace continuous-time compensation |
+| [PredictableStepApproximation](CarryingCapacity/PredictableStepApproximation.lean), [FrozenPredictableIntegrand](CarryingCapacity/FrozenPredictableIntegrand.lean), [InitialFrozenPredictable](CarryingCapacity/InitialFrozenPredictable.lean) | Strict-past deterministic approximations construct predictable pre-jump versions; actual path left limits and accepted test-function increments are identified almost surely, also with arbitrary initial records | The nonpositive-time fallback is fixed; increments vanish there |
+| [FrozenJumpIdentity](CarryingCapacity/FrozenJumpIdentity.lean), [FrozenCountingIdentity](CarryingCapacity/FrozenCountingIdentity.lean), [InitialFrozenCountingIdentity](CarryingCapacity/InitialFrozenCountingIdentity.lean) | Actual chronological telescoping, finite atomic integrability and signed counting-measure equation, retaining the exit jump | Finite height cutoff and autonomous rates; non-explosive patching remains separate |
+| [FrozenIntensity](CarryingCapacity/FrozenIntensity.lean), [FrozenGeneratorIntegral](CarryingCapacity/FrozenGeneratorIntegral.lean) | Finite active-set bounds give product integrability; actual height integration gives the rate-weighted drift and frozen generator | Nonnegative active rates and a dominating cutoff are required for generator identification |
+| [FrozenCompensation](CarryingCapacity/FrozenCompensation.lean), [InitialFrozenCompensation](CarryingCapacity/InitialFrozenCompensation.lean) | Signed compensation and integrability for the actual finite-horizon frozen increments, with all integrability premises discharged | Arbitrary test functions; no initial moment assumption is needed for increments |
+| [FrozenPreStateTime](CarryingCapacity/FrozenPreStateTime.lean) | Actual current and pre-jump states agree outside the countable proposal-time set; their restricted time integrals agree, also with sampled initial records | A time-null assertion; equality at jump times is not asserted |
+| [FrozenDynkin](CarryingCapacity/FrozenDynkin.lean) | Actual frozen-process Dynkin expectation identity with the current-state generator; test-function and time-integrated drift integrability are derived | Fixed deterministic initial state and horizon; stopped Gronwall and Lyapunov exit estimates remain separate |
+| [InitialFrozenDynkin](CarryingCapacity/InitialFrozenDynkin.lean) | Actual randomly initialized frozen-process Dynkin identity; changes and time-integrated current-state drift are integrable without an initial moment assumption; separate expectations follow when the initial test value is integrable | Fixed horizons and autonomous rates; Lyapunov Gronwall, exit bounds and non-explosion remain separate |
+| [InitialPredictableIntegral](CarryingCapacity/InitialPredictableIntegral.lean) | Actual initialized counting kernel, predictable integrability equivalence, signed/vector compensation and random-integral integrability | Raw initial-product filtration; deterministic product integrability is explicit |
+| [ThinningKernel](CarryingCapacity/ThinningKernel.lean) | Exact accepted-label probabilities; mean one-proposal increment; clock-rate normalization equals the frozen generator; finite active sets admit positive rate bounds | The actual continuous-time Dynkin identity is proved above |
 | [Models](CarryingCapacity/Models.lean) | Scalar birth–death generator identities through cubic order; full three-term positive-increment coupling bounds; activity growth; cubic Lyapunov domination, drift and superlinearity; integrals of generator identities | Scalar model only; integrated identities are not time derivatives of stochastic expectations |
 | [ModelTransport](CarryingCapacity/ModelTransport.lean) | Actual generalized moments control arbitrary nonnegative Lipschitz mortality; quadratic-feedback coupling and activity estimates follow from transport | Uses the concrete cubic Lyapunov choice, rather than every real exponent greater than two |
 | [QuadraticModel](CarryingCapacity/QuadraticModel.lean) | Instantiates the actual single-type rates in `Framework`; proves `MomentCouplingBound` and `MomentActivityBound`; constructs `LyapunovControl` with `Ψ(x)=1+x³` for arbitrary nonnegative Lipschitz mortality | Checks the dynamic hypotheses of Proposition 7.7; initialization and the stochastic limit corollary remain outside this result |
@@ -177,11 +191,27 @@ the full marked finite-grid law is proved, allowing categories to vary between
 windows and requiring disjointness only within each window. The same full joint
 law is proved for bounded-height grid rectangles in the original common counting
 measure, for one fixed label. Its parameters are window length times the
-positive Lebesgue mass of each category. The full marked PRM characterization on
-arbitrary finite-intensity measurable planar sets, independence from marked
-history, predictable compensation, and exit
-bounds from the model's Lyapunov drift remain outstanding, as does applying the
-patching theorem to those bounds.
+positive Lebesgue mass of each category. The full independently scattered PRM law on arbitrary finite-intensity
+measurable planar sets remains outstanding. Bounded future rectangle counts
+are now independent of the full marked history, including an arbitrary
+independent initial record. This suffices to prove nonnegative predictable
+compensation on the actual raw noise and initial-product filtrations. The
+actual frozen path also satisfies its test-function counting equation and
+Dynkin expectation identity. Exit bounds from the model's Lyapunov drift
+remain outstanding, as does applying the patching theorem to those bounds.
+
+The frozen Dynkin proof uses these actual objects throughout. Strict-past grid
+approximations construct predictable pre-jump states, and chronological
+finite-list telescoping identifies the real counting-measure integral with
+the test-function change, including the exit jump. Finite active states and a
+finite time-height box give signed integrability. Compensation and height
+integration then identify the expected drift with the existing frozen
+generator. Current and pre-jump states differ only at the countable proposal
+times, so either version gives the same time integral. This proves a
+fixed-horizon expectation identity, also on the actual initial-record product.
+The change form needs no initial moment assumption; the separate-expectation
+form assumes an integrable initial test value. It does not yet prove the Lyapunov
+Gronwall bound, non-explosion, or a stopped-process martingale theorem.
 
 `EmpiricalLLN.wasserstein_strongLaw` proves the full empirical transport strong
 law using finite-state common-mass couplings and vanishing moment tails.
@@ -211,9 +241,11 @@ controlling only unmatched jumps would miss this term.
 1. Extend the proved common-noise grid-rectangle laws to the independently
    scattered law on arbitrary finite-intensity measurable planar sets.
    Extend the proved bounded-rectangle independence from the full common
-   marked past to joint future windows/categories within strips. Derive
-   predictable compensation, Dynkin's formula, and Lyapunov exit estimates
-   on the actual initial-record/noise product space.
+   marked past to joint future windows/categories within strips. Predictable
+   compensation is proved from the scalar independence and intensity, without
+   requiring this stronger joint law. Dynkin's expectation identity is also
+   proved for the actual frozen construction. Derive the Lyapunov expectation
+   and exit estimates on the initial-record/noise product space.
    Shared-noise frozen paths, stopped compatibility, and completed-filtration
    first-exit stopping times are proved, including the arbitrary-initial product
    space. Applying the patching theorem still requires the exit estimates.
