@@ -7,8 +7,11 @@ Unbounded Moment Feedback*
 prove either paper's complete theorem package. All canonical Section 6
 conclusions are now proved for Xie's manuscript, including uniform empirical
 convergence, empirical J1 path-law convergence and finite-particle J1 chaos.
-The prescribed-PRM/usual-filtration formulation and full application package
-remain unfinished. Existing results for
+The real-power Wp comparisons, model hypotheses and globally well-posed closed
+mean ODE are also proved. The prescribed-PRM construction and convergence
+transfers are now available; remaining work includes the full general stopped
+comparison lemma and the prescribed-space localization and martingale statements.
+Existing results for
 [DeWitt, Evans, Hiesmayr, and Hummel (2024)](https://arxiv.org/html/2307.06010v2)
 are retained as shared infrastructure and separately documented coverage;
 completing that original paper is not the current target.
@@ -74,10 +77,10 @@ the stochastic processes.
 
 The complete repository-wide build passed without warnings, and its exhaustive
 audit checked
-**3,789 theorem declarations and 4,901 safe declarations across 275 modules**.
+**4,309 theorem declarations and 5,614 safe declarations across 315 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. The counts include the
-ten-module J1/Section 6 batch. Separate negative
+prescribed-space, real-power transport, model and mean-equation modules. Separate negative
 checks confirmed that the audit rejects
 custom project axioms, both public and private placeholder proofs, and a
 forbidden dependency imported transitively through a safe definition. The
@@ -90,6 +93,19 @@ check the rejection behavior without adding invalid proofs to project sources.
 | File | Checked content | Boundary |
 |---|---|---|
 | [MomentGeometry](CarryingCapacity/MomentGeometry.lean) | Discrete κ scales; genuine adapted state metric; weight and ℓ¹ bounds; finite moment and Lyapunov sublevels | Does not prove probability-space completeness or Wasserstein–Orlicz results |
+| [RealPowerMoment](CarryingCapacity/RealPowerMoment.lean), [RealPowerIntegrals](CarryingCapacity/RealPowerIntegrals.lean), [PowerWasserstein](CarryingCapacity/PowerWasserstein.lean), [PowerWassersteinMetric](CarryingCapacity/PowerWassersteinMetric.lean), [PowerWassersteinTopology](CarryingCapacity/PowerWassersteinTopology.lean) | Genuine ordinary Wp coupling metric for every real p>1; both exact comparison inequalities; moment convergence derived from Wp convergence; equality of the two metric topologies | Completes Remark 2.1; no Wasserstein–Orlicz extension is asserted |
+| [CoordinateMoments](CarryingCapacity/CoordinateMoments.lean), [PopulationCoordinateMoments](CarryingCapacity/PopulationCoordinateMoments.lean) | The l1 distance between vectors of κ moments is bounded by actual Wκ; measurable running vector error and uniform convergence under the manuscript initialization | Gives every type mean simultaneously for linear κ; the closed mean ODE is separate |
+| [UsualFiltration](CarryingCapacity/UsualFiltration.lean), [CanonicalUsualFiltration](CarryingCapacity/CanonicalUsualFiltration.lean) | Minimal completed right-continuous augmentation of the actual history; completeness of the restricted law; actual particle, driven and nonlinear paths adapted there; exact localization exits are stopping times | Canonical histories; arbitrary supplied inputs require the transfer below |
+| [MarkedNoiseReconstruction](CarryingCapacity/MarkedNoiseReconstruction.lean), [MarkedNoiseObservation](CarryingCapacity/MarkedNoiseObservation.lean), [MarkedPastReconstruction](CarryingCapacity/MarkedPastReconstruction.lean), [CountingMeasureStrongFunction](CarryingCapacity/CountingMeasureStrongFunction.lean) | Measurable recovery of canonical noise from its actual counts; a separate past-only decoder; exact equality of completed count and indexed histories; entire paths are measurable functions of initial data and actual measures | Reconstruction is derived on probability-one events; no extra random input or assumed decoder identity |
+| [PoissonObservationLaw](CarryingCapacity/PoissonObservationLaw.lean) | Standard independent Poisson count laws determine the entire countable observation law, via disjoint Boolean atoms and finite-cylinder uniqueness | Supplies the law bridge for prescribed-noise realization; path properties and adaptation need separate transfer |
+| [PrescribedPoissonRealization](CarryingCapacity/PrescribedPoissonRealization.lean), [PrescribedPoissonFiltration](CarryingCapacity/PrescribedPoissonFiltration.lean), [PrescribedJumpProcess](CarryingCapacity/PrescribedJumpProcess.lean) | Supplied PRMs reconstruct the exact original initial/noise product law; actual natural count filtration and usual augmentation; measurable strong paths, nonexplosion, left limits, supplied-measure counting equations and pathwise uniqueness | Global construction; explicit frozen-level/exit and martingale consumers remain separate |
+| [PrescribedConfigurationProcess](CarryingCapacity/PrescribedConfigurationProcess.lean), [PrescribedNonlinearProcess](CarryingCapacity/PrescribedNonlinearProcess.lean) | Concrete interacting and nonlinear strong processes on the supplied space; exact empirical/own-marginal equations, usual-natural adaptedness, finite activity and pathwise uniqueness | Nonlinear equation fixes the proved limiting law curve, as in Corollary 4.4; general deterministic-environment and frozen-level consumers remain separate |
+| [PrescribedObservableLaws](CarryingCapacity/PrescribedObservableLaws.lean), [PrescribedPopulationLimits](CarryingCapacity/PrescribedPopulationLimits.lean), [PrescribedPathLimits](CarryingCapacity/PrescribedPathLimits.lean) | Exact laws of AE-measurable observables; uniform empirical, scalar-moment and vector-moment convergence on the supplied space; actual empirical and focal J1 path maps and limiting laws | The record and output laws are proved from genuine PRM laws and initial independence, not assumed |
+| [PredictableStoppingMask](CarryingCapacity/PredictableStoppingMask.lean), [IndependentIncrementCompensation](CarryingCapacity/IndependentIncrementCompensation.lean) | Inclusive arbitrary-stopping-time mask is predictable; full nonnegative predictable compensation on any filtered space derived from unweighted intensity and independent future counts | Does not yet prove full Lemma 4.1's arbitrary random-environment pathwise comparison or its localization-removal step |
+| [LinearCoordinateApproximation](CarryingCapacity/LinearCoordinateApproximation.lean), [LinearCoordinateForward](CarryingCapacity/LinearCoordinateForward.lean), [LinearMeanGenerator](CarryingCapacity/LinearMeanGenerator.lean), [LinearMeanEquation](CarryingCapacity/LinearMeanEquation.lean), [LinearMeanLipschitz](CarryingCapacity/LinearMeanLipschitz.lean), [LinearMeanUniqueness](CarryingCapacity/LinearMeanUniqueness.lean) | Finite-support coordinate approximation and activity-dominated state/time limits justify the true mean equation; exact birth/death/mutation drift; actual global nonnegative solution; local Lipschitz bounds and compact-time Gronwall prove uniqueness | Completes Proposition 7.5's ODE conclusion without assuming bounded candidate means or an unbounded-test equation |
+| [AdaptedCoordinateForward](CarryingCapacity/AdaptedCoordinateForward.lean), [QuadraticMeanEquation](CarryingCapacity/QuadraticMeanEquation.lean) | Ordinary coordinate tests justified for general normalized κ by actual adapted activity; quadratic-feedback first-mean integral and differential equations, genuine time integrability and right derivative at zero | The quadratic first mean retains second-moment feedback; no autonomous first-mean closure is asserted |
+| [LinearCarryingCapacity](CarryingCapacity/LinearCarryingCapacity.lean), [LinearCarryingCapacityBounds](CarryingCapacity/LinearCarryingCapacityBounds.lean), [LinearJumpGeometry](CarryingCapacity/LinearJumpGeometry.lean), [LinearCarryingCapacityHypotheses](CarryingCapacity/LinearCarryingCapacityHypotheses.lean), [LinearCarryingCapacityApplication](CarryingCapacity/LinearCarryingCapacityApplication.lean) | Exact multitype vector-mean mortality and mutation rates; full activity/coupling bounds; Lyapunov powers for every real p>1; canonical nonexplosion, nonlinear uniqueness, uniform empirical and vector-mean convergence, and J1 chaos | Proposition 7.3 and the canonical Corollary 7.4 application; Proposition 7.5's closed ODE remains separate |
+| [RealPowerLyapunov](CarryingCapacity/RealPowerLyapunov.lean), [QuadraticRealLyapunov](CarryingCapacity/QuadraticRealLyapunov.lean), [QuadraticFeedbackApplication](CarryingCapacity/QuadraticFeedbackApplication.lean) | Quadratic-feedback Lyapunov verification for every real r>2; canonical nonexplosion, nonlinear uniqueness, uniform empirical/second-moment convergence and J1 chaos | Proposition 7.7 and the canonical Corollary 7.8 application; prescribed-space transfer remains separate |
 | [Transport](CarryingCapacity/Transport.lean) | Actual probability laws with integrable κ weight; actual marginal couplings; finite coupling costs; infimum transport cost, symmetry and zero self-distance; `\|Mκ(μ)−Mκ(ν)\| ≤ Wκ(μ,ν)` and consequent moment convergence | The metric, completeness, and empirical LLN results are supplied by the modules below; general optimal-plan existence remains separate |
 | [TransportMetric](CarryingCapacity/TransportMetric.lean) | Actual disintegration-based gluing; triangle inequality; separation by measurable events; a genuine `MetricSpace`; Lipschitz moment map | Does not assert existence of an optimal coupling for every pair of laws |
 | [TransportCompleteness](CarryingCapacity/TransportCompleteness.lean) | Infinite simultaneous coupling through Ionescu–Tulcea; constructed finite-moment limit law; transport tail estimate; genuine `CompleteSpace` instance | Nonlinear process construction remains separate |
@@ -499,8 +515,10 @@ càdlàg process on all nonnegative times, with the consistent law as its actual
 marginal and the exact moment envelope. `NonlinearGlobalCounting` proves its
 predictable left-state counting equation, integral finiteness and finite activity
 on every bounded interval. `NonlinearGlobalForward` gives global weak-law existence
-and uniqueness under local genuine Lyapunov bounds. Realization on arbitrary
-externally supplied PRM spaces and the usual filtration formulation remain open.
+and uniqueness under local genuine Lyapunov bounds. The prescribed-space
+realization and usual-natural adaptedness are supplied by
+the reconstruction and concrete process modules above. Localization and
+usual-filtration martingale consumers remain separate.
 
 `EmpiricalLLN.wasserstein_strongLaw` proves the full empirical transport strong
 law using finite-state common-mass couplings and vanishing moment tails.
@@ -544,25 +562,32 @@ controlling only unmatched jumps would miss this term.
 
 ## Remaining work for Kenny's complete theorem package
 
-1. Realize the constructed solutions on arbitrary probability spaces carrying the
-   prescribed initial variable and PRMs, and establish adaptation to the
-   completed, right-continuous natural filtration specified in the manuscript.
-   The canonical full Poisson laws, raw predictable compensation, all-time
-   nonlinear realization, exact moment envelope and global weak-law uniqueness
-   are already proved.
+1. Finish explicit prescribed-space consumers for the frozen systems,
+   compatibility, localization stopping times and stopped moment/exit estimates,
+   the full deterministic-environment formulation of Proposition 4.2 and
+   Corollary 4.4's whole-horizon Lyapunov exit bound.
+   The global strong construction and its usual-natural adaptedness, exact
+   supplied-measure equation, pathwise uniqueness, and uniform/J1 population
+   convergence transfer are proved.
 2. Export the full standalone Lemma 4.1 for arbitrary adapted càdlàg environment
    pairs and a common stopping time, including removal of finite-state stopping
    under the stated integrable domination. Its actual deterministic-environment
    and population-exit instances, positive-increment algebra and required
    compensation estimates are proved; they do not alone establish that full
    general statement.
-3. Complete Section 7's multitype linear carrying-capacity verification and
-   application for every stated real exponent p>1, the closed first-moment ODE
-   with unbounded-test justification and global well-posedness, and the quadratic
-   application for every real r>2. Existing scalar and quadratic checks, including
-   the cubic Lyapunov choice for the quadratic model, are partial applications.
-4. Prove both Wp comparison inequalities in Remark 2.1 for the stated real powers
-   and the resulting equivalence of the Wκ and ordinary Wp convergence topologies.
+3. Prove the finite-support generator martingale statement in the prescribed
+   usual-natural filtration, and finish the corresponding prescribed-system
+   exchangeability statement. The canonical raw-filtration martingale and
+   actual noise/initial relabeling are proved; enlarging the filtration requires
+   an additional argument.
+
+Proposition 7.5's closed first-moment ODE is proved with genuine unbounded-test
+justification and global nonnegative uniqueness. The multitype hypotheses for
+every real p>1, quadratic hypotheses for every real r>2 and model limit
+applications are also proved.
+
+Remark 2.1 is proved, including both exact real-power comparison inequalities,
+the genuine ordinary Wp metric and equality of convergence topologies.
 
 Optional sampling, semigroup/strong Markov results and stronger joint-future
 independence assertions may be useful extensions, but they are not additional

@@ -208,9 +208,10 @@ many population rows smaller than k are handled explicitly.
 
 These results cover every canonical conclusion of Section 6 in source
 `c768811`, including both path-space limits and fixed-time chaos. The complete
-275-module build passed without warnings; the exhaustive audit checked 3,789
-theorem declarations and 4,901 safe declarations, including this ten-module J1
-batch. The negative audit fixtures also passed.
+315-module build passed without warnings; the exhaustive audit checked 4,309
+theorem declarations and 5,614 safe declarations, including the J1,
+prescribed-space, real-power model, mean-equation and transport modules.
+The negative audit fixtures also passed.
 
 ## Dependency order
 
@@ -235,8 +236,12 @@ batch. The negative audit fixtures also passed.
 8. The time-grid argument, canonical uniform interacting empirical limit, genuine
    Borel J1 path maps, empirical weak Dirac limit, vector path-space chaos and
    fixed-time finite-particle chaos are proved. Remaining Kenny obligations are
-   the prescribed-PRM/usual-filtration formulation, full general Lemma 4.1,
-   the model applications and closed mean ODE, and the Wp comparisons.
+   the explicit prescribed-space localization and usual-filtration martingale
+   statements, and full general Lemma 4.1. The global prescribed-space strong
+   construction and empirical/path-law transfers are proved, as is the globally
+   well-posed closed mean ODE.
+   The Wp comparisons and topology equality, real-power model hypotheses and
+   canonical model applications are now proved.
 
 The original proof has a different route through Feller generation, Markov
 mapping, Yule domination, frozen-process convergence, and tightness. Its weaker
@@ -253,6 +258,17 @@ any subsequent edits.
 | Module | Implemented mathematical coverage | Boundaries |
 |---|---|---|
 | `MomentGeometry.lean` | Discrete κ normalization; linear/quadratic scales; metric axioms for ρκ; Kκ and coordinate bounds; finite state and Lyapunov sublevels | Does not prove completeness of the law space or the Wp comparison of Remark 2.1 |
+| `RealPowerMoment.lean`, `RealPowerIntegrals.lean`, `PowerWasserstein.lean`, `PowerWassersteinMetric.lean`, `PowerWassersteinTopology.lean` | Exact real-power scale, genuine coupling-defined ordinary Wp metric, both Remark 2.1 inequalities and equality of topologies; moment control follows from Wp convergence | No Orlicz theorem is asserted |
+| `CoordinateMoments.lean`, `PopulationCoordinateMoments.lean` | Actual vector κ moments are l1-Lipschitz in Wκ; genuine all-time error measurability and uniform vector-moment convergence | Linear specialization supplies all type means |
+| `UsualFiltration.lean`, `CanonicalUsualFiltration.lean` | Minimal completed right-continuous augmentation, completeness, actual canonical adaptedness and localization stopping times | Usual-filtration martingale preservation is separate |
+| `MarkedNoiseReconstruction.lean`, `MarkedNoiseObservation.lean`, `MarkedPastReconstruction.lean`, `CountingMeasureStrongFunction.lean`, `PoissonObservationLaw.lean` | Actual-count injectivity and measurable inverse; causal past decoder; completed counting/indexed histories agree; standard disjoint Poisson laws determine all count observations | No canonical clock realization or output law is assumed |
+| `PrescribedPoissonRealization.lean`, `PrescribedPoissonFiltration.lean`, `PrescribedJumpProcess.lean`, `PrescribedConfigurationProcess.lean`, `PrescribedNonlinearProcess.lean` | Exact original record law, actual supplied natural history, usual-adapted strong paths, genuine left states and supplied counting equations, finite activity and pathwise uniqueness; nonlinear own marginals and moment envelope | Explicit frozen-level/localization transfer and general deterministic-environment wrapper remain open |
+| `PrescribedObservableLaws.lean`, `PrescribedPopulationLimits.lean`, `PrescribedPathLimits.lean` | Exact AE-observable laws, uniform transport/scalar/vector-moment convergence and empirical/focal J1 path-law convergence on the supplied space | The given PRM laws and initial independence derive all transfer premises |
+| `PredictableStoppingMask.lean`, `IndependentIncrementCompensation.lean` | Inclusive arbitrary stopping mask is predictable; nonnegative predictable compensation from primitive intensity and independent future counts on any filtered space | Full Lemma 4.1 still needs random-environment pathwise comparison and localization removal |
+| `LinearCarryingCapacity.lean`, `LinearCarryingCapacityBounds.lean`, `LinearJumpGeometry.lean`, `LinearCarryingCapacityHypotheses.lean`, `LinearCarryingCapacityApplication.lean` | Full multitype carrying-capacity model, exact rate/activity/coupling bounds, every real p>1 Lyapunov power, and canonical uniform/J1 model limits | Supplied-space model limits follow through the general transfer modules |
+| `RealPowerLyapunov.lean`, `QuadraticRealLyapunov.lean`, `QuadraticFeedbackApplication.lean` | Quadratic feedback dynamic hypotheses for every real r>2 and actual nonlinear/empirical/J1 limit application | Exact rates retain nonlinear moment feedback |
+| `LinearCoordinateApproximation.lean`, `LinearCoordinateForward.lean`, `LinearMeanGenerator.lean`, `LinearMeanEquation.lean`, `LinearMeanLipschitz.lean`, `LinearMeanUniqueness.lean` | Genuine unbounded-coordinate expectation, global mean ODE, exact mutation orientation, local Lipschitz estimates and uniqueness on the nonnegative time axis | Candidate bounds are derived from continuity, not assumed |
+| `AdaptedCoordinateForward.lean`, `QuadraticMeanEquation.lean` | General κ activity justifies ordinary coordinate tests; actual quadratic first-mean integral/derivative formula including time-zero right derivative | Second-moment feedback remains explicit; no autonomous first-mean closure |
 | `Transport.lean` | Genuine probability measures with integrable Kκ; all measure couplings with their probability property; independent/diagonal/swapped couplings; integrability of every coupling cost; the infimum Wκ with zero self-distance and symmetry; moment difference bounded by Wκ; moment convergence from Wκ convergence | Metric and completeness are proved in the following modules; arbitrary-law optimal-plan existence remains open |
 | `TransportMetric.lean` | Actual conditional-kernel gluing; cost triangle; separation by indicator tests; MetricSpace; Lipschitz moment and event-probability maps | No arbitrary-law optimal coupling theorem |
 | `TransportCompleteness.lean` | Actual Ionescu–Tulcea simultaneous coupling of near-optimal consecutive plans; a.s. finite total path distance; measurable finite-moment limit law; tail transport bound; CompleteSpace instance | Does not construct nonlinear laws |
@@ -900,23 +916,39 @@ right continuity of the completed filtration remain open.
 
 ## Remaining Kenny obligations
 
-1. Transfer the strong construction to arbitrary spaces carrying the specified
-   initial variable and PRMs, and establish the completed, right-continuous
-   natural filtration formulation. The canonical Poisson characterization,
-   raw predictable compensation, global paths, actual equations and law
-   uniqueness are already proved.
+1. Finish explicit supplied-space consumers for frozen paths, compatibility,
+   stopping times, localization moment/exit bounds, and the general external
+   deterministic-environment formulation of Proposition 4.2, and Corollary 4.4's
+   whole-horizon Lyapunov exit bound. The measurable
+   noise reconstruction, exact original input law, usual-natural adaptation,
+   global supplied-measure equations and uniqueness, and uniform/J1 population
+   convergence transfers are proved.
 2. Prove the full standalone Lemma 4.1 for arbitrary adapted càdlàg environments
    and a common stopping time, with the stated integrable-domination passage
    beyond finite-state stopping. The exact positive-increment algebra and the
    deterministic-environment/population-exit instances used in the current
    canonical proof are proved, but do not replace this broader statement.
-3. Complete Proposition 7.3 and Corollary 7.4 for the multitype linear model and
-   every real p>1; Proposition 7.5's unbounded-test mean closure and globally
-   well-posed ODE; and Proposition 7.7/Corollary 7.8 for every real r>2 in the
-   quadratic model. Existing scalar checks and the quadratic cubic-Lyapunov
-   verification remain partial model coverage.
-4. Prove the two real-power Wp comparison inequalities of Remark 2.1 and the
-   resulting equivalence of the Wκ and ordinary Wp convergence topologies.
+3. Establish the generator martingale in the prescribed usual-natural
+   filtration, and finish the explicit supplied-system exchangeability
+   statement of Proposition 3.4. The raw canonical generator martingale and
+   actual initial/noise relabeling are proved; filtration enlargement is not
+   inferred from adaptedness alone.
+
+Proposition 7.5 is now proved: uniform vector-mean convergence, the genuine
+unbounded-coordinate expectation equation, an actual global nonnegative mean
+curve and its uniqueness among all nonnegative classical solutions. Local
+Lipschitz constants come from the actual coefficients; compact-time bounds are
+derived from candidate continuity. The mutation field uses the exact incoming
+and outgoing coefficients. Proposition 7.3 is verified for the full multitype
+model and every real p>1; Proposition 7.7 is verified for every real r>2. The
+canonical Corollaries 7.4 and 7.8 and the general supplied-space limit transfer
+are proved.
+
+Remark 2.1 is now proved by `RealPowerMoment`, `RealPowerIntegrals`,
+`PowerWasserstein`, `PowerWassersteinMetric` and `PowerWassersteinTopology`:
+both exact comparison inequalities, a genuine coupling-defined ordinary Wp
+metric, and equality of topologies. Moment control needed for the reverse
+comparison is derived from Wp convergence, not added as a premise.
 
 All canonical Section 6 conclusions are proved, including true Borel J1 path
 laws, empirical weak Dirac convergence and vector-valued path-space chaos.
