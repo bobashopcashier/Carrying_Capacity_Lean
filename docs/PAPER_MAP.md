@@ -78,8 +78,11 @@ including their empirical configuration specialization. The exhaustion,
 measurable adapted patch, cadlag regularity and finite activity parts of
 Proposition 3.4 are proved, as is the unrestricted test-function counting equation
 for the constructed global path. The global Lyapunov expectation part of Corollary 3.6
-follows by Fatou. Full global equation uniqueness, weighted-activity estimates,
-and the remaining nonlinear/mean-field theorem statements are not claimed.
+follows by Fatou. Global equation pathwise uniqueness is proved, including the
+particle-coordinate formulation. The actual finite-support generator martingale
+and integrated weak forward equation are proved. Countability also removes the
+initial-moment premise from nonexplosion and these finite-support conclusions.
+Weighted-activity estimates and the nonlinear/mean-field statements remain open.
 
 ## Dependency order
 
@@ -155,8 +158,11 @@ any subsequent edits.
 | `MarkedTimeProducts.lean` | Measurability and integrability of actual random time-block products for measurable factors of norm at most one; exact exponential transform from deterministic block integration and the full clock increment law | Finite monotone grids with nonnegative starting time and deterministic per-window factors; no predictable compensation |
 | `MarkedGridLaw.lean` | Actual multivariate transform and product Poisson law for all strip window/category counts on a finite monotone grid; arbitrary finite category type, varying categories per window, repeated times and arbitrary nonnegative first time | Requires measurable categories disjoint within each window; categories may overlap across different windows; the full common-noise bounded-height grid extension is supplied below |
 | `MarkedBoundedCounts.lean` | On one probability-one event, actual common-noise prefix and window masses below a strict natural height cutoff equal finite sums of strip counts for all measurable categories and ordered nonnegative endpoints; finite sums of category probabilities equal positive Lebesgue mass | Negative-height portions have zero mass; no independence or distribution is asserted by this module alone |
-| `MarkedRectangleLaw.lean` | Complete category vectors from actual distinct strips are independent; finite superposition gives the product Poisson law for bounded-height category counts and for the genuine rectangle masses embedded in extended nonnegative reals | One fixed label j, a common horizon T≥0, and pairwise disjoint measurable Bᵢ⊆(−∞,m); the grid extension is supplied below, while general disjoint space-time sets remain open; bounded future-rectangle independence is supplied below |
-| `MarkedGridRectangles.lean` | Entire actual strip grid vectors are independent across strips; finite superposition gives the full product Poisson law for bounded window/category arrays and the genuine common counting-measure grid-rectangle masses embedded in extended nonnegative reals | One fixed label j, finite monotone grid u with u₀≥0, measurable B[a,i]⊆(−∞,m) for a common natural m, and category disjointness within each window; parameters are Δuₐ times positive Lebesgue mass; arbitrary finite-intensity planar sets and joint future-grid independence from the past remain separate |
+| `MarkedRectangleLaw.lean` | Complete category vectors from actual distinct strips are independent; finite superposition gives the product Poisson law for bounded-height category counts and for the genuine rectangle masses embedded in extended nonnegative reals | One fixed label j, a common horizon T≥0, and pairwise disjoint measurable Bᵢ⊆(−∞,m); the grid extension is supplied below, while general finite-intensity planar sets are supplied below; bounded future-rectangle independence is supplied below |
+| `MarkedGridRectangles.lean` | Entire actual strip grid vectors are independent across strips; finite superposition gives the full product Poisson law for bounded window/category arrays and the genuine common counting-measure grid-rectangle masses embedded in extended nonnegative reals | One fixed label j, finite monotone grid u with u₀≥0, measurable B[a,i]⊆(−∞,m) for a common natural m, and category disjointness within each window; parameters are Δuₐ times positive Lebesgue mass; arbitrary finite-intensity planar sets are supplied below; joint future-grid independence from the past remains separate |
+| `MarkedSetCounts.lean`, `PoissonLawLimit.lean`, `MarkedSetPoissonLimit.lean` | Actual natural-valued finite-intensity counts; exact expectation and symmetric-difference discrepancy bound; summable approximations give AE eventual equality and full-vector Poisson-law limits | Target-law independence is never assumed; approximating laws are supplied by the later application |
+| `FiniteDisjointApproximation.lean`, `MarkedRectangleAlgebra.lean`, `MarkedBoxApproximation.lean`, `MarkedAlgebraExtension.lean` | Disjointification with controlled errors; dense lower-box algebra; summable bounded-box approximation; extension to arbitrary measurable finite-intensity disjoint families | Pure geometric approximation and law extension |
+| `TimeGridRefinement.lean`, `PoissonCoordinateSum.lean`, `MarkedBoundedAlgebraLaw.lean`, `MarkedPoissonMeasure.lean` | Finite Boolean rectangle decomposition on a monotone time grid; product-Poisson summation; exact product law and joint independence of genuine random-measure masses on any finite disjoint measurable family of finite intensity | Fixed noise label; infinite-intensity sets, simultaneous cross-label characterization, and future-vector independence from raw histories remain separate |
 | `NullAugmentedIndependence.lean` | Exact independence survives ambient-null augmentation on either or both sigma algebras and passage to the completed ambient measure; measurable functions of augmented independent histories are independent | Augmentation uses the original ambient law, not its trim to the smaller history; no filtration right-continuity claim |
 | `ClockPastObservation.lean` | Actual censored arrivals and arrival masks are measurable in the augmented full count history; raw count masks are measurable and match arrival masks a.s.; the next count increment is independent of the augmented history | Exact exceptional samples are retained; nonnegative deterministic observation and future-window times |
 | `MarkedPastProducts.lean` | Distinct past mark factors and future deterministic index blocks have factorized integrals; unarrived past coordinates contribute constants; unit bounds give genuine integrability | No stopped-index independence hypothesis; arbitrary empty blocks are included |
@@ -171,14 +177,14 @@ any subsequent edits.
 | `MarkedCountMoments.lean`, `MarkedCountAdapted.lean`, `MarkedCountMartingale.lean` | Actual mass finiteness before conversion to real values, first moments and integrability, full-history adaptedness, conditional means and compensated-count martingale | Raw common-noise filtration and bounded measurable height categories |
 | `MarkedElementaryCompensation.lean`, `InitialElementaryCompensation.lean` | Exact weighted future-count and step-integrand formulas, including null-augmented initial-product histories | No integrability assumption on nonnegative coefficients; full extension below uses raw histories |
 | `PredictableSets.lean`, `PredictableCompensation.lean` | Positive-time predictable sigma algebra; genuine Campbell measure from actual point pushforwards; finite-box measure uniqueness and zero nonpositive-time mass; full nonnegative predictable compensation | Proved from actual rectangle identities, not an assumed compensator |
-| `MarkedCountingKernel.lean`, `PredictableIntegral.lean` | Actual s-finite counting kernel and composition product; Bochner Fubini; equivalence of predictable integrability and compensation for signed or vector integrands | Explicit product-integrability hypothesis; does not yet derive frozen Dynkin |
+| `MarkedCountingKernel.lean`, `PredictableIntegral.lean` | Actual s-finite counting kernel and composition product; Bochner Fubini; equivalence of predictable integrability and compensation for signed or vector integrands | Explicit product-integrability hypothesis; frozen Dynkin is supplied below |
 | `InitialPredictableCompensation.lean` | Every fixed-initial section is noise-predictable; Tonelli lifts full nonnegative compensation to the actual initial-product law | Raw initial-product predictable sigma algebra; no completed-section measurability shortcut |
 | `FrozenCompatibility.lean` | Actual first-exit indices for nested frozen recursions; agreement including the exit jump; monotone exit indices; stopped larger recursion equals the permanently frozen smaller one; stopped continuous-time agreement under a common clock | Uses the same decoder and proposal sequence; cutoff-list compatibility is supplied below |
 | `ChronologicalEvents.lean` | Measurable finite-set selection and chronological sorting; jointly measurable actual bounded-box event lists; exact membership and strict ordering; time-prefix and height-filter identities simultaneously for all boxes almost surely | Does not by itself identify the stochastic intensity of the counting measure |
 | `RejectedProposals.lean` | Removing proposals rejected at every active state preserves the actual frozen recursion, including its accepted exit jump; height-bound specialization | Deterministic list identities, used to compare actual bounded-box paths |
 | `CommonFrozenProcess.lean` | Frozen paths defined from the shared marked noise's chronological events; joint measurability and finite-range confinement; almost-sure bound independence, permanent freezing, and continuous-time nested-set agreement through the exit jump | Autonomous rates on a countable state space with finitely many directions; counting and generator identities are supplied below |
 | `CommonFrozenRegularity.lean` | Almost-sure local right constancy and left constancy, càdlàg regularity, zero-time value and initial interval for all cutoffs and initial states | These path properties do not identify compensation or prove adaptedness |
-| `CommonFrozenExit.lean` | Genuine extended first-exit infimum and pre-exit membership; almost-sure finite attainment, zero/infinite boundary cases, nested-exit monotonicity, and stopped larger path equals smaller path including its exit jump | Exit probability estimates remain open; stopping-time properties are supplied below |
+| `CommonFrozenExit.lean` | Genuine extended first-exit infimum and pre-exit membership; almost-sure finite attainment, zero/infinite boundary cases, nested-exit monotonicity, and stopped larger path equals smaller path including its exit jump | Exit probability estimates and stopping-time properties are supplied below |
 | `CommonNoiseFiltration.lean` | Actual observation filtration from arrived labelled marks, independent of the process; monotonicity and ambient measurability; all-sample history factorization; measurable time evaluations and adaptedness for deterministic or time-zero-measurable initial states | No full-σ-algebra shortcut or process-generated filtration; marked-future independence and predictable compensation are proved in dedicated modules |
 | `CommonFrozenStopping.lean` | Actual completed ambient probability law; minimal augmentation of each raw history by ambient null sets; exact original first exit is a stopping time, completed-measurable and raw AE-measurable; raw time-zero-measurable initial states included | Infinity uses only the supremum of finite histories; right continuity and optional sampling are not claimed; the arbitrary-initial product extension is supplied below |
 | `CommonInitialNoise.lean` | Actual arbitrary initial-record/noise product law, exact full marginals and independence, including measurable initial-state maps; initial-plus-observed-noise filtration; exact process initial law; joint measurability, adaptedness, and almost-sure regularity and stopped compatibility | Accepts the paired-array laws from Lemma 5.1; frozen generator identification is supplied below, while trajectory coupling estimates remain open |
@@ -194,9 +200,14 @@ any subsequent edits.
 | `FrozenLyapunovBound.lean`, `InitialLyapunovExit.lean` | Actual affine-exponential frozen Lyapunov bound; actual first-exit Markov bound; reciprocal tail exhaustion | Drift, nonnegative Lyapunov function and initial integrability are model hypotheses |
 | `LyapunovLocalization.lean`, `ConfigurationLocalization.lean` | Canonical {V<n+1} active sets, derived finite positive rate bounds, simultaneous exit monotonicity/compatibility, exact actual empirical generator and drift | The configuration drift is derived from LyapunovControl, not supplied as a separate assumption |
 | `GlobalLocalizedProcess.lean`, `GlobalLocalizedActivity.lean` | Raw jointly measurable and adapted patch; correct initial value; actual finite proposal-list representation, finite activity/range and cadlag paths | Generic regularity bridge uses actual exit exhaustion, discharged in the next layer |
-| `ActualNonexplosion.lean`, `ConfigurationNonexplosion.lean` | Genuine exit bounds and exhaustion from the raw generator drift; actual nonexplosive global configuration construction with measurable adapted paths | No given moment bound or exhaustion conclusion; does not claim global SDE uniqueness or the full mean-field theorem |
+| `ActualNonexplosion.lean`, `ConfigurationNonexplosion.lean` | Genuine exit bounds and exhaustion from the raw generator drift; actual nonexplosive global configuration construction with measurable adapted paths | No given moment bound or exhaustion conclusion; arbitrary initial laws and global equation uniqueness are supplied below; the mean-field theorem remains open |
 | `GlobalLyapunovMoment.lean`, `ActualGlobalMoment.lean` | Fatou gives integrability and exponential expectation control of the actual global Lyapunov value | Current-time expectation, not expected running maximum or all weighted activity bounds |
-| `GlobalLocalizedCountingIdentity.lean`, `ActualGlobalCounting.lean` | Predictable global pre-state identified with its actual left limit; genuine global rate-threshold counting equation and pathwise integrability; configuration specialization from LyapunovControl | No active-set or height cutoff in the global integrand; full planar PRM law and global equation uniqueness remain separate |
+| `GlobalLocalizedCountingIdentity.lean`, `ActualGlobalCounting.lean` | Predictable global pre-state identified with its actual left limit; genuine global rate-threshold counting equation and pathwise integrability; configuration specialization from LyapunovControl | No active-set or height cutoff in the global integrand; global equation uniqueness is supplied below |
+| `DiscreteCausalUniqueness.lean`, `CountingEquationUniqueness.lean`, `GlobalCountingUniqueness.lean`, `ActualGlobalUniqueness.lean` | Discrete first-disagreement uniqueness; genuine left-limit counting equations for separating tests; actual finite-coordinate particle specialization | Candidate càdlàg paths, same initial record, and same driving measure; no candidate localization or finite-activity premise |
+| `ArbitraryInitialNonexplosion.lean` | One full noise event for all deterministic states yields arbitrary-initial-law exhaustion, càdlàg paths, finite activity, counting equations and coordinate uniqueness | Countable states and autonomous rates satisfying the Lyapunov drift; no initial moment for path properties, while moment estimates keep their integrability premises |
+| `FiniteSupportGeometry.lean`, `FiniteSupportGlobal.lean`, `GlobalFiniteSupportDrift.lean` | Finite backward influence of configuration tests; bounded raw generator; product integrability and current-state compensator identification | Finite support is essential to this argument; unbounded-test martingales are not inferred |
+| `InitialConditionalCompensation.lean`, `PredictableHistoryTruncation.lean`, `PredictableCountingMartingale.lean` | Signed compensation tested on actual past events; conditional zero for future integrals; counting-equation-to-martingale bridge | Predictability and product integrability are explicit in the generic bridge, proved for the application |
+| `GlobalHistoryIntegral.lean`, `ConfigurationMartingale.lean`, `ConfigurationForwardEquation.lean` | All-sample terminal-history reconstruction; raw-adapted current-state generator martingale; weak forward equation by actual Fubini | Any independent initial probability law, finitely supported configuration tests; no initial moment, semigroup, strong Markov, or forward-law uniqueness claim |
 | `InitialPredictableIntegral.lean` | Actual initialized counting kernel and Campbell measure; predictable integrability equivalence; signed/vector compensation and random-integral integrability | Raw product filtration; full completed-predictable extension is separate |
 | `ThinningKernel.lean` | Finite positive bound on active rates; exact accepted-label mass; expected proposal increment times card(J) C equals the frozen generator | Requires positive C and 0≤q≤C for this one-step normalization; actual continuous-time Dynkin is proved above |
 | `LimitArguments.lean` | Successive population-then-cutoff limits, reciprocal cutoff removal, scalar three-region convergence criterion; explicit failure of arbitrary diagonal limits | Inputs are already-obtained scalar error/tail bounds; does not derive stochastic coupling or uniform integrability estimates |
@@ -235,8 +246,8 @@ The same file now also proves a genuine measure-theoretic implication: bounds
 exit events. Taking countably many integer horizons gives almost-sure
 exhaustion of every finite nonnegative horizon. Combined with pathwise
 compatibility and monotonicity, this yields an almost-sure unique patched
-path. The exit estimates themselves, and measurability/adaptedness of the
-patched process, remain separate proof obligations.
+path. The later Lyapunov and global-process modules derive the actual exit
+estimates and prove measurability and adaptedness of the patched process.
 
 `CommonInitialNoise.lean` supplies the independent initial-record extension.
 For the coupling in Lemma 5.1, take the initial record to be the whole paired
@@ -275,8 +286,8 @@ finite-grid product law. `CommonFrozenStopping.lean` uses finite-exit attainment
 and permanent freezing to identify each exit event with the current outside
 event almost surely. Adjoining precisely the ambient null sets to the noise
 history makes the exact original first exit a stopping time, without changing
-its values or assuming right continuity. The full marked PRM SDE and Lyapunov
-exit estimates remain separate.
+its values or assuming right continuity. The later Lyapunov, global counting,
+and uniqueness modules supply the autonomous nonexplosive particle equation.
 
 `MarkedStripCounts.lean` identifies actual strip masses with finite mark counts,
 including masses of windows `(S,T] × B`. `MarkedProducts.lean` integrates the
@@ -311,8 +322,16 @@ under one strict natural upper bound, disjoint within each window, the actual
 masses of `(u[a],u[a+1]] × B[a,i]` have the full product Poisson law with
 parameters `(u[a+1] - u[a]) * positiveVolume.real B[a,i]`. The natural-valued
 product law is embedded into extended nonnegative reals in the exact measure
-identity. The independently scattered law on arbitrary finite-intensity
-measurable planar sets remains separate.
+identity. `TimeGridRefinement` extends this to finite Boolean combinations of
+lower rectangles inside a bounded box, and `PoissonCoordinateSum` aggregates
+the grid counts without weakening their full product law. Bounded-box exhaustion
+and disjoint measure-dense approximations then give the arbitrary finite-intensity
+set law. The symmetric-difference intensity controls count discrepancies;
+summability gives almost-sure eventual equality of the entire finite count
+vector. `MarkedPoissonMeasure.countingMeasure_map` states the resulting exact
+law for genuine counting-measure masses, and `independent_countingMeasure`
+gives joint independence. This is for one fixed label and finite target
+intensities, without a target-law or independence premise.
 
 `MarkedPastIndependence.independent_stripView_windowCount` now proves that one
 future category count in `(s,s+t]` is independent of the entire indexed
@@ -413,24 +432,45 @@ bound, so the freezing indicator and height cap disappear pointwise from the
 accepted increment. The actual finite-level equation and pathwise integrability
 then transfer to the global path. `ActualGlobalCounting` discharges exhaustion
 from the Lyapunov assumptions, including the empirical configuration model.
-Optional sampling, global equation pathwise uniqueness, the state-process
-martingale problem and right continuity of the completed filtration remain open.
+`DiscreteCausalUniqueness` rules out a first disagreement by right continuity
+and strict-past causality of the counting equation. `ActualGlobalUniqueness`
+discharges the constructed process's exhaustion; finite coordinate tests separate
+configurations, so candidate nonlinear-test equations are not assumed.
+`ArbitraryInitialNonexplosion` applies the deterministic-initial theorem at each
+state and takes a countable intersection in the actual noise law. Substitution
+of any independent sampled initial state therefore gives the same path results
+without an initial moment.
+
+For finite-support tests, `FiniteSupportGeometry` proves that all states capable
+of affecting a test lie in a finite backward influence set. This bounds the raw
+generator and supplies product integrability of the actual counting field.
+`InitialConditionalCompensation` tests signed compensation on every past event,
+and conditional-expectation uniqueness gives conditional zero. The resulting
+`ConfigurationMartingale.generator_martingale` uses the actual current state
+and raw history filtration. Its adaptedness is proved on every sample by
+`GlobalHistoryIntegral`, rather than inferred from an almost-sure modification.
+`ConfigurationForwardEquation` derives genuine sample-time Fubini and the
+integrated weak forward equation. No initial Lyapunov moment is required for
+these finite-support results. Optional sampling, semigroup/strong Markov
+statements, forward-law uniqueness, and right continuity of the completed
+filtration remain open.
 
 
 ## Next connections to formalize
 
-1. Extend the proved common-noise grid-rectangle laws to the independently
-   scattered law on arbitrary finite-intensity measurable planar sets and
-   extend bounded-rectangle independence from the whole common marked
+1. Extend the proved arbitrary measurable finite-intensity planar-set laws
+   to infinite-intensity sets and simultaneous noise labels, and extend
+   bounded-rectangle independence from the whole common marked
    history to joint future windows/categories within strips.
    Scalar future rectangle independence already suffices for the proved
    predictable compensation theorem; this stronger law is not a prerequisite
    for the next drift argument.
-2. Prove global equation pathwise uniqueness for the actual nonexplosive patch,
-   then the state-process martingale problem
-   and the usual right-continuous filtration. Actual Lyapunov expectation and
-   exit bounds, exhaustion, global finite activity, moment integrability and the
-   unrestricted test-function counting equation are now derived, including their empirical configuration specialization.
+2. Prove the usual right-continuous filtration, optional sampling, and required
+   semigroup/strong Markov statements. Actual nonexplosion, global counting
+   equations, coordinate-equation pathwise uniqueness, the finite-support
+   generator martingale and weak forward equation are now proved, including
+   arbitrary independent initial laws. Lyapunov expectation bounds retain their
+   initial-moment assumptions.
 3. Construct the deterministic-environment forward law and its uniqueness;
    prove preservation of the complete Lyapunov curve space and the actual
    stochastic Volterra estimate, then apply the proved Bielecki contraction and

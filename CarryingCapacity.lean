@@ -112,12 +112,40 @@ import CarryingCapacity.LyapunovLocalization
 
 import CarryingCapacity.ActualGlobalCounting
 
+import CarryingCapacity.ActualGlobalUniqueness
+import CarryingCapacity.ArbitraryInitialNonexplosion
+import CarryingCapacity.ConfigurationForwardEquation
+import CarryingCapacity.ConfigurationMartingale
+import CarryingCapacity.CountingEquationUniqueness
+import CarryingCapacity.DiscreteCausalUniqueness
+import CarryingCapacity.FiniteDisjointApproximation
+import CarryingCapacity.FiniteSupportGeometry
+import CarryingCapacity.FiniteSupportGlobal
+import CarryingCapacity.GlobalCountingUniqueness
+import CarryingCapacity.GlobalFiniteSupportDrift
+import CarryingCapacity.GlobalHistoryIntegral
+import CarryingCapacity.InitialConditionalCompensation
+import CarryingCapacity.MarkedAlgebraExtension
+import CarryingCapacity.MarkedBoundedAlgebraLaw
+import CarryingCapacity.MarkedBoxApproximation
+import CarryingCapacity.MarkedRectangleAlgebra
+import CarryingCapacity.MarkedSetCounts
+import CarryingCapacity.MarkedSetPoissonLimit
+import CarryingCapacity.PoissonCoordinateSum
+import CarryingCapacity.PoissonLawLimit
+import CarryingCapacity.PredictableCountingMartingale
+import CarryingCapacity.PredictableHistoryTruncation
+import CarryingCapacity.TimeGridRefinement
+
+import CarryingCapacity.MarkedPoissonMeasure
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
 This is a partial formalization of DeWitt--Evans--Hiesmayr--Hummel (2024)
 and Kenny Xie's moment-feedback manuscript. All imported theorems are proved.
-Actual Lyapunov non-explosion and global particle paths are constructed.
-The full strong-solution, nonlinear-flow, mean-field, and chaos theorems
-remain open; see README.md and docs/PAPER_MAP.md for exact coverage.
+Actual autonomous global particle paths, coordinate-equation pathwise uniqueness,
+finite-support generator martingales, and weak forward equations are proved,
+including arbitrary independent initial laws. Nonlinear-flow, mean-field,
+and chaos theorems remain open; see README.md and docs/PAPER_MAP.md for exact coverage.
 -/
