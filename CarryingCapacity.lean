@@ -180,6 +180,20 @@ import CarryingCapacity.TimeDependentLyapunovComparison
 import CarryingCapacity.TimeDependentNonexplosion
 import CarryingCapacity.TimeDependentStochasticContinuity
 
+import CarryingCapacity.CoupledDistanceContinuity
+import CarryingCapacity.CouplingExpectation
+import CarryingCapacity.DeterministicEnvironmentCoupling
+import CarryingCapacity.DeterministicEnvironmentRunningSupremum
+import CarryingCapacity.DeterministicEnvironmentVolterra
+import CarryingCapacity.NonlinearFixedPoint
+import CarryingCapacity.SynchronousCompensation
+import CarryingCapacity.SynchronousFrozenCounting
+import CarryingCapacity.SynchronousGlobalCounting
+import CarryingCapacity.SynchronousPositiveIncrement
+import CarryingCapacity.SynchronousRunningSupremum
+import CarryingCapacity.TimeDependentGlobalPreStateTime
+import CarryingCapacity.VolterraGronwall
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
@@ -189,6 +203,8 @@ Actual autonomous global particle paths, coordinate-equation pathwise uniqueness
 finite-support generator martingales, and weak forward equations are proved,
 including arbitrary independent initial laws. The actual prescribed-environment
 evolution is a continuous, moment-envelope-preserving self-map of the manuscript
-curve space. Its stochastic contraction estimate and the nonlinear-flow, mean-field,
+curve space. Synchronous coupling proves its Volterra estimate and constructs a
+unique fixed curve there, with an actual self-consistent common-noise realization
+on each selected finite horizon. Full forward-law uniqueness, mean-field limits
 and chaos theorems remain open; see README.md and docs/PAPER_MAP.md for exact coverage.
 -/
