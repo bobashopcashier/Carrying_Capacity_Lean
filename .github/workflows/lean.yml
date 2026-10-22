@@ -12,7 +12,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Install pinned elan
@@ -28,3 +28,5 @@ jobs:
         run: lake exe cache get
       - name: Build and audit every proof
         run: python3 scripts/check_proofs.py
+      - name: Check audit rejection fixtures
+        run: python3 scripts/test_audit.py
