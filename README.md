@@ -44,7 +44,7 @@ rejects proof placeholders. The permitted foundational axioms are Lean's
 the stochastic processes.
 
 The complete build passed without warnings, and the exhaustive audit checked
-**992 theorem declarations and 1,313 safe declarations across 39 modules**.
+**1,166 theorem declarations and 1,528 safe declarations across 46 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. Separate negative
 checks confirmed that the audit rejects
@@ -58,7 +58,8 @@ custom project axioms and both public and private placeholder proofs.
 | [Transport](CarryingCapacity/Transport.lean) | Actual probability laws with integrable κ weight; actual marginal couplings; finite coupling costs; infimum transport cost, symmetry and zero self-distance; `\|Mκ(μ)−Mκ(ν)\| ≤ Wκ(μ,ν)` and consequent moment convergence | The metric, completeness, and empirical LLN results are supplied by the modules below; general optimal-plan existence remains separate |
 | [TransportMetric](CarryingCapacity/TransportMetric.lean) | Actual disintegration-based gluing; triangle inequality; separation by measurable events; a genuine `MetricSpace`; Lipschitz moment map | Does not assert existence of an optimal coupling for every pair of laws |
 | [TransportCompleteness](CarryingCapacity/TransportCompleteness.lean) | Infinite simultaneous coupling through Ionescu–Tulcea; constructed finite-moment limit law; transport tail estimate; genuine `CompleteSpace` instance | Nonlinear process construction remains separate |
-| [LyapunovFlowSpace](CarryingCapacity/LyapunovFlowSpace.lean) | Lower semicontinuity of genuine extended Lyapunov moments; closed complete moment sublevels and continuous-curve spaces; nonempty complete manuscript space with its exponential envelope | Completeness uses the uniform transport metric; Bielecki equivalence, preservation by the dynamics, and contraction remain open |
+| [LyapunovFlowSpace](CarryingCapacity/LyapunovFlowSpace.lean) | Lower semicontinuity of genuine extended Lyapunov moments; closed complete moment sublevels and continuous-curve spaces; nonempty complete manuscript space with its exponential envelope | Preservation by the stochastic dynamics remains open |
+| [BieleckiFlowSpace](CarryingCapacity/BieleckiFlowSpace.lean) | Exact exponentially weighted supremum metric, uniform equivalence, and completeness; Volterra integration gives contraction factor A/(λ−A); conditional unique fixed point for λ>2A | The invariant evolution map and its stochastic Volterra estimate are explicit inputs, not constructed here |
 | [EmpiricalMeasure](CarryingCapacity/EmpiricalMeasure.lean) | Genuine finite empirical probability laws; exact integral identities; paired and permuted transport couplings; single-update estimate; generator bridge | Exact optimal matching is a separate result |
 | [EmpiricalMatching](CarryingCapacity/EmpiricalMatching.lean) | Splits arbitrary couplings across repeated particle labels; Birkhoff decomposition; exact attained permutation optimum; measurable optimal matching preserving the empirical law | Randomized exchangeable initialization is supplied by `ExchangeableMatching` |
 | [FiniteTransport](CarryingCapacity/FiniteTransport.lean) | Explicit common-mass coupling; transport bounded by diameter times total variation on a common finite support; atomic convergence implies transport convergence | Both laws must be concentrated on the same finite set |
@@ -78,13 +79,19 @@ custom project axioms and both public and private placeholder proofs.
 | [PoissonClockLaw](CarryingCapacity/PoissonClockLaw.lean) | Exponential survival and conditional memorylessness; residual-life law; exact zero-proposal probability for the constructed count | These partial clock laws are not a proof of the full Poisson-process characterization |
 | [PoissonIncrements](CarryingCapacity/PoissonIncrements.lean) | Shifted-clock law and head/tail independence; nonatomic arrivals; renewal recurrence; exact Poisson law of the actual count at every nonnegative time | One-time laws alone do not imply independent increments |
 | [PoissonRestart](CarryingCapacity/PoissonRestart.lean) | Whole-clock restart under survival of the first wait; exact two-count law; actual count/increment product law; stationary increment law and independence from the starting count | Independence from a count alone does not establish independence from its entire history |
-| [PoissonFiniteDimensional](CarryingCapacity/PoissonFiniteDimensional.lean) | Full mutual independence of all increments on every finite monotone time grid; actual product Poisson law, including repeated times and arbitrary nonnegative starting time | Independence from the entire past filtration and compensation remain separate |
+| [PoissonFiniteDimensional](CarryingCapacity/PoissonFiniteDimensional.lean) | Full mutual independence of all increments on every finite monotone time grid; actual product Poisson law, including repeated times and arbitrary nonnegative starting time | Full-past independence is supplied below; the marked PRM law remains separate |
+| [PoissonMoments](CarryingCapacity/PoissonMoments.lean) | Poisson first-moment series, finite extended moment, genuine integrability, and exact expectations for actual clock counts and increments | Does not identify a marked-noise compensator |
+| [PoissonPastIndependence](CarryingCapacity/PoissonPastIndependence.lean) | Future clock increment independent of the entire past count filtration, proved from finite-vector laws and a directed union; exact conditional increment expectation | This is the clock's raw natural filtration; the larger marked-noise history still needs its own independence proof |
+| [PoissonMartingale](CarryingCapacity/PoissonMartingale.lean) | Actual compensated clock N_t−rt is an integrable adapted martingale with zero mean; stopping at a deterministic horizon preserves it | Does not assert random optional sampling or a marked-process compensator |
 | [MarkedNoise](CarryingCapacity/MarkedNoise.lean) | One actual counting-measure family for every cutoff, built from independent unit strips; measurable noise; simultaneous local finiteness and absence of coincident arrival times | Full marked PRM characterization and compensation remain open |
+| [MarkedIntensity](CarryingCapacity/MarkedIntensity.lean) | Exact expected counting measure equals product Lebesgue measure on the nonnegative quadrant; counts have the correct expected area on every measurable set; full nonnegative deterministic Campbell identity | Does not prove the marked Poisson law or compensation for random predictable integrands |
 | [FrozenCompatibility](CarryingCapacity/FrozenCompatibility.lean) | Nested frozen recursions agree through their actual first exit, including the exit jump; exit indices are monotone; stopped continuous-time paths agree under a common locally finite clock | This module uses a common proposal sequence; actual cutoff-list compatibility is supplied below |
 | [ChronologicalEvents](CarryingCapacity/ChronologicalEvents.lean) | Jointly measurable chronological lists from actual time-height boxes; strict ordering, exact membership, time prefixes, and height filtering simultaneously for all cutoffs almost surely | Local finiteness and distinct times come from the constructed common noise |
 | [RejectedProposals](CarryingCapacity/RejectedProposals.lean), [CommonFrozenProcess](CarryingCapacity/CommonFrozenProcess.lean) | Actual shared-noise frozen paths; joint measurability and finite range; almost-sure invariance under changing a valid rate bound, permanent freezing, and nested-path agreement through the exit jump | Countable state space, finitely many directions, deterministic initial state, and time-homogeneous rates; generator identification still needs compensation |
-| [CommonFrozenRegularity](CarryingCapacity/CommonFrozenRegularity.lean), [CommonFrozenExit](CarryingCapacity/CommonFrozenExit.lean) | Genuine first exits as infima; almost-sure càdlàg paths, initial interval, finite-exit attainment, monotone exits, and stopped-larger-path equality with the smaller frozen path | Does not assert that first exits are stopping times or derive exit probability bounds |
-| [CommonNoiseFiltration](CarryingCapacity/CommonNoiseFiltration.lean) | Genuine filtration of arrived labelled noise points; exact all-sample factorization of frozen paths through observed history; adaptedness, including initial information measurable at time zero | A general independent initial vector requires an enlarged product space; noise increments relative to this filtration, usual augmentation, and stopping-time results remain separate |
+| [CommonFrozenRegularity](CarryingCapacity/CommonFrozenRegularity.lean), [CommonFrozenExit](CarryingCapacity/CommonFrozenExit.lean) | Genuine first exits as infima; almost-sure càdlàg paths, initial interval, finite-exit attainment, monotone exits, and stopped-larger-path equality with the smaller frozen path | Exit probability estimates remain open; stopping-time properties are supplied below |
+| [CommonNoiseFiltration](CarryingCapacity/CommonNoiseFiltration.lean) | Genuine filtration of arrived labelled noise points; exact all-sample factorization of frozen paths through observed history; adaptedness, including initial information measurable at time zero | Independence of marked future increments remains open |
+| [CommonFrozenStopping](CarryingCapacity/CommonFrozenStopping.lean) | Minimal augmentation of noise histories by ambient null sets; actual completed probability law; exact first exits are stopping times and measurable in the completed space, AE-measurable in the original space | No right-continuity or optional-stopping theorem is asserted; Lyapunov exit estimates still require compensation |
+| [CommonInitialNoise](CarryingCapacity/CommonInitialNoise.lean) | Actual product of an arbitrary initial-record law and the full noise law; exact marginals and independence; prescribed initial-state law; joint measurability, adaptedness, and almost-sure càdlàg paths and stopped compatibility | Accepts the constructed paired initial laws through measurable projections; completion and stopping-time identification on this enlarged product filtration remain separate |
 | [ThinningKernel](CarryingCapacity/ThinningKernel.lean) | Exact accepted-label probabilities; mean one-proposal increment; clock-rate normalization equals the frozen generator; finite active sets admit positive rate bounds | One-step expectation identities do not replace continuous-time compensation |
 | [Models](CarryingCapacity/Models.lean) | Scalar birth–death generator identities through cubic order; full three-term positive-increment coupling bounds; activity growth; cubic Lyapunov domination, drift and superlinearity; integrals of generator identities | Scalar model only; integrated identities are not time derivatives of stochastic expectations |
 | [ModelTransport](CarryingCapacity/ModelTransport.lean) | Actual generalized moments control arbitrary nonnegative Lipschitz mortality; quadratic-feedback coupling and activity estimates follow from transport | Uses the concrete cubic Lyapunov choice, rather than every real exponent greater than two |
@@ -131,10 +138,13 @@ surely, changing a valid dominating rate bound does not change the path, and
 nested active sets give monotone actual exit times and stopped-path compatibility,
 including the exit jump. The frozen paths are almost surely càdlàg and are
 adapted to the filtration generated by arrived labelled
-noise points. Finite-grid increments of the underlying exponential clock have
-their full product Poisson law. The marked PRM characterization, compensation,
-and exit bounds from the model's Lyapunov drift remain outstanding, as does
-applying the patching theorem to those bounds.
+noise points. The exact first exits are stopping times after the minimal null
+augmentation. The underlying exponential clock has its full finite-grid Poisson
+law and future increments independent of the entire past count history. The
+marked measure has the correct Lebesgue intensity and deterministic Campbell
+identity. The marked PRM characterization, predictable compensation, and exit
+bounds from the model's Lyapunov drift remain outstanding, as does applying the
+patching theorem to those bounds.
 
 `EmpiricalLLN.wasserstein_strongLaw` proves the full empirical transport strong
 law using finite-state common-mass couplings and vanishing moment tails.
@@ -148,6 +158,11 @@ proved uniform-integrability and LLN results: its expected pairing cost tends
 to zero under the manuscript's initialization hypotheses. `EmpiricalArrayError`
 transfers expected and time-integrated errors to finite iid arrays that vary
 with N, without requiring those arrays to be initial segments of one sequence.
+`CommonInitialNoise` then realizes a prescribed initial record independently
+of the entire common noise and constructs the corresponding adapted frozen
+paths. A paired-array law from `InitialCoupling` can serve as that initial record,
+preserving its complete joint law while either vector projection initializes a
+process.
 
 The quadratic coupling calculation includes the shared-jump contribution.
 For a nonlinear κ, even a simultaneous birth can increase the distance;
@@ -155,14 +170,17 @@ controlling only unmatched jumps would miss this term.
 
 ## Remaining work for complete paper formalizations
 
-1. Full marked PRM law, filtration increment independence, stopping-time and
-   compensation results, Dynkin's formula, and Lyapunov exit estimates. The
-   actual shared-noise frozen paths and their stopped compatibility are proved.
+1. Full marked PRM law, independence from the marked past, predictable
+   compensation, Dynkin's formula, and Lyapunov exit estimates. Shared-noise
+   frozen paths, stopped compatibility, and completed-filtration first-exit
+   stopping times on the noise-only space are proved. The arbitrary-initial
+   product space still needs the completion and stopping-time extension.
 2. For the original theorem: Feller generation, the Markov empirical process,
    Yule domination, tightness, and convergence under its weaker initial data.
 3. For the extension: deterministic-environment forward uniqueness, preservation
-   of the Lyapunov curve space, Bielecki contraction, and the nonlinear fixed
-   point. The moment-law space and candidate curve space are proved complete.
+   of the Lyapunov curve space, and the stochastic Volterra estimate for the
+   actual evolution map. The complete Bielecki space and conditional contraction
+   and fixed-point argument are proved; the nonlinear flow is not yet constructed.
 4. Derive localized process coupling, time-grid estimates, and path-space
    propagation of chaos from the proved initialization and empirical-error lemmas.
 
