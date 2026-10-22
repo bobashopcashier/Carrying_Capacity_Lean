@@ -12,8 +12,9 @@ assumption is a genuine finite Lyapunov moment.
 The canonical realization is the existing strong prescribed-environment
 construction evaluated at this fixed curve. Its marginals equal that curve on
 the construction interval. After that interval the environment is held at its
-endpoint; self-consistency is claimed only on `[0,T]`. This does not assert
-forward-equation uniqueness or a mean-field limit.
+endpoint; self-consistency is claimed only on `[0,T]`. The subsequent
+`NonlinearForwardUniqueness` and population-limit modules prove the full
+forward uniqueness and mean-field conclusions; `MainTheorem` assembles them.
 -/
 
 noncomputable section

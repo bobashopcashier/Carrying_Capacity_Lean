@@ -9,8 +9,7 @@ A Lean 4 formalization of
 
 Every numbered lemma, proposition, theorem, and corollary of the manuscript has
 a Lean proof. The proofs use only Lean's standard axioms (`propext`,
-`Classical.choice`, `Quot.sound`) and contain no `sorry`. A few results are
-packaged differently from the paper; see [Known gaps](#known-gaps).
+`Classical.choice`, `Quot.sound`) and contain no `sorry`. The combined theorem statements and quantitative refinements are listed below.
 
 This repository holds only the Lean code. The paper lives in
 [Carrying_Capacity_fixed](https://github.com/bobashopcashier/Carrying_Capacity_fixed).
@@ -26,11 +25,15 @@ appear as:
 |---|---|
 | Assumption 2.2 (synchronous coupling) | `MomentCouplingBound κ q` |
 | Assumption 2.3 (weighted activity) | `MomentActivityBound κ q` |
-| Assumption 2.5 (Lyapunov control) | `LyapunovControl κ q`, a structure carrying Ψ |
+| Assumption 2.5 (Lyapunov control) | `LyapunovControl κ q`, a structure carrying Ψ and an explicit admissible drift constant |
 | Assumption 2.6 (initialization) | explicit hypotheses on the initial configurations: exchangeability, the uniform bound on `E Π₀ᴺ(Ψ)`, and `Wκ(Π₀ᴺ, ν) → 0` in probability |
 | ν ∈ Pκ(E) with ν(Ψ) < ∞ | `ν : MomentLaw κ D` and `Integrable control.function ν.measure` |
 
 ### Theorem 2.7
+
+[`MainTheorem.main_theorem`](CarryingCapacity/MainTheorem.lean) proves all four
+parts together in `MainTheorem.Conclusions`, on the supplied probability space.
+The underlying declarations remain available separately:
 
 | Part | Lean |
 |---|---|
@@ -69,24 +72,21 @@ Most results are proved in two settings.
   filtration (`UsualFiltration.filtration`). This is the paper's setting; the
   transfer from the canonical setting is proved, not assumed.
 
-## Known gaps
+## Quantitative and supplied-space statements
 
-None of these affects the mathematics, but each is a place where the Lean
-statement differs from the paper's.
-
-- No single declaration states Theorem 2.7, Corollary 7.4, or Corollary 7.8.
-  Their parts are the separate theorems listed above, all with the same
-  hypotheses.
-- `DeterministicEnvironmentLyapunov.driftConstant` is chosen with
-  `Classical.choose`. The envelope K(t) of (4.6) and (4.10) therefore holds for
-  some admissible drift constant, not for one you supply.
-- Corollaries 7.4 and 7.8 are stated in the canonical setting. The prescribed
-  theorems apply to both models without extra hypotheses, but no packaged
-  prescribed statement exists.
-- In the prescribed setting, (3.18) is stated for the event that the empirical
-  Lyapunov moment reaches R by time T. Its identification with `{τ_R ≤ T}` is
-  proved only in the canonical setting.
-- Remark 2.8's uniform convergence in ordinary Wₚ is not stated as a theorem.
+- [`ModelCorollaries.corollary_7_4` and `.corollary_7_8`](CarryingCapacity/ModelCorollaries.lean)
+  assemble the model conclusions on supplied independent Poisson measures.
+  The quadratic corollary also states convergence of the empirical second moment.
+- `LyapunovControl.drift` retains the supplied admissible constant as data.
+  [`ExplicitLyapunovConstant`](CarryingCapacity/ExplicitLyapunovConstant.lean)
+  proves the envelope (4.6)/(4.10) for any such constant, including for a nonlinear
+  law originally constructed with a different admissible constant.
+- [`PrescribedConfigurationExit.firstExit_probability_le`](CarryingCapacity/PrescribedConfigurationExit.lean)
+  states (3.18) for the actual event `{τ_R ≤ T}` on the supplied space. The exit
+  is AE measurable and agrees with the crossing event almost surely.
+- [`PowerWassersteinUniform.measure_runningError_gt_tendsto_zero`](CarryingCapacity/PowerWassersteinUniform.lean)
+  states Remark 2.8's uniform ordinary Wₚ convergence in probability for every
+  real p > 1, with the supremum over time inside the probability.
 
 ## Build and verify
 
@@ -95,14 +95,14 @@ Install [elan](https://github.com/leanprover/elan), then run:
 ```sh
 lake exe cache get
 python3 scripts/check_proofs.py
-python3 scripts/test_audit.py
+python3 scripts/test_audit.py --expected-counts 4632 6096 354
 ```
 
 `check_proofs.py` runs `lake build` and the axiom audit. Expected output:
 
 ```
-Source policy passed for 349 modules.
-Proof audit passed: 4579 theorems, 5992 safe declarations, 349 modules. Permitted axioms: propext, Classical.choice, Quot.sound.
+Source policy passed for 354 modules.
+Proof audit passed: 4632 theorems, 6096 safe declarations, 354 modules. Permitted axioms: propext, Classical.choice, Quot.sound.
 All audit tests passed in …s; temporary fixtures removed.
 ```
 
@@ -130,7 +130,7 @@ lake env lean --run .lake/packages/mathlib/Cache/Main.lean get
   placeholder proofs.
 
 CI runs all three on every push to `main` and every pull request
-(`.github/workflows/lean.yml`).
+(`.github/workflows/lean.yml`), with the expected declaration counts pinned.
 
 ## Reading the Lean
 

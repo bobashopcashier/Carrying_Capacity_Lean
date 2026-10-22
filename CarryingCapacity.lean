@@ -354,12 +354,17 @@ import CarryingCapacity.FiniteStateActivityIntegrability
 import CarryingCapacity.PrescribedFixedTimeChaos
 import CarryingCapacity.PrescribedRandomEnvironmentComparison
 import CarryingCapacity.RandomEnvironmentActivityIntegral
+import CarryingCapacity.MainTheorem
+import CarryingCapacity.ModelCorollaries
+import CarryingCapacity.PowerWassersteinUniform
+import CarryingCapacity.PrescribedConfigurationExit
+import CarryingCapacity.ExplicitLyapunovConstant
 
 /-!
-# Checked foundations for carrying-capacity mean-field models
+# Checked carrying-capacity mean-field theorem package
 
-This is a partial formalization of DeWitt--Evans--Hiesmayr--Hummel (2024)
-and Kenny Xie's moment-feedback manuscript. All imported theorems are proved.
+This formalizes Kenny Xie's moment-feedback manuscript and retains partial
+coverage of DeWitt--Evans--Hiesmayr--Hummel (2024). All imported theorems are proved.
 Actual autonomous global particle paths, coordinate-equation pathwise uniqueness,
 finite-support generator martingales, and weak forward equations are proved,
 including arbitrary independent initial laws. The actual prescribed-environment

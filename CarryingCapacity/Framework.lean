@@ -136,14 +136,15 @@ def MomentActivityBound {D : ℕ} (κ : MomentScale) (q : Rates D (MomentLaw κ 
   ∃ C : ℝ, 0 ≤ C ∧ ∀ x μ,
     weightedActivity κ q x μ ≤ C * (1 + momentWeight κ x) * (1 + moment μ)
 
-/-- Manuscript Assumption 2.5, with the stated superlinear limit. -/
+/-- Manuscript Assumption 2.5, retaining the supplied drift constant as data
+so every quantitative envelope uses that same admissible constant. -/
 structure LyapunovControl {D : ℕ} (κ : MomentScale) (q : Rates D (MomentLaw κ D)) where
   function : State D → ℝ
   dominates : ∀ x, 1 + momentWeight κ x ≤ function x
   superlinear : Tendsto (fun x => function x / (1 + momentWeight κ x))
     (Filter.comap populationSize atTop) atTop
-  drift : ∃ C : ℝ, 0 ≤ C ∧ ∀ x (μ : MomentLaw κ D),
+  drift : {C : ℝ // 0 ≤ C ∧ ∀ x (μ : MomentLaw κ D),
     Integrable function μ.measure →
-    q.generator μ function x ≤ C * (1 + function x + ∫ y, function y ∂μ.measure)
+    q.generator μ function x ≤ C * (1 + function x + ∫ y, function y ∂μ.measure)}
 
 end CarryingCapacity

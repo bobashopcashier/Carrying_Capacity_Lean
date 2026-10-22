@@ -29,4 +29,4 @@ jobs:
       - name: Build and audit every proof
         run: python3 scripts/check_proofs.py
       - name: Check audit rejection fixtures
-        run: python3 scripts/test_audit.py
+        run: python3 scripts/test_audit.py --expected-counts 4632 6096 354
