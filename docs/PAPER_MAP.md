@@ -1,5 +1,7 @@
 # Sources and formalization boundaries
 
+The active formalization target is Xie's manuscript. Earlier original-paper
+results are retained below as a separate inventory, not as an additional target.
 This inventory distinguishes the two papers and the deterministic lemmas from
 stochastic theorems that are not yet formalized. A theorem mentioned here is
 not a Lean theorem merely because it appears in this document.
@@ -17,7 +19,8 @@ not a Lean theorem merely because it appears in this document.
   [paper repository](https://github.com/bobashopcashier/Carrying_Capacity_fixed/tree/c7688113e4a92910b6403fdd8ecb14fb0f3ce6a9),
   `new.tex`, source version `c768811`. Section paths below refer to that paper
   repository, not this standalone verification repository. The attached
-  `new.pdf` is byte-identical to the paper repository's `new.pdf`: SHA256
+  `new.pdf` is byte-identical to `new.pdf` at the recorded source version
+  `c768811` (not necessarily the paper repository's latest formatted PDF): SHA256
   `cf1d663ae6fd9b72038a37f07a6bcb52aceed59d7ccfe089aa066240835660e5`.
 
 ## Original-paper inventory
@@ -82,10 +85,12 @@ the original paper's numbering.
 
 The initial-coupling assertion of Lemma 5.1 is supplied by
 `InitialCoupling.exists_initial_coupling`. The independent empirical-error
-conclusions of Lemma 5.2 are supplied for measurable iid arrays and a continuous
-law curve with the required Lyapunov bound by `EmpiricalArrayError`; constructing
-the iid trajectory arrays and applying them to the proved nonlinear curve remains
-separate. Proposition 3.3's actual
+conclusions of Lemma 5.2 are now supplied for the actual constructed nonlinear
+arrays by `NonlinearParticleArray` and `NonlinearParticleEmpirical`. The exact
+product input law and original-noise identities come from `ParticleInputRecords`
+and `ParticleNoiseProjection`; genuine integrability is proved before both the
+fixed-time and real time-integrated error limits. This does not establish the
+stopped interacting-particle comparison of Proposition 5.3. Proposition 3.3's actual
 frozen Lyapunov expectation and reciprocal exit estimates are now proved,
 including their empirical configuration specialization. The exhaustion,
 measurable adapted patch, cadlag regularity and finite activity parts of
@@ -209,6 +214,11 @@ any subsequent edits.
 | `AtomicTransportContinuity.lean` | Actual finite truncation handles retained atoms and zero normalization; genuine uniform superlinear moments make truncation costs small; atomic convergence gives Wκ convergence for arbitrary filters; weak solutions are automatically Wκ-continuous | The candidate supplies no continuity or rate-regularity premise; true extended Lyapunov bounds give integrability before ordinary moments are used |
 | `DeterministicEnvironmentGeneralCoupling.lean`, `NonlinearForwardUniqueness.lean` | Proved linear identification realizes general nonlinear candidates; common-noise compensation and actual endpoint moments give a finite expected-distance inequality; Gronwall proves full bounded-Ψ law uniqueness; actual existence, exact envelope and exact interval-domain unique existence | Theorem 4.3's law statement under the original manuscript hypotheses and finite initial Ψ moment; no candidate continuity, sharp envelope or stochastic comparison assumption |
 | `FiniteJumpForwardRestriction.lean`, `NonlinearHorizonConsistency.lean` | Genuine weak-solution integrability and equations restrict to smaller horizons and transfer under local coefficient/law equality; actual fixed curves, deterministic environments and process marginal laws agree on overlapping construction intervals | Includes zero horizons and endpoints; establishes laws only, not sample-path agreement or a single all-time nonlinear realization |
+| `ParticleNoiseProjection.lean`, `ParticleInputRecords.lean` | Exact joint product law and mutual independence of whole particle input records; exact projected counting measures; raw-history projection measurability; coupled-initial-array specialization | Requires the proved initial iid marginal, rather than assuming trajectory independence |
+| `NonlinearParticleArray.lean`, `NonlinearParticleContinuation.lean` | Constructed nonlinear copies on the original particle noise; full product fixed-time laws, trajectory independence, raw adaptedness, simultaneous path regularity and left limits; actual initial values and integrable all-horizon counting equations | Path independence is for the coordinate sigma algebra; nonlinear self-consistency is on [0,T], with endpoint-held rates afterward |
+| `CompactIntervalIntegration.lean`, `NonlinearParticleEmpirical.lean` | Interval-subtype Lebesgue measure and exact integral/integrability transfer; actual beta_N integrability, twice-moment/envelope bounds, fixed-time convergence and genuine real time-integrated convergence | Supplies the independent-array empirical-error component of Lemma 5.2, not comparison to the interacting configuration |
+| `PredictableExitMask.lean` | Raw predictability of rational strict-past survival; simultaneous pathwise identification with the inclusive genuine-exit mask; AE measurability and nonnegative compensation of the stopped counting integral | Retains the exit jump and covers initial-outside/no-exit cases; the stopped synchronous running-cost estimate remains separate |
+| `DeterministicEnvironmentConfiguration.lean` | Actual prescribed-environment configuration; exact normalized generator and activity, N-independent Lyapunov drift, derived local rate caps, nonexplosion, moments, predictable left states and coordinate counting equations | Does not yet identify its coordinates with the independent nonlinear array or prove stopped population comparison |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -794,17 +804,13 @@ right continuity of the completed filtration remain open.
    augmented filtration. General prescribed-environment output-law continuity,
    full moment-bounded nonlinear law uniqueness, the exact envelope and
    consistency of laws across horizons are proved.
-4. Prove the grouped-input bridge on
-   `γ_N.prod (MarkedNoise.law (Fin N × Jump D))`, with γ_N supplied by
-   `InitialCoupling`: each record consists of the nonlinear initial coordinate
-   and the noise restricted to that particle's jump labels. The entire record
-   array must have exactly the product of `CommonInitialNoise.law ν.measure
-   (Jump D)`, with an exact projected counting-measure identity. Applying the
-   existing nonlinear process would then give iid trajectories and connect
-   `EmpiricalArrayError` to their empirical discrepancy. This bridge is not yet
-   proved. Next derive stopped interacting-particle comparison, time-grid
-   convergence and Skorokhod/path-space chaos. Preserve the original theorem's
-   weaker initialization as a distinct target.
+4. Assemble stopped interacting-particle comparison from the actual shared-noise
+   constructions, synchronous positive-increment bounds and inclusive exit-mask
+   compensation. Remove stopping using the uniform exit tails, then prove
+   time-grid convergence and Skorokhod/path-space chaos. The grouped-input law,
+   actual iid trajectories, their exact noise identities and the real
+   time-integrated independent empirical-error limit are now proved. Preserve
+   the original theorem's weaker initialization as a distinct target.
 
 The empirical transport LLN bridge is now proved: `FiniteTransport` constructs
 the common-mass coupling and bounds transport by

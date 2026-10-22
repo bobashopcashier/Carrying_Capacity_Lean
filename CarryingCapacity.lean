@@ -213,6 +213,14 @@ import CarryingCapacity.DeterministicEnvironmentGeneralLaw
 import CarryingCapacity.FiniteJumpForwardRestriction
 import CarryingCapacity.NonlinearForwardUniqueness
 import CarryingCapacity.NonlinearHorizonConsistency
+import CarryingCapacity.ParticleNoiseProjection
+import CarryingCapacity.ParticleInputRecords
+import CarryingCapacity.CompactIntervalIntegration
+import CarryingCapacity.NonlinearParticleArray
+import CarryingCapacity.NonlinearParticleContinuation
+import CarryingCapacity.NonlinearParticleEmpirical
+import CarryingCapacity.PredictableExitMask
+import CarryingCapacity.DeterministicEnvironmentConfiguration
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -230,6 +238,10 @@ linear forward-law uniqueness identify the nonlinear weak solution. Atomic
 continuity and genuine Lyapunov bounds derive transport continuity for every
 moment-bounded weak candidate, and actual synchronous coupling proves uniqueness
 in that full class and the exact envelope. Fixed law curves agree across horizons.
+Actual independent nonlinear particle arrays use projected records of the shared
+particle-labelled noise. Their full product laws, raw adaptedness, counting
+equations and time-integrated empirical error convergence are proved. Rational
+past observations justify compensation through the genuine first-exit jump.
 Arbitrary external-space realization, global pathwise horizon consistency,
 mean-field limits and chaos theorems remain open; see README.md and
 docs/PAPER_MAP.md for exact coverage.

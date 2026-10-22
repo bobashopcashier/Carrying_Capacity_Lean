@@ -1,13 +1,15 @@
 # Lean formalization of carrying-capacity mean-field models
 
 **Status: partial formalization, with checked proofs and an explicit boundary.**
-This project formalizes definitions and proof components from both
-[DeWitt, Evans, Hiesmayr, and Hummel (2024)](https://arxiv.org/html/2307.06010v2)
-and Kenny Xie's *Mean-Field Limits for Multitype Birth–Death Systems with
+The current target is Kenny Xie's *Mean-Field Limits for Multitype Birth–Death Systems with
 Unbounded Moment Feedback*
 ([manuscript source](https://github.com/bobashopcashier/Carrying_Capacity_fixed/blob/c7688113e4a92910b6403fdd8ecb14fb0f3ce6a9/new.tex)). It does **not** yet
 prove either paper's complete stochastic theorem package, mean-field limit, or
-propagation-of-chaos theorem. Those conclusions are neither axioms nor hidden
+propagation-of-chaos theorem. Existing results for
+[DeWitt, Evans, Hiesmayr, and Hummel (2024)](https://arxiv.org/html/2307.06010v2)
+are retained as shared infrastructure and separately documented coverage;
+completing that original paper is not the current target.
+The unproved conclusions are neither axioms nor hidden
 fields of a structure in this project.
 
 This repository contains only the Lean verification. The paper is maintained
@@ -45,7 +47,7 @@ rejects proof placeholders. The permitted foundational axioms are Lean's
 the stochastic processes.
 
 The complete build passed without warnings, and the exhaustive audit checked
-**2,983 theorem declarations and 3,658 safe declarations across 211 modules**.
+**3,106 theorem declarations and 3,801 safe declarations across 219 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. Separate negative
 checks confirmed that the audit rejects
@@ -100,6 +102,11 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [AtomicTransportContinuity](CarryingCapacity/AtomicTransportContinuity.lean) | Exact finite-truncation atom identities, including the collapsed zero atom; uniform superlinear tails give Wκ convergence from atomic convergence; every moment-bounded weak solution is automatically Wκ-continuous | Genuine extended Ψ bound and tested time integrability; candidate continuity is derived |
 | [DeterministicEnvironmentGeneralCoupling](CarryingCapacity/DeterministicEnvironmentGeneralCoupling.lean), [NonlinearForwardUniqueness](CarryingCapacity/NonlinearForwardUniqueness.lean) | Linear identification realizes arbitrary moment-bounded nonlinear candidates; actual shared-noise compensation, finite integral bounds and Gronwall prove full-class law uniqueness; actual existence, exact envelope and unique existence on [0,T] | Requires the paper's coupling/activity/Lyapunov hypotheses and finite initial Ψ moment; no candidate continuity or manuscript-envelope premise. This proves Theorem 4.3's law well-posedness |
 | [FiniteJumpForwardRestriction](CarryingCapacity/FiniteJumpForwardRestriction.lean), [NonlinearHorizonConsistency](CarryingCapacity/NonlinearHorizonConsistency.lean) | Restriction and coefficient/law congruence preserve genuine tested integrability; larger fixed curves restrict exactly to smaller fixed curves; actual environments and process marginal laws agree on overlapping horizons | Equality of laws is proved; sample-path consistency and a single nonlinear realization for all times are not asserted |
+| [ParticleNoiseProjection](CarryingCapacity/ParticleNoiseProjection.lean), [ParticleInputRecords](CarryingCapacity/ParticleInputRecords.lean) | Exact full product law of particle initial/noise records; mutual independence; pointwise projected counting-measure identity; measurability in the raw shared history | Initial coordinates have the prescribed iid vector marginal; the rest of the paired initial record is unrestricted |
+| [NonlinearParticleArray](CarryingCapacity/NonlinearParticleArray.lean), [NonlinearParticleContinuation](CarryingCapacity/NonlinearParticleContinuation.lean) | Actual independent nonlinear trajectories on the shared particle-noise space; full product marginals, raw adaptedness, simultaneous càdlàg and left-limit properties, actual initial values, integrable increments and all-horizon counting equations | Trajectory independence uses the coordinate sigma algebra, not a Skorokhod-space identification; the environment is endpoint-held after T |
+| [CompactIntervalIntegration](CarryingCapacity/CompactIntervalIntegration.lean), [NonlinearParticleEmpirical](CarryingCapacity/NonlinearParticleEmpirical.lean) | Actual expected empirical error is genuinely integrable, bounded by twice the moment and terminal envelope, and tends to zero at fixed times and after real time integration | Applies to the constructed independent comparison array under the extension's assumptions; does not yet estimate its discrepancy from the interacting particles |
+| [PredictableExitMask](CarryingCapacity/PredictableExitMask.lean) | Rational strict-past survival is raw predictable; actual right-local constancy identifies it with the inclusive genuine-exit mask; nonnegative compensation retains the exit jump | Generic compensation bridge; stopped interacting-particle running-cost estimates remain to be assembled |
+| [DeterministicEnvironmentConfiguration](CarryingCapacity/DeterministicEnvironmentConfiguration.lean) | Actual configuration in a prescribed environment; exact averaged generator and activity, particle-number-independent Lyapunov coefficients, finite rate caps, nonexplosion, moments and coordinate counting equations | Identifying its coordinates with the independent nonlinear array and proving the stopped population comparison remain separate |
 | [RateControl](CarryingCapacity/RateControl.lean) | Every admissible jump has adapted length at least one; total rate is bounded by weighted activity; actual finite-configuration Lyapunov sublevels are finite | Gives deterministic finiteness needed for freezing, without constructing the driving random measures |
 | [FiniteGenerator](CarryingCapacity/FiniteGenerator.lean) | Single-particle update identity; exact generator identity for empirical averages; averaged Lyapunov drift | Does not apply Dynkin's formula or construct a process |
 | [Freezing](CarryingCapacity/Freezing.lean) | Finite-proposal recursion; one-jump enlargement; retaining the exit jump; permanent freezing; unique compatible patch; finite-horizon agreement; exit-tail bounds imply almost-sure exhaustion and patching | Requires the exit bounds and compatibility; does not derive them from a Poisson SDE or prove adaptedness of the patch |
@@ -447,6 +454,19 @@ preserving its complete joint law while either vector projection initializes a
 process. `CommonInitialStopping` supplies the completion and exact first-exit
 stopping-time statements for that enlarged product filtration.
 
+`ParticleNoiseProjection` and `ParticleInputRecords` now prove the full joint
+law of the nonlinear initial/noise records extracted from this same space.
+`NonlinearParticleArray` applies the actual nonlinear process to these records:
+the trajectories are independent for the coordinate sigma algebra, their
+fixed-time vector law is the product nonlinear law, and their counting
+equations use the original particle-labelled measures. The continuation after
+the chosen horizon keeps the environment fixed at its endpoint.
+`NonlinearParticleEmpirical` derives genuine error and time integrability and
+proves the actual time-integrated independent empirical error tends to zero.
+`PredictableExitMask` proves compensation up to and including a genuine exit
+using a raw predictable rational-history version. It does not discard the
+exit jump or assume a completed-filtration compensation theorem.
+
 The quadratic coupling calculation includes the shared-jump contribution.
 For a nonlinear κ, even a simultaneous birth can increase the distance;
 controlling only unmatched jumps would miss this term.
@@ -478,13 +498,12 @@ controlling only unmatched jumps would miss this term.
    law uniqueness, the exact envelope and consistency of laws across horizons
    are proved. The completed right-continuous filtration formulation remains
    separate from the proved raw-history and completion results.
-4. First combine the paired initial-array law with noise labeled by particle
-   and jump direction. Prove that the array of projected nonlinear initial/noise
-   records has the exact product law, and that each projected counting measure
-   is the corresponding common counting measure. This missing bridge would
-   produce iid nonlinear copies and connect the empirical-error estimates.
-   Then derive localized interacting-particle comparison, time-grid estimates
-   and path-space propagation of chaos.
+4. Derive the stopped interacting-particle running-cost estimate, remove
+   localization using the uniform exit bounds, and prove time-grid convergence
+   and path-space propagation of chaos. The actual independent nonlinear array,
+   exact shared-noise identities, its time-integrated empirical-error limit,
+   and inclusive exit-mask compensation are now proved. These ingredients have
+   not yet been assembled into the interacting-particle comparison theorem.
 
 The Lean kernel checks the formal statements and proofs. Matching them to a
 paper remains a mathematical review task, which is why the source map and
