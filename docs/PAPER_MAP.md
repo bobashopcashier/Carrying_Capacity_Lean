@@ -141,13 +141,18 @@ so Theorem 4.3's law well-posedness statement is proved, including its full
 moment-bounded uniqueness class. Genuine tested time integrability is explicit
 in the formal definition of the weak equation.
 
-The fixed law curves and actual process marginals are also consistent across
-construction horizons. This does not assert that separately constructed paths
-agree on overlaps or provide one all-time nonlinear realization. Proposition
+The fixed law curves and actual canonical paths are consistent across
+construction horizons, including their endpoints. `TimeDependentLocalUniqueness`
+and `NonlinearPathConsistency` derive path equality from actual same-input
+counting equations. `NonlinearGlobalProcess` gives one all-time measurable,
+raw-adapted, càdlàg realization with its actual nonlinear marginals and exact
+moment envelope. `NonlinearGlobalCounting` proves genuine predictable left
+states, the all-time own-marginal counting equation, integral finiteness, finite
+activity and horizon-local spatial exit exhaustion. `NonlinearGlobalForward`
+proves global weak-law existence and uniqueness in the locally Ψ-bounded class;
+continuity and the sharp envelope are derived for every candidate. Proposition
 4.2 and Corollary 4.4 still retain their arbitrary supplied PRM-space and
-completed right-continuous filtration obligations. The canonical expected
-weighted jump-variation estimate and independent uniform empirical limit
-are proved. Interacting empirical convergence and path-space chaos remain separate.
+completed right-continuous filtration obligations.
 
 For Section 6, `NonlinearEmpiricalSupremum.runningError` is the actual
 independent-array error supremum over every real time in `[0,T]`; its AE
@@ -168,6 +173,18 @@ all stochastic premises of `NonlinearEmpiricalUniform`, which proves Proposition
 selects one finite grid before the population limit; exact iid record laws give
 the centered variation LLN, with no independence across times or population sizes.
 
+`PopulationEmpiricalLimit` combines this uniform iid limit with the proved
+synchronous comparison, then projects the paired record to its original initial
+vector while retaining exactly the same noise. It proves Theorem 6.3's uniform
+empirical Wκ and generalized-moment limits in probability for the actual canonical
+population with the original vector law. `CoupledLawConvergence` and
+`PopulationFixedTimeChaos` give weak convergence of each fixed-k vector at each
+fixed time to the product nonlinear marginal, the fixed-time part of Corollary
+6.4. `SkorokhodJ1` constructs the genuine path metric, its Borel structure and
+time-change convergence criterion, including uniform-to-J1 convergence. The
+actual random path maps have not yet been proved measurable for that Borel
+structure, so Skorokhod path-space chaos is not asserted.
+
 ## Dependency order
 
 1. Define the state, jump maps, empirical averages, rate data, adapted metric,
@@ -182,14 +199,16 @@ the centered variation LLN, with no independence across times or population size
 6. Use the proved atomic-to-transport continuity, linear law identification and
    actual synchronous comparison to identify every moment-bounded nonlinear
    weak solution with the Bielecki fixed curve. The exact envelope and
-   consistency of laws across construction horizons are proved; pathwise
-   all-horizon and arbitrary external-PRM realization remain separate.
+   actual pathwise compatibility across horizons now give one all-time canonical
+   nonlinear process and unique global law. External-PRM realization remains separate.
 7. Initial matching, uniform-integrability upgrades, empirical LLNs,
    localized population coupling, and the successive N-then-R limit are proved
    for the canonical systems. Actual paired-path relabeling gives the stopped
    coordinate symmetry and fixed-focal comparison as well.
-8. Formalize the time-grid argument, Skorokhod transfer, and independence of
-   fixed collections; assemble the main theorem and model corollaries.
+8. The time-grid argument, canonical uniform interacting empirical limit and
+   fixed-time finite-particle chaos are proved. Connect actual random paths to
+   the constructed J1 Borel space, prove path-space chaos, and complete the
+   model corollaries and Wp comparisons.
 
 The original proof has a different route through Feller generation, Markov
 mapping, Yule domination, frozen-process convergence, and tightness. Its weaker
@@ -247,7 +266,12 @@ any subsequent edits.
 | `DeterministicEnvironmentGeneralLaw.lean` | Genuine actual pushforward MomentLaw for general prescribed environments, exact initial law, derived affine-exponential Ψ bounds, and Wκ-continuous outputCurve by stochastic continuity and superlinear uniform integrability | Continuous environment with bounded genuine Ψ moment and a separate finite-Ψ initial law; no v(0)=ν hypothesis; canonical product-space realization |
 | `AtomicTransportContinuity.lean` | Actual finite truncation handles retained atoms and zero normalization; genuine uniform superlinear moments make truncation costs small; atomic convergence gives Wκ convergence for arbitrary filters; weak solutions are automatically Wκ-continuous | The candidate supplies no continuity or rate-regularity premise; true extended Lyapunov bounds give integrability before ordinary moments are used |
 | `DeterministicEnvironmentGeneralCoupling.lean`, `NonlinearForwardUniqueness.lean` | Proved linear identification realizes general nonlinear candidates; common-noise compensation and actual endpoint moments give a finite expected-distance inequality; Gronwall proves full bounded-Ψ law uniqueness; actual existence, exact envelope and exact interval-domain unique existence | Theorem 4.3's law statement under the original manuscript hypotheses and finite initial Ψ moment; no candidate continuity, sharp envelope or stochastic comparison assumption |
-| `FiniteJumpForwardRestriction.lean`, `NonlinearHorizonConsistency.lean` | Genuine weak-solution integrability and equations restrict to smaller horizons and transfer under local coefficient/law equality; actual fixed curves, deterministic environments and process marginal laws agree on overlapping construction intervals | Includes zero horizons and endpoints; establishes laws only, not sample-path agreement or a single all-time nonlinear realization |
+| `FiniteJumpForwardRestriction.lean`, `NonlinearHorizonConsistency.lean` | Genuine weak-solution integrability and equations restrict to smaller horizons and transfer under local coefficient/law equality; actual fixed curves, deterministic environments and process marginal laws agree on overlapping construction intervals | Includes zero horizons and endpoints; pathwise consistency and the all-time realization are supplied below |
+| `TimeDependentLocalUniqueness.lean` | Genuine separating-test counting equations, same initial state and locally equal rates imply equality on the closed horizon | Candidate càdlàg paths and true left limits are explicit; the actual nonlinear paths discharge these premises |
+| `NonlinearPathConsistency.lean` | Actual same-input nonlinear paths agree through the smaller horizon's endpoint; one event gives simultaneous integer-horizon compatibility | No path compatibility is assumed; actual law consistency and local counting-equation uniqueness prove it |
+| `NonlinearGlobalProcess.lean` | One all-time jointly measurable, raw-adapted, càdlàg nonlinear realization; true marginals, continuous environment, exact envelope and arbitrary finite-horizon agreement | Canonical initial-state/noise space; no arbitrary supplied PRM realization or usual-filtration assertion |
+| `NonlinearGlobalCounting.lean` | Actual predictable left limits, all-time own-marginal counting equation, genuine increment integrability, initial state, finite activity and spatial localization exhaustion on every horizon | Fixed-test equation is simultaneous in all horizons; unbounded-test expectation identities are not inferred |
+| `NonlinearGlobalForward.lean` | Actual global weak-law existence and unique existence on nonnegative times in the full locally Ψ-bounded class; continuity and envelope follow for candidates | Genuine finite-support tested time integrability remains explicit; negative-time extensions need not agree |
 | `ParticleNoiseProjection.lean`, `ParticleInputRecords.lean` | Exact joint product law and mutual independence of whole particle input records; exact projected counting measures; raw-history projection measurability; coupled-initial-array specialization | Requires the proved initial iid marginal, rather than assuming trajectory independence |
 | `NonlinearParticleArray.lean`, `NonlinearParticleContinuation.lean` | Constructed nonlinear copies on the original particle noise; full product fixed-time laws, trajectory independence, raw adaptedness, simultaneous path regularity and left limits; actual initial values and integrable all-horizon counting equations | Path independence is for the coordinate sigma algebra; nonlinear self-consistency is on [0,T], with endpoint-held rates afterward |
 | `CompactIntervalIntegration.lean`, `NonlinearParticleEmpirical.lean` | Interval-subtype Lebesgue measure and exact integral/integrability transfer; actual beta_N integrability, twice-moment/envelope bounds, fixed-time convergence and genuine real time-integrated convergence | Supplies the independent-array empirical-error component of Lemma 5.2, not comparison to the interacting configuration |
@@ -263,13 +287,17 @@ any subsequent edits.
 | `PopulationCouplingProbability.lean`, `PopulationCouplingConvergence.lean` | Actual real probability bound; fixed-R stopped expectation converges to zero, then reciprocal actual exit tails give vanishing unstopped running-cost event probabilities | Family version takes genuine initial expected pairing-error convergence; final wrapper discharges it |
 | `PopulationEmpiricalCoupling.lean`, `PopulationSynchronousApproximation.lean` | Actual uniform empirical discrepancy bounded by averaged coordinate running suprema; original initialization implies canonical coupled systems with both discrepancy limits and exact initial vector marginals | First two conclusions of Theorem 5.4; the focal conclusion is supplied below and Section 6 is tracked separately |
 | `ParticleRelabeling.lean`, `ConfigurationRelabeling.lean`, `PopulationStoppedExchangeability.lean` | Full paired-input measure preservation and exact noise identities; counting equations and pathwise uniqueness give actual configuration relabeling; genuine common exit invariance and equal coordinate stopped expectations | Initial exchangeability is the only symmetry premise; arbitrary localization cap choices need not be equivariant. No external whole-trajectory law identification |
-| `PopulationFocalProbability.lean`, `PopulationFocalConvergence.lean`, `PopulationFocalApproximation.lean` | Actual focal event probability is bounded by one C/R exit term plus k times the stopped expectation divided by the threshold; successive limits prove fixed-focal comparison; one initialization family satisfies all three canonical Theorem 5.4 conclusions | Exact first-k event when N is at least k; Section 6's nonlinear-law limit and Skorokhod chaos are separate results |
+| `PopulationFocalProbability.lean`, `PopulationFocalConvergence.lean`, `PopulationFocalApproximation.lean` | Actual focal event probability is bounded by one C/R exit term plus k times the stopped expectation divided by the threshold; successive limits prove fixed-focal comparison; one initialization family satisfies all three canonical Theorem 5.4 conclusions | Exact first-k event when N is at least k; Section 6's canonical nonlinear-law and fixed-time chaos limits are supplied below; Skorokhod path-space chaos remains separate |
 | `IndependentArrayLLN.lean` | Exact product-law transfer from a constructed infinite iid sequence yields centered scalar empirical-mean probability limits for arbitrary integrable observables, including merely AE-measurable ones | Applies to varying row spaces without any across-row premise; actual interval-variation integrability is supplied below |
 | `EmpiricalTimeGrid.lean`, `RightContinuousSupremum.lean` | Actual empirical-law cell and finite-grid inequalities; exact equal mesh; right-continuous costs have rational-plus-terminal suprema and derived AE measurability | The deterministic grid bridge has explicit displacement and law-modulus premises; the actual stochastic application below discharges them |
 | `NonlinearEmpiricalSupremum.lean` | Genuine nonlinear particle path regularity and continuity of the environment give simultaneous right continuity of the actual independent empirical error; its exact uncountable running supremum is AE measurable | No assumed error continuity or supremum measurability; uniform convergence is supplied below |
 | `NonlinearActivityBound.lean`, `NonlinearPathVariation.lean` | Genuine integrable current activity and its marginal-moment bound; actual predictable accepted-jump variation, measurability, interval monotonicity and exact compensation | Finiteness is not assumed in compensation; its derivation follows below |
 | `NonlinearVariationDisplacement.lean`, `NonlinearVariationBounds.lean` | All-time same-path displacement bound on one event, finite expected interval variation with explicit coefficient, AE finiteness, ordinary integrability and Wasserstein time modulus | Lemma 6.1 estimates for actual canonical paths; includes the right-endpoint jump and derives all integrability |
 | `NonlinearEmpiricalUniform.lean` | Finite-grid error bounds and exact record-product LLN prove the true uniform independent empirical probability limit, including the zero horizon | Proposition 6.2 under the manuscript assumptions; no stochastic variation, uniform convergence or across-row independence premise |
+| `PopulationEmpiricalLimit.lean` | Exact initial-record/noise projection transfers the actual paired-space limit to the canonical original-vector-law population; uniform empirical Wκ and generalized-moment errors tend to zero in probability | Theorem 6.3's canonical uniform conclusions; no external trajectory identification or J1 path-map measurability is assumed |
+| `CoupledLawConvergence.lean` | Genuine measurable coupling with vanishing mismatch controls bounded continuous tests and gives weak convergence of pushforward probability laws | Countable state spaces, varying row spaces, and exact comparison marginals; no weak-limit premise |
+| `PopulationFixedTimeChaos.lean` | Actual canonical fixed-k laws at each fixed time converge weakly to the product nonlinear marginal from manuscript initialization | Fixed-time Corollary 6.4 only; no joint-time or Skorokhod path-space conclusion |
+| `SkorokhodJ1.lean` | Genuine time-change J1 metric and Borel structure on actual càdlàg paths; separation, triangle inequality, convergence criterion, and uniform-to-J1 convergence | Actual random path-map measurability and path-space chaos remain open; no path-space completeness claim |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -349,7 +377,7 @@ any subsequent edits.
 | `FrozenLyapunovBound.lean`, `InitialLyapunovExit.lean` | Actual affine-exponential frozen Lyapunov bound; actual first-exit Markov bound; reciprocal tail exhaustion | Drift, nonnegative Lyapunov function and initial integrability are model hypotheses |
 | `LyapunovLocalization.lean`, `ConfigurationLocalization.lean` | Canonical {V<n+1} active sets, derived finite positive rate bounds, simultaneous exit monotonicity/compatibility, exact actual empirical generator and drift | The configuration drift is derived from LyapunovControl, not supplied as a separate assumption |
 | `GlobalLocalizedProcess.lean`, `GlobalLocalizedActivity.lean` | Raw jointly measurable and adapted patch; correct initial value; actual finite proposal-list representation, finite activity/range and cadlag paths | Generic regularity bridge uses actual exit exhaustion, discharged in the next layer |
-| `ActualNonexplosion.lean`, `ConfigurationNonexplosion.lean` | Genuine exit bounds and exhaustion from the raw generator drift; actual nonexplosive global configuration construction with measurable adapted paths | No given moment bound or exhaustion conclusion; arbitrary initial laws and global equation uniqueness are supplied below; the mean-field theorem remains open |
+| `ActualNonexplosion.lean`, `ConfigurationNonexplosion.lean` | Genuine exit bounds and exhaustion from the raw generator drift; actual nonexplosive global configuration construction with measurable adapted paths | No given moment bound or exhaustion conclusion; arbitrary initial laws and global equation uniqueness are supplied below; canonical empirical convergence is supplied by the population limit modules |
 | `GlobalLyapunovMoment.lean`, `ActualGlobalMoment.lean` | Fatou gives integrability and exponential expectation control of the actual global Lyapunov value | Current-time expectation, not expected running maximum or all weighted activity bounds |
 | `GlobalLocalizedCountingIdentity.lean`, `ActualGlobalCounting.lean` | Predictable global pre-state identified with its actual left limit; genuine global rate-threshold counting equation and pathwise integrability; configuration specialization from LyapunovControl | No active-set or height cutoff in the global integrand; global equation uniqueness is supplied below |
 | `DiscreteCausalUniqueness.lean`, `CountingEquationUniqueness.lean`, `GlobalCountingUniqueness.lean`, `ActualGlobalUniqueness.lean` | Discrete first-disagreement uniqueness; genuine left-limit counting equations for separating tests; actual finite-coordinate particle specialization | Candidate càdlàg paths, same initial record, and same driving measure; no candidate localization or finite-activity premise |
@@ -787,9 +815,11 @@ a horizon and changing coefficients or laws only outside it.
 same pointwise K(t) envelope, and transfers its actual weak equation. The proved
 uniqueness identifies the restriction with the smaller fixed curve. Actual
 process marginals and deterministic environments consequently agree on every
-overlap, including endpoints and zero horizons. No sample-path identification
-across horizons, single all-time nonlinear realization or arbitrary externally
-supplied PRM probability space is asserted.
+overlap, including endpoints and zero horizons. The subsequent
+`NonlinearPathConsistency`, `NonlinearGlobalProcess`, `NonlinearGlobalCounting`
+and `NonlinearGlobalForward` modules also give actual pathwise agreement, one
+all-time canonical realization, its own-marginal equation and global weak-law
+uniqueness. Arbitrary externally supplied PRM spaces remain outside this result.
 
 For the autonomous configuration construction, `InitialFrozenExpectation`
 supplies genuine Fubini and
@@ -849,23 +879,19 @@ right continuity of the completed filtration remain open.
    generator martingale and weak forward equation are now proved, including
    arbitrary independent initial laws. Lyapunov expectation bounds retain their
    initial-moment assumptions.
-3. Establish sample-path consistency of the canonical nonlinear realizations
-   across horizons and construct a single all-time nonlinear process; extend
-   realization to arbitrary externally supplied PRM spaces with the required
-   augmented filtration. General prescribed-environment output-law continuity,
-   full moment-bounded nonlinear law uniqueness, the exact envelope and
-   consistency of laws across horizons are proved.
-4. Transfer the proved uniform independent empirical convergence to the
-   interacting system, then establish Skorokhod/path-space chaos. Proposition 5.3 and all three
-   canonical Theorem 5.4 comparison conclusions are now assembled under the
-   original initialization assumptions, using proved paired-path relabeling
-   and equal coordinate stopped expectations. The deterministic grid bridge,
-   generic integrable-observable iid-row LLN, actual empirical-supremum
-   measurability and genuine expected variation estimate now prove Proposition 6.2.
-   The grouped-input law,
-   actual iid trajectories, their exact noise identities and the real
-   time-integrated independent empirical-error limit are now proved. Preserve
-   the original theorem's weaker initialization as a distinct target.
+3. Extend the actual all-time canonical nonlinear process to arbitrary externally
+   supplied PRM spaces with the required usual filtration. Pathwise horizon
+   compatibility, own-marginal equations, global moment-bounded law uniqueness
+   and the exact envelope are already proved.
+4. Prove the actual random path maps measurable for the constructed Skorokhod
+   J1 Borel structure, then establish path-space chaos. The canonical uniform
+   empirical and generalized-moment limits and fixed-time finite-particle chaos
+   are proved from the manuscript initialization assumptions. Preserve the
+   original paper's weaker initialization as a separate, unfinished target.
+5. Complete the carrying-capacity application package, including unbounded-test
+   justification for the closed mean ODE, the stated general Lyapunov exponents,
+   and the Wp comparison of Remark 2.1. The existing scalar/quadratic checks do
+   not yet constitute those application corollaries.
 
 The empirical transport LLN bridge is now proved: `FiniteTransport` constructs
 the common-mass coupling and bounds transport by
