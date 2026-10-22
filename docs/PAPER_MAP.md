@@ -108,8 +108,11 @@ any subsequent edits.
 | `TransportMetric.lean` | Actual conditional-kernel gluing; cost triangle; separation by indicator tests; MetricSpace; Lipschitz moment and event-probability maps | No arbitrary-law optimal coupling theorem |
 | `TransportCompleteness.lean` | Actual Ionescu–Tulcea simultaneous coupling of near-optimal consecutive plans; a.s. finite total path distance; measurable finite-moment limit law; tail transport bound; CompleteSpace instance | Invariant time-dependent flow space and Bielecki contraction remain separate |
 | `EmpiricalMeasure.lean` | Empirical probability/MomentLaw constructions; test integrals; paired and permuted couplings; Wκ upper bound; update estimate; exact empirical-integral generator and Lyapunov identities | No process law follows from the generator algebra alone |
-| `EmpiricalMatching.lean` | Repeated-state mass splitting; doubly stochastic label plan preserving transport cost; Birkhoff decomposition; Wκ equals attained minimum over permutations; measurable selected matching with exact empirical law and cost | Joint exchangeability of the matched random initialization needs a further symmetrization argument |
-| `EmpiricalLLN.lean` | Scalar, moment, all-state-frequency, and fixed-cutoff-tail strong laws from measurable pairwise independent identically distributed samples; finite Ψ gives a MomentLaw; finite-range truncation law and coupling; vanishing tail transport cost | The finite-support comparison completing Wκ empirical convergence is still open; no full iid transport LLN is claimed |
+| `EmpiricalMatching.lean` | Repeated-state mass splitting; doubly stochastic label plan preserving transport cost; Birkhoff decomposition; Wκ equals attained minimum over permutations; measurable selected matching with exact empirical law and cost | Randomized joint exchangeability is supplied by `ExchangeableMatching` |
+| `FiniteTransport.lean` | Explicit diagonal common mass and normalized residual-product coupling; exact marginals; Wκ ≤ diameter times half the sum of absolute atomic mass differences; transport convergence from atomic convergence on fixed finite support | Finite-support comparison, not an arbitrary-law optimal-plan theorem |
+| `EmpiricalLLN.lean` | Full almost-sure empirical Wκ convergence from measurable pairwise independent identically distributed samples and a finite κ moment; scalar, moment, singleton, tail, and truncated strong laws; finite Ψ gives a MomentLaw | Fixed-law convergence; no uniform-in-time path theorem |
+| `EmpiricalMeanError.lean` | Common marginals imply exact empirical Ψ expectations; derived uniform integrability and expected Wκ convergence; βN≤2Mκ; jointly measurable errors and time-integrated convergence under a continuous law curve and uniform Ψ integral bound | Proves the auxiliary infinite-sample-family error limit used in Lemma 5.2; transfer to N-dependent arrays, construction of the process, and construction of the law curve remain separate |
+| `ExchangeableMatching.lean` | Actual law obtained from optimal matching and an independent uniform common permutation; preservation of both full exchangeable vector laws; joint paired exchangeability; exact optimal cost; cost distribution, integrability and expectation identities; iid-target specialization | Supplies the finite-population construction of Lemma 5.1; its expected-error convergence theorem takes the two empirical-error limits as inputs, to be assembled with the LLN/UI results |
 | `Symmetrization.lean` | Generator equivariance; uniform permutation average; equal empirical measures iff a relabeling exists; genuine exchangeable symmetrized measure with deterministic empirical state | Stochastic exchangeability still needs process construction and uniqueness |
 | `EmpiricalGenerator.lean` | Countable space of actual empirical measures; representative-independent symmetrization Markov kernel; pushforward is the prescribed Dirac law; quotient generator; Bα=αA intertwining | Does not assert the empirical process is Markov or supply a Feller semigroup |
 | `LyapunovTails.lean` | Actual uniform integral tails from superlinear Ψ; affine-envelope uniform integrability; empirical-transport in-measure to L1 upgrade using expected empirical Ψ bound | Common probability space; explicit integrability is required to avoid totalized-integral loopholes; the initial in-probability convergence is an input |
@@ -117,9 +120,12 @@ any subsequent edits.
 | `FiniteGenerator.lean` | Exact 1/N empirical-generator identity and averaged Lyapunov drift | The empirical-law interpretation is proved in EmpiricalMeasure; Dynkin and process expectation bounds remain separate |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
-| `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Full Poisson count law and independent increments remain open |
+| `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | One-time count laws are supplied below; independent increments remain open |
 | `FrozenProcess.lean` | Actual independent iid uniform labels and thinning marks; measurable recursion and time evaluations from deterministic initial states; finite range; right continuity and left limits a.s.; permanent freezing | No filtration/adaptedness, compensator, or compatibility across different clock rates |
 | `PoissonClockLaw.lean` | Survival multiplication, conditional residual exponential law, and exact zero-count probability | Not the complete Poisson-process characterization |
+| `PoissonIncrements.lean` | Actual shifted-clock law; independent head and tail; nonatomic arrivals; derived count renewal recurrence and its evaluated integral; count pushforward equals Poisson(rt) for every t≥0 | One-time marginals do not establish stationary independent increments; those remain open despite the module name |
+| `MarkedNoise.lean` | A single actual probability space and measurable counting-measure family from independent unit vertical strips; a common probability-one event gives local finiteness for every real time/height cutoff and no simultaneous arrivals | Does not yet identify the full PRM law, enumerate the chronological event lists measurably, or prove compensation |
+| `FrozenCompatibility.lean` | Actual first-exit indices for nested frozen recursions; agreement including the exit jump; monotone exit indices; stopped larger recursion equals the permanently frozen smaller one; stopped continuous-time agreement under a common clock | Same decoder and proposal sequence; compatibility across distinct height-cutoff event lists and stopping-time properties remain open |
 | `ThinningKernel.lean` | Finite positive bound on active rates; exact accepted-label mass; expected proposal increment times card(J) C equals the frozen generator | Requires positive C and 0≤q≤C; continuous-time generator identification still needs compensation |
 | `LimitArguments.lean` | Successive population-then-cutoff limits, reciprocal cutoff removal, scalar three-region convergence criterion; explicit failure of arbitrary diagonal limits | Inputs are already-obtained scalar error/tail bounds; does not derive stochastic coupling or uniform integrability estimates |
 | `Models.lean` | Boundary-aware scalar first/second/third generator identities; weighted activity; full three-term positive coupling cost including common births; birth/death estimates; affine feedback; cubic Lyapunov domination, drift and superlinearity; integrated generator identities under integrability | Covers scalar computations and r=3 Lyapunov control, not the general multitype application, every real r>2, stochastic forward identities, or limit corollaries |
@@ -160,25 +166,47 @@ compatibility and monotonicity, this yields an almost-sure unique patched
 path. The exit estimates themselves, and measurability/adaptedness of the
 patched process, remain separate proof obligations.
 
+`FrozenCompatibility.lean` now derives compatibility and monotone exits for
+actual recursions with nested active sets and the same proposal sequence. The
+exit jump is included. Under a common locally finite clock, stopping the larger
+continuous-time path at the smaller exit arrival gives the smaller frozen path.
+`MarkedNoise.lean` separately constructs the common counting measures, with
+finitely many proposals in every bounded time-height box and no coincident event
+times on a single probability-one event. Connecting these results requires a
+measurable chronological enumeration and a proof that inserting proposals above
+the smaller rate bound leaves its path unchanged. Neither compatibility across
+distinct cutoff event lists nor the full PRM SDE is yet claimed.
+
 
 ## Next connections to formalize
 
-1. Complete the Poisson characterization and construct a common marked driving
-   noise for every cutoff level. The checked exponential paths and thinning
-   probabilities supply components, not yet a PRM SDE theorem.
+1. Prove stationary independent increments and the full marked PRM law. Use the
+   constructed common noise to define measurable chronological frozen paths and
+   establish compatibility across the cutoff event lists. One-time Poisson
+   laws, local finiteness, and common-sequence recursion compatibility are proved.
 2. Prove filtration adaptedness, compensation/Dynkin, and stopped Gronwall.
    Derive reciprocal exit estimates before applying the existing a.e. patching
    theorem to the actual stochastic system.
 3. Use the complete moment-law space to construct the deterministic-environment
    forward law, its uniqueness, the invariant flow space, and nonlinear fixed point.
-4. Connect iid empirical laws, optimal initial matching, localized coupling,
-   time-grid convergence, and Skorokhod/path-space chaos. Preserve the original
-   theorem's weaker initialization as a distinct target.
+4. Assemble the initialization coupling from the now-proved empirical transport
+   LLN, expected-error limits, and exchangeable matching construction. Derive
+   localized process coupling, time-grid convergence, and Skorokhod/path-space
+   chaos. Preserve the original theorem's weaker initialization as a distinct target.
 
-The immediate empirical-LLN bridge is concrete: for two laws supported on the
-same finite set S, construct the common-mass coupling and bound transport by
-`diam(S) * (1/2) * sum_{x in S} |μ{x} - ν{x}|`. Apply this to the finite-range
-truncations in `EmpiricalLLN`, then use the checked singleton strong laws,
-fixed-cutoff tail strong laws, vanishing target tails, and transport triangle
-inequality. This statement remains a proof target, not an imported hypothesis
-or completed result.
+The empirical transport LLN bridge is now proved: `FiniteTransport` constructs
+the common-mass coupling and bounds transport by
+`diam(S) * (1/2) * sum_{x in S} |μ{x} - ν{x}|`. `EmpiricalLLN` applies it to
+finite-range truncations, then combines singleton and fixed-cutoff tail strong
+laws, vanishing target tails, and the transport triangle inequality.
+`EmpiricalMeanError` derives Lyapunov uniform integrability from the common
+marginal law, obtaining expected-error convergence. Its time-integrated theorem
+derives error measurability and domination from jointly measurable samples, a
+continuous law curve, and a uniform Ψ integral bound on a finite time measure.
+The samples are initial segments of one infinite family. Transfer to separately
+constructed finite iid families requires equality of their finite vector laws;
+that transfer has not yet been packaged as a separate theorem.
+The time hypotheses quantify over the whole time type. For a finite-horizon
+Lyapunov bound, choose that type to be the interval `[0,T]` itself. Restricting
+only the integration measure while keeping time type ℝ does not restrict the
+theorem's uniform-bound hypothesis to the interval.

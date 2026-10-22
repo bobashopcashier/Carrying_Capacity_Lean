@@ -10,7 +10,10 @@ import CarryingCapacity.QuadraticModel
 import CarryingCapacity.LimitArguments
 import CarryingCapacity.EmpiricalMeasure
 import CarryingCapacity.EmpiricalMatching
+import CarryingCapacity.FiniteTransport
 import CarryingCapacity.EmpiricalLLN
+import CarryingCapacity.EmpiricalMeanError
+import CarryingCapacity.ExchangeableMatching
 import CarryingCapacity.TransportMetric
 import CarryingCapacity.TransportCompleteness
 import CarryingCapacity.Symmetrization
@@ -19,7 +22,10 @@ import CarryingCapacity.LyapunovTails
 import CarryingCapacity.CountableJumpProcess
 import CarryingCapacity.FrozenProcess
 import CarryingCapacity.PoissonClockLaw
+import CarryingCapacity.PoissonIncrements
 import CarryingCapacity.ThinningKernel
+import CarryingCapacity.MarkedNoise
+import CarryingCapacity.FrozenCompatibility
 
 /-!
 # Checked foundations for carrying-capacity mean-field models

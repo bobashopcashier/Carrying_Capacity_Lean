@@ -1,15 +1,17 @@
 import CarryingCapacity.TransportCompleteness
 import CarryingCapacity.EmpiricalMeasure
 import CarryingCapacity.LyapunovTails
+import CarryingCapacity.FiniteTransport
 
 /-!
-# Strong laws for empirical observables and finite-state approximation
+# The empirical strong law in the adapted Wasserstein distance
 
 The sample assumptions are genuine measurable, identically distributed,
 pairwise independent random variables. Integrability is taken under the actual
 common law. Scalar, moment, and event-frequency strong laws are derived from
-mathlib's Etemadi strong law. The finite-state truncation bounds use genuine
-transport plans and integrable moment tails.
+mathlib's Etemadi strong law. Genuine common-mass couplings on finite supports
+and integrable moment-tail bounds then prove almost-sure transport convergence,
+including the manuscript's finite-Lyapunov-moment initialization.
 -/
 
 noncomputable section
@@ -240,5 +242,82 @@ theorem sample_truncation_bound (X : ℕ → Ω → State D) (n : ℕ) (ω : Ω)
       ∫ x, tailWeight κ K x ∂(sampleLaw κ X n ω).measure := by
   rw [← truncateLaw_sampleLaw]
   exact wasserstein_truncateLaw_le _ K
+
+/-- Every fixed finite-state truncation obeys the actual transport strong law,
+simultaneously for all integer cutoffs. -/
+theorem truncated_wasserstein_strongLaw (P : Measure Ω) (μ : MomentLaw κ D)
+    (X : ℕ → Ω → State D) (hm : ∀ i, Measurable (X i))
+    (hind : Pairwise (fun i j => IndepFun (X i) (X j) P))
+    (hlaw : ∀ i, Measure.map (X i) P = μ.measure) :
+    ∀ᵐ ω ∂P, ∀ K : ℕ, Tendsto
+      (fun n => wasserstein (truncateLaw (sampleLaw κ X n ω) K) (truncateLaw μ K))
+      atTop (𝓝 0) := by
+  rw [ae_all_iff]
+  intro K
+  let Y : ℕ → Ω → State D := fun i ω => truncate κ K (X i ω)
+  have hYm (i : ℕ) : Measurable (Y i) :=
+    (measurable_of_countable (truncate κ K)).comp (hm i)
+  have hYi : Pairwise (fun i j => IndepFun (Y i) (Y j) P) :=
+    fun i j hij => (hind hij).comp (measurable_of_countable (truncate κ K))
+      (measurable_of_countable (truncate κ K))
+  have hYlaw (i : ℕ) : Measure.map (Y i) P = (truncateLaw μ K).measure := by
+    change Measure.map ((truncate κ K) ∘ X i) P = Measure.map (truncate κ K) μ.measure
+    rw [← Measure.map_map (measurable_of_countable _) (hm i), hlaw i]
+  filter_upwards [singleton_strongLaw P (truncateLaw μ K) Y hYm hYi hYlaw] with ω hω
+  let S := (finite_range_truncate (κ := κ) (D := D) K).toFinset
+  have hsupport (ν : MomentLaw κ D) : (truncateLaw ν K).measure S = 1 := by
+    simpa only [S, Set.Finite.coe_toFinset] using truncateLaw_range_mass ν K
+  apply FiniteTransport.wasserstein_tendsto_of_finite_support
+    (fun n => truncateLaw (sampleLaw κ X n ω) K) (truncateLaw μ K) S
+    (fun n => hsupport (sampleLaw κ X n ω)) (hsupport μ)
+  intro x _
+  simpa only [truncateLaw_sampleLaw] using hω x
+
+/-- The empirical laws of measurable identically distributed, pairwise independent
+samples converge almost surely in the adapted Wasserstein distance. Only finite
+κ-moment of the common law is required. -/
+theorem wasserstein_strongLaw (P : Measure Ω) (μ : MomentLaw κ D)
+    (X : ℕ → Ω → State D) (hm : ∀ i, Measurable (X i))
+    (hind : Pairwise (fun i j => IndepFun (X i) (X j) P))
+    (hlaw : ∀ i, Measure.map (X i) P = μ.measure) :
+    ∀ᵐ ω ∂P, Tendsto (fun n => wasserstein (sampleLaw κ X n ω) μ) atTop (𝓝 0) := by
+  filter_upwards [tail_strongLaw P μ X hm hind hlaw,
+    truncated_wasserstein_strongLaw P μ X hm hind hlaw] with ω ht hw
+  apply tendsto_order.mpr
+  constructor
+  · intro a ha
+    exact Eventually.of_forall fun n => ha.trans_le (wasserstein_nonneg _ _)
+  · intro ε hε
+    have hsmall : ∀ᶠ K in atTop, (∫ x, tailWeight κ K x ∂μ.measure) < ε / 4 :=
+      (integral_tailWeight_tendsto_zero μ).eventually (gt_mem_nhds (by linarith))
+    obtain ⟨K, hK⟩ := hsmall.exists
+    have hlim := ((ht K).add (hw K)).add
+      (tendsto_const_nhds (x := ∫ x, tailWeight κ K x ∂μ.measure))
+    have hevent : ∀ᶠ n in atTop,
+        (∫ x, tailWeight κ K x ∂(sampleLaw κ X n ω).measure) +
+          wasserstein (truncateLaw (sampleLaw κ X n ω) K) (truncateLaw μ K) +
+          (∫ x, tailWeight κ K x ∂μ.measure) < ε :=
+      hlim.eventually (gt_mem_nhds (by linarith))
+    filter_upwards [hevent] with n hn
+    have h₁ := wasserstein_triangle (sampleLaw κ X n ω)
+      (truncateLaw (sampleLaw κ X n ω) K) μ
+    have h₂ := wasserstein_triangle (truncateLaw (sampleLaw κ X n ω) K) (truncateLaw μ K) μ
+    have h₃ := wasserstein_truncateLaw_le (sampleLaw κ X n ω) K
+    have h₄ := wasserstein_truncateLaw_le μ K
+    rw [wasserstein_symm (truncateLaw μ K) μ] at h₂
+    linarith
+
+/-- The manuscript's finite-Lyapunov-moment initialization implies the transport
+strong law, through a proved finite-moment embedding. -/
+theorem wasserstein_strongLaw_of_lyapunov (P : Measure Ω)
+    (μ : ProbabilityMeasure (State D)) (Ψ : State D → ℝ)
+    (hdom : ∀ x, 1 + momentWeight κ x ≤ Ψ x)
+    (hΨ : Integrable Ψ (μ : Measure (State D)))
+    (X : ℕ → Ω → State D) (hm : ∀ i, Measurable (X i))
+    (hind : Pairwise (fun i j => IndepFun (X i) (X j) P))
+    (hlaw : ∀ i, Measure.map (X i) P = (μ : Measure (State D))) :
+    ∀ᵐ ω ∂P, Tendsto (fun n => wasserstein (sampleLaw κ X n ω) (lawOfLyapunov μ Ψ hdom hΨ))
+      atTop (𝓝 0) :=
+  wasserstein_strongLaw P (lawOfLyapunov μ Ψ hdom hΨ) X hm hind hlaw
 
 end CarryingCapacity.EmpiricalLLN
