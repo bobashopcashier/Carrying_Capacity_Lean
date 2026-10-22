@@ -69,7 +69,6 @@ import CarryingCapacity.CommonNoiseFiltration
 import CarryingCapacity.CommonFrozenStopping
 import CarryingCapacity.CommonInitialNoise
 import CarryingCapacity.CommonInitialStopping
-
 import CarryingCapacity.FrozenCompensation
 import CarryingCapacity.FrozenCountingIdentity
 import CarryingCapacity.FrozenDynkin
@@ -95,7 +94,6 @@ import CarryingCapacity.PredictableCompensation
 import CarryingCapacity.PredictableIntegral
 import CarryingCapacity.PredictableSets
 import CarryingCapacity.PredictableStepApproximation
-
 import CarryingCapacity.ActualGlobalMoment
 import CarryingCapacity.ActualNonexplosion
 import CarryingCapacity.ConfigurationLocalization
@@ -109,9 +107,7 @@ import CarryingCapacity.InitialFrozenExpectation
 import CarryingCapacity.InitialLyapunovExit
 import CarryingCapacity.IntegralGronwall
 import CarryingCapacity.LyapunovLocalization
-
 import CarryingCapacity.ActualGlobalCounting
-
 import CarryingCapacity.ActualGlobalUniqueness
 import CarryingCapacity.ArbitraryInitialNonexplosion
 import CarryingCapacity.ConfigurationForwardEquation
@@ -136,8 +132,31 @@ import CarryingCapacity.PoissonLawLimit
 import CarryingCapacity.PredictableCountingMartingale
 import CarryingCapacity.PredictableHistoryTruncation
 import CarryingCapacity.TimeGridRefinement
-
 import CarryingCapacity.MarkedPoissonMeasure
+import CarryingCapacity.DeterministicEnvironmentFrozen
+import CarryingCapacity.DeterministicEnvironmentRates
+import CarryingCapacity.IndependentNoiseLabels
+import CarryingCapacity.MarkedFullPoissonLaw
+import CarryingCapacity.MarkedInfiniteIntensity
+import CarryingCapacity.OriginalParticleSystem
+import CarryingCapacity.PredictableTime
+import CarryingCapacity.TimeDependentCountingIdentity
+import CarryingCapacity.TimeDependentDynkin
+import CarryingCapacity.TimeDependentFrozenExit
+import CarryingCapacity.TimeDependentFrozenProcess
+import CarryingCapacity.TimeDependentGeneratorIntegral
+import CarryingCapacity.TimeDependentGeneratorMartingale
+import CarryingCapacity.TimeDependentHistory
+import CarryingCapacity.TimeDependentHistoryIntegral
+import CarryingCapacity.TimeDependentInitial
+import CarryingCapacity.TimeDependentInitialCompensation
+import CarryingCapacity.TimeDependentInitialCounting
+import CarryingCapacity.TimeDependentIntensity
+import CarryingCapacity.TimeDependentJumpIdentity
+import CarryingCapacity.TimeDependentMartingale
+import CarryingCapacity.TimeDependentPreStateTime
+import CarryingCapacity.TimeDependentPredictable
+import CarryingCapacity.TimeDependentRateLocalization
 
 /-!
 # Checked foundations for carrying-capacity mean-field models

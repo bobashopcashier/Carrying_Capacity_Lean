@@ -45,7 +45,7 @@ rejects proof placeholders. The permitted foundational axioms are Lean's
 the stochastic processes.
 
 The complete build passed without warnings, and the exhaustive audit checked
-**2,135 theorem declarations and 2,646 safe declarations across 135 modules**.
+**2,399 theorem declarations and 2,960 safe declarations across 159 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. Separate negative
 checks confirmed that the audit rejects
@@ -76,6 +76,9 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [Symmetrization](CarryingCapacity/Symmetrization.lean), [EmpiricalGenerator](CarryingCapacity/EmpiricalGenerator.lean) | Permutation equivariance; empirical equality iff relabeling; actual exchangeable symmetrization kernel; deterministic empirical state under that kernel; well-defined quotient generator and intertwining identity | Does not prove process exchangeability, the Markov mapping theorem, or Feller generation |
 | [LyapunovTails](CarryingCapacity/LyapunovTails.lean) | Superlinear Lyapunov control gives uniform moment tails; genuine uniform integrability of empirical transport errors; in-probability initialization upgrades to expected-error convergence | Uses a common probability space and genuine integrability; does not supply the initial in-probability convergence assumption |
 | [Framework](CarryingCapacity/Framework.lean) | Multitype birth/death/mutation maps; invalid-jump convention; generator linearity; distinct original TV and extended moment assumptions | Assumption structures record hypotheses; they are not the main theorems |
+| [OriginalParticleSystem](CarryingCapacity/OriginalParticleSystem.lean) | Actual empirical probability rates under the original assumptions; finite total-population sublevels and affine drift; arbitrary-initial nonexplosive particle process, càdlàg paths, finite activity, counting equations and coordinate-equation pathwise uniqueness | No moment-law restriction or extension LyapunovControl; Feller generation, Markov identification and the original mean-field theorem remain separate |
+| [DeterministicEnvironmentRates](CarryingCapacity/DeterministicEnvironmentRates.lean) | The diagonal coupling bound derives fixed-state rate Lipschitz continuity in Wκ; measurable rates along continuous or endpoint-clamped law curves; activity derives finite-active-set rate bounds on compact horizons | Supplies actual coefficient hypotheses; does not construct the nonlinear law curve |
+| [DeterministicEnvironmentFrozen](CarryingCapacity/DeterministicEnvironmentFrozen.lean) | Actual endpoint-clamped frozen environment path with a derived positive rate cap; joint/raw-history measurability, càdlàg paths, counting identity, Dynkin change formula and generator martingale; exact original-environment drift up to the selected horizon | Coupling/activity assumptions and a continuous law curve discharge every rate premise; finite active set only, with no global nonexplosion or nonlinear-law assertion |
 | [RateControl](CarryingCapacity/RateControl.lean) | Every admissible jump has adapted length at least one; total rate is bounded by weighted activity; actual finite-configuration Lyapunov sublevels are finite | Gives deterministic finiteness needed for freezing, without constructing the driving random measures |
 | [FiniteGenerator](CarryingCapacity/FiniteGenerator.lean) | Single-particle update identity; exact generator identity for empirical averages; averaged Lyapunov drift | Does not apply Dynkin's formula or construct a process |
 | [Freezing](CarryingCapacity/Freezing.lean) | Finite-proposal recursion; one-jump enlargement; retaining the exit jump; permanent freezing; unique compatible patch; finite-horizon agreement; exit-tail bounds imply almost-sure exhaustion and patching | Requires the exit bounds and compatibility; does not derive them from a Poisson SDE or prove adaptedness of the patch |
@@ -106,7 +109,8 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [MarkedGridRectangles](CarryingCapacity/MarkedGridRectangles.lean) | Actual common counting-measure masses on finite-grid rectangles have the full product Poisson law, with parameters window length times positive Lebesgue category mass | One fixed label, monotone grid with nonnegative start, and measurable categories disjoint per window under a common strict natural height bound; arbitrary finite-intensity planar-set laws are supplied below; joint future-grid independence from the past remains separate |
 | [MarkedSetCounts](CarryingCapacity/MarkedSetCounts.lean), [PoissonLawLimit](CarryingCapacity/PoissonLawLimit.lean), [MarkedSetPoissonLimit](CarryingCapacity/MarkedSetPoissonLimit.lean) | Actual finite-intensity natural counts and exact expectations; symmetric-difference error bounds; full-vector Poisson laws pass through summable set approximation | Law-transfer bridge takes proved approximating laws; the final application below discharges them |
 | [FiniteDisjointApproximation](CarryingCapacity/FiniteDisjointApproximation.lean), [MarkedRectangleAlgebra](CarryingCapacity/MarkedRectangleAlgebra.lean), [MarkedBoxApproximation](CarryingCapacity/MarkedBoxApproximation.lean), [MarkedAlgebraExtension](CarryingCapacity/MarkedAlgebraExtension.lean) | Disjoint measure-dense algebra approximations; summable bounded-box truncation; extension from bounded Boolean rectangle laws to finite-intensity measurable sets | Pure approximation and extension; finite target intensity is required |
-| [TimeGridRefinement](CarryingCapacity/TimeGridRefinement.lean), [PoissonCoordinateSum](CarryingCapacity/PoissonCoordinateSum.lean), [MarkedBoundedAlgebraLaw](CarryingCapacity/MarkedBoundedAlgebraLaw.lean), [MarkedPoissonMeasure](CarryingCapacity/MarkedPoissonMeasure.lean) | Finite Boolean rectangle refinement and product-Poisson aggregation; exact product law and joint independence for actual masses of every finite disjoint family of measurable finite-intensity planar sets | One fixed noise label; no infinite-intensity or simultaneous cross-label characterization is asserted by the final theorem |
+| [TimeGridRefinement](CarryingCapacity/TimeGridRefinement.lean), [PoissonCoordinateSum](CarryingCapacity/PoissonCoordinateSum.lean), [MarkedBoundedAlgebraLaw](CarryingCapacity/MarkedBoundedAlgebraLaw.lean), [MarkedPoissonMeasure](CarryingCapacity/MarkedPoissonMeasure.lean) | Finite Boolean rectangle refinement and product-Poisson aggregation; exact product law and joint independence for actual masses of every finite disjoint family of measurable finite-intensity planar sets | One fixed noise label and finite target intensities; the full extension is supplied below |
+| [MarkedInfiniteIntensity](CarryingCapacity/MarkedInfiniteIntensity.lean), [IndependentNoiseLabels](CarryingCapacity/IndependentNoiseLabels.lean), [MarkedFullPoissonLaw](CarryingCapacity/MarkedFullPoissonLaw.lean) | Actual mass is almost surely infinite on each infinite-intensity set; whole random measures are jointly independent across labels; exact product laws for arbitrary measurable disjoint sets, including mixed finite/infinite intensities and finite arrays of distinct labels | Disjointness is required within each label only; joint future-array independence from the whole marked past remains separate |
 | [NullAugmentedIndependence](CarryingCapacity/NullAugmentedIndependence.lean), [ClockPastObservation](CarryingCapacity/ClockPastObservation.lean) | Independence survives ambient-null augmentation; exact censored arrivals and arrival masks are measurable in the augmented full count history; the next clock increment remains independent | Retains the actual samples, including exceptional values; does not assert right continuity of the filtration |
 | [MarkedPastProducts](CarryingCapacity/MarkedPastProducts.lean), [MarkedObservation](CarryingCapacity/MarkedObservation.lean) | Deterministic disjoint mark products factor; actual censored arrival-time/mark observations have explicit measurable clock means; past/future mark factors separate after fixing a good clock | Random-index independence is derived by integration, not assumed |
 | [MarkedPastTransform](CarryingCapacity/MarkedPastTransform.lean) | Exact factorization of finite observed-past test products against a future-window mark transform, using proved clock-past independence | Deterministic window and mark factors; no predictable compensation |
@@ -124,6 +128,12 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [ChronologicalEvents](CarryingCapacity/ChronologicalEvents.lean) | Jointly measurable chronological lists from actual time-height boxes; strict ordering, exact membership, time prefixes, and height filtering simultaneously for all cutoffs almost surely | Local finiteness and distinct times come from the constructed common noise |
 | [RejectedProposals](CarryingCapacity/RejectedProposals.lean), [CommonFrozenProcess](CarryingCapacity/CommonFrozenProcess.lean) | Actual shared-noise frozen paths; joint measurability and finite range; almost-sure invariance under changing a valid rate bound, permanent freezing, and nested-path agreement through the exit jump | Countable state space, finitely many directions and autonomous rates; the generator expectation identity is supplied below |
 | [CommonFrozenRegularity](CarryingCapacity/CommonFrozenRegularity.lean), [CommonFrozenExit](CarryingCapacity/CommonFrozenExit.lean) | Genuine first exits as infima; almost-sure càdlàg paths, initial interval, finite-exit attainment, monotone exits, and stopped-larger-path equality with the smaller frozen path | Exit probability estimates and stopping-time properties are supplied below |
+| [TimeDependentFrozenProcess](CarryingCapacity/TimeDependentFrozenProcess.lean), [TimeDependentRateLocalization](CarryingCapacity/TimeDependentRateLocalization.lean), [TimeDependentFrozenExit](CarryingCapacity/TimeDependentFrozenExit.lean) | Actual event-time rates in the common-noise recursion; joint measurability, finite confinement, càdlàg paths and genuine exits; cutoff independence and nested compatibility from horizon-local bounds by time clamping | Finite active sets and time horizons; global time-dependent exhaustion and the deterministic-environment forward law remain separate |
+| [PredictableTime](CarryingCapacity/PredictableTime.lean), [TimeDependentHistory](CarryingCapacity/TimeDependentHistory.lean), [TimeDependentPredictable](CarryingCapacity/TimeDependentPredictable.lean), [TimeDependentInitial](CarryingCapacity/TimeDependentInitial.lean) | All-sample raw-history factorization and adaptedness; predictable evaluation of measurable time coefficients; actual pre-jump states and arbitrary independent initial records | Finite active set; no proposed-process measurability or predictability is assumed |
+| [TimeDependentJumpIdentity](CarryingCapacity/TimeDependentJumpIdentity.lean), [TimeDependentCountingIdentity](CarryingCapacity/TimeDependentCountingIdentity.lean), [TimeDependentInitialCounting](CarryingCapacity/TimeDependentInitialCounting.lean) | Actual chronological telescoping and integrable signed counting-measure equation with event-time rates, including the exit jump and independent initial records | Fixed finite height cutoff; no global time-dependent exhaustion claim |
+| [TimeDependentIntensity](CarryingCapacity/TimeDependentIntensity.lean), [TimeDependentInitialCompensation](CarryingCapacity/TimeDependentInitialCompensation.lean), [TimeDependentGeneratorIntegral](CarryingCapacity/TimeDependentGeneratorIntegral.lean), [TimeDependentPreStateTime](CarryingCapacity/TimeDependentPreStateTime.lean), [TimeDependentDynkin](CarryingCapacity/TimeDependentDynkin.lean) | Finite-box product integrability, signed compensation, actual current-state generator identification and initialized Dynkin formula; genuine Fubini yields the integral of expected drift | Measurable time rates, nonnegative and bounded on the active set during the horizon; change identity needs no initial moment, separate expectations require an integrable initial test value |
+| [TimeDependentHistoryIntegral](CarryingCapacity/TimeDependentHistoryIntegral.lean) | Exact later-history reconstruction and raw-history measurability of actual current-state time integrals | This is a measurability statement; integrability and Dynkin are supplied separately |
+| [TimeDependentMartingale](CarryingCapacity/TimeDependentMartingale.lean), [TimeDependentGeneratorMartingale](CarryingCapacity/TimeDependentGeneratorMartingale.lean) | Actual compensated accepted-increment martingale and classical current-state generator martingale in the raw filtration; genuine integrability and zero expectation | Finite active set; the all-time generator martingale requires nonnegative bounded active rates for every positive time, provided by the endpoint-clamped construction |
 | [CommonNoiseFiltration](CarryingCapacity/CommonNoiseFiltration.lean) | Genuine filtration of arrived labelled noise points; exact all-sample factorization of frozen paths through observed history; adaptedness, including initial information measurable at time zero | Full-past independence and predictable compensation are supplied by the modules above |
 | [CommonFrozenStopping](CarryingCapacity/CommonFrozenStopping.lean) | Minimal augmentation of noise histories by ambient null sets; actual completed probability law; exact first exits are stopping times and measurable in the completed space, AE-measurable in the original space | No right-continuity or optional-stopping theorem is asserted; Lyapunov exit estimates are derived below from the proved Dynkin identity |
 | [CommonInitialNoise](CarryingCapacity/CommonInitialNoise.lean) | Actual product of an arbitrary initial-record law and the full noise law; exact marginals and independence; prescribed initial-state law; joint measurability, adaptedness, and almost-sure càdlàg paths and stopped compatibility | Accepts constructed paired initial laws through measurable projections; Dynkin is supplied below, while trajectory comparison estimates remain open |
@@ -161,6 +171,15 @@ convergent deterministic empirical initial laws without the extension's
 uniform Lyapunov bound. It cannot be recovered merely by specializing κ to
 the identity in a theorem that assumes those stronger moments. The original
 boundary rule also suppresses births when the corresponding type is absent.
+
+`OriginalParticleSystem` now constructs the original finite-N system directly
+from `OriginalAssumptions`, using empirical probability measures with no moment
+restriction. Its total-population drift follows from the original lineage-linear
+rate bound: births contribute one, deaths contribute a nonpositive amount, and
+mutations preserve total population. Finite sublevels and the proved localization
+chain give nonexplosion, the actual counting equation and coordinate-equation
+pathwise uniqueness for arbitrary independent initial laws. This establishes
+the particle construction without borrowing the extension's stronger moment hypotheses.
 
 ## Reading the central statements
 
@@ -209,9 +228,13 @@ measure, for one fixed label. Its parameters are window length times the
 positive Lebesgue mass of each category. Boolean rectangle refinement and
 summable disjoint measure approximation now extend this to every finite family
 of disjoint measurable planar sets of finite intensity, for one fixed noise label.
-The final theorem states the exact product Poisson law of the genuine counting
-measure masses and derives joint independence. Infinite-intensity sets and a
-simultaneous cross-label characterization remain separate. Bounded future rectangle counts
+The full extension now also covers infinite intensity: bounded-box Poisson
+lower tails force the genuine mass to be infinite almost surely. Complete
+label records, and therefore the entire random counting measures, are jointly
+independent across labels. `MarkedFullPoissonLaw.countingMeasure_arrays_map`
+gives the exact nested product law for finite arrays of arbitrary measurable
+sets at distinct labels, allowing infinite intensities and requiring disjointness
+only among sets attached to the same label. Bounded future rectangle counts
 are now independent of the full marked history, including an arbitrary
 independent initial record. This suffices to prove nonnegative predictable
 compensation on the actual raw noise and initial-product filtrations. The
@@ -254,8 +277,27 @@ compensation derives the conditional martingale identity. The classical expressi
 the entire past from the terminal observed history; the definition using the
 prescribed initial record is itself a martingale. Sample-time Fubini gives its
 integrated weak forward equation. These results need no initial moment. Forward-law
-uniqueness, semigroup/strong Markov statements, optional sampling, and
-time-dependent deterministic environments remain separate.
+uniqueness, semigroup/strong Markov statements and optional sampling remain
+separate. The time-dependent frozen construction now evaluates each rate at
+the actual proposal time, with raw history adaptation and predictable strict-past
+states supplied by the accompanying modules. Endpoint clamping derives
+cutoff independence and compatibility from bounds valid only on the selected
+horizon. `DeterministicEnvironmentRates` derives the required time measurability
+and finite-region horizon bounds from the manuscript assumptions along a
+continuous law curve. The actual finite-active time-dependent path satisfies
+its counting equation and initialized Dynkin formula. Signed increment
+integrability comes from finite-box support; sample-time Fubini gives the
+ordinary Lebesgue integral of the expected current-state drift. The change
+identity needs no initial test moment, while separate expectations require one.
+The actual compensated process and current-state generator expression are
+raw-filtration martingales. `DeterministicEnvironmentFrozen` instantiates
+these theorems with the actual paper rates, a cap chosen from the activity
+bound, and the endpoint-clamped continuous environment. Its horizon-specific
+Dynkin formula uses the exact original-environment generator. The all-time
+martingale is for the clamped environment, which agrees with the original
+one up to the selected horizon.
+Global time-dependent nonexplosion and uniqueness of the
+deterministic-environment forward law remain separate.
 
 `EmpiricalLLN.wasserstein_strongLaw` proves the full empirical transport strong
 law using finite-state common-mass couplings and vanishing moment tails.
@@ -282,10 +324,10 @@ controlling only unmatched jumps would miss this term.
 
 ## Remaining work for complete paper formalizations
 
-1. Extend the proved finite-intensity planar-set characterization to
-   infinite-intensity sets and simultaneous noise labels, and extend the
-   proved bounded-rectangle independence from the full common
-   marked past to joint future windows/categories within strips. Predictable
+1. Extend the proved bounded-rectangle independence from the full common
+   marked past to joint future windows/categories within strips. Arbitrary
+   measurable-set Poisson laws, infinite-intensity masses and simultaneous
+   cross-label laws are already proved. Predictable
    compensation is proved from the scalar independence and intensity, without
    requiring this stronger joint law. Dynkin's expectation identity is also
    proved for the actual frozen construction. Lyapunov expectation and exit
@@ -298,7 +340,10 @@ controlling only unmatched jumps would miss this term.
    filtration, optional sampling, and Markov/semigroup statements remain separate.
 2. For the original theorem: Feller generation, the Markov empirical process,
    Yule domination, tightness, and convergence under its weaker initial data.
-3. For the extension: deterministic-environment forward uniqueness, preservation
+   Its actual finite-N nonexplosive construction and coordinate-equation
+   pathwise uniqueness now follow directly from the original assumptions.
+3. For the extension: global deterministic-environment construction and forward
+   uniqueness beyond the proved finite-active-set time-dependent construction, preservation
    of the Lyapunov curve space, and the stochastic Volterra estimate for the
    actual evolution map. The complete Bielecki space and conditional contraction
    and fixed-point argument are proved; the nonlinear flow is not yet constructed.
