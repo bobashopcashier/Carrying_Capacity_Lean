@@ -8,9 +8,10 @@ The actual initial-coupling theorem supplies the paired laws and every initial
 moment and error limit needed by the stochastic comparison. The constructed
 same-noise finite systems then have vanishing averaged path discrepancy and
 uniform empirical transport discrepancy in probability. Both are genuine
-uncountable time suprema. The fixed-focal conclusion still requires paired-path
-exchangeability, and convergence of the independent empirical process to the
-nonlinear law uniformly in time is a separate Section 6 result.
+uncountable time suprema. `PopulationFocalApproximation` adds the fixed-focal
+conclusion using actual paired-path symmetry. Convergence of the independent
+empirical process to the nonlinear law uniformly in time is a separate
+Section 6 result.
 -/
 
 noncomputable section

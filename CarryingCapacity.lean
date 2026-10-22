@@ -243,6 +243,16 @@ import CarryingCapacity.PopulationCouplingProbability
 import CarryingCapacity.PopulationCouplingConvergence
 import CarryingCapacity.PopulationEmpiricalCoupling
 import CarryingCapacity.PopulationSynchronousApproximation
+import CarryingCapacity.ParticleRelabeling
+import CarryingCapacity.ConfigurationRelabeling
+import CarryingCapacity.PopulationStoppedExchangeability
+import CarryingCapacity.PopulationFocalProbability
+import CarryingCapacity.PopulationFocalConvergence
+import CarryingCapacity.PopulationFocalApproximation
+import CarryingCapacity.EmpiricalTimeGrid
+import CarryingCapacity.IndependentArrayLLN
+import CarryingCapacity.RightContinuousSupremum
+import CarryingCapacity.NonlinearEmpiricalSupremum
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -269,8 +279,14 @@ cost, a compensated expected-activity inequality, derived finite expectation,
 uniform common-exit tails and a cutoff-removal probability estimate. The sharp
 stopped Gronwall estimate and independent empirical-error limit prove vanishing
 averaged path discrepancy and uniform empirical transport discrepancy between
-the paired systems under the manuscript's initialization assumptions. Fixed-focal
-approximation still requires the paired-path exchangeability bridge.
+the paired systems under the manuscript's initialization assumptions. Actual
+initial/noise relabeling and pathwise uniqueness give equal stopped-coordinate
+expectations; the same cutoff limit proves fixed-focal approximation. All three
+canonical synchronous conclusions are assembled on the same paired laws.
+The actual independent empirical running error is AE measurable through its
+right-continuous paths. Deterministic grid bounds and an integrable-observable
+iid-row law of large numbers are proved; the actual expected weighted
+jump-variation estimate is still required for the uniform nonlinear-law limit.
 Arbitrary external-space realization, global pathwise horizon consistency,
 mean-field limits and chaos theorems remain open; see README.md and
 docs/PAPER_MAP.md for exact coverage.
