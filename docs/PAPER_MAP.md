@@ -30,10 +30,10 @@ on the number of lineages.
 | Original result | Content | Full stochastic proof status |
 |---|---|---|
 | Proposition 2.3 | Feller semigroup and finitely-supported generator core | Not formalized |
-| Proposition 2.4 | Exchangeability and Markov empirical process | Not formalized |
+| Proposition 2.4 | Exchangeability and Markov empirical process | Symmetrization kernel and generator intertwining proved; full process statement remains open |
 | Theorem 2.5 | Deterministic nonlinear forward law and empirical path convergence | Not formalized |
 | Remark 2.6; Corollary 2.7 | Fixed-time and path-space propagation of chaos | Not formalized |
-| Lemmas 3.1–3.3; Propositions 3.5, 3.7–3.9; Lemmas 3.11–3.12 | Symmetrization, domination, freezing, tightness | Not formalized |
+| Lemmas 3.1–3.3; Propositions 3.5, 3.7–3.9; Lemmas 3.11–3.12 | Symmetrization, domination, freezing, tightness | Algebraic symmetrization and marked frozen paths partly formalized; domination, process-law identification, and tightness remain open |
 
 Theorem 2.5 starts from a uniformly symmetrized deterministic empirical law
 converging weakly. It does **not** assume the extension's uniform Lyapunov
@@ -104,11 +104,23 @@ any subsequent edits.
 | Module | Implemented mathematical coverage | Boundaries |
 |---|---|---|
 | `MomentGeometry.lean` | Discrete κ normalization; linear/quadratic scales; metric axioms for ρκ; Kκ and coordinate bounds; finite state and Lyapunov sublevels | Does not prove completeness of the law space or the Wp comparison of Remark 2.1 |
-| `Transport.lean` | Genuine probability measures with integrable Kκ; all measure couplings with their probability property; independent/diagonal/swapped couplings; integrability of every coupling cost; the infimum Wκ with zero self-distance and symmetry; moment difference bounded by Wκ; moment convergence from Wκ convergence | Wasserstein separation, triangle inequality, gluing lemma, optimal transport, and completeness remain missing |
+| `Transport.lean` | Genuine probability measures with integrable Kκ; all measure couplings with their probability property; independent/diagonal/swapped couplings; integrability of every coupling cost; the infimum Wκ with zero self-distance and symmetry; moment difference bounded by Wκ; moment convergence from Wκ convergence | Metric and completeness are proved in the following modules; arbitrary-law optimal-plan existence remains open |
+| `TransportMetric.lean` | Actual conditional-kernel gluing; cost triangle; separation by indicator tests; MetricSpace; Lipschitz moment and event-probability maps | No arbitrary-law optimal coupling theorem |
+| `TransportCompleteness.lean` | Actual Ionescu–Tulcea simultaneous coupling of near-optimal consecutive plans; a.s. finite total path distance; measurable finite-moment limit law; tail transport bound; CompleteSpace instance | Invariant time-dependent flow space and Bielecki contraction remain separate |
+| `EmpiricalMeasure.lean` | Empirical probability/MomentLaw constructions; test integrals; paired and permuted couplings; Wκ upper bound; update estimate; exact empirical-integral generator and Lyapunov identities | No process law follows from the generator algebra alone |
+| `EmpiricalMatching.lean` | Repeated-state mass splitting; doubly stochastic label plan preserving transport cost; Birkhoff decomposition; Wκ equals attained minimum over permutations; measurable selected matching with exact empirical law and cost | Joint exchangeability of the matched random initialization needs a further symmetrization argument |
+| `EmpiricalLLN.lean` | Scalar, moment, all-state-frequency, and fixed-cutoff-tail strong laws from measurable pairwise independent identically distributed samples; finite Ψ gives a MomentLaw; finite-range truncation law and coupling; vanishing tail transport cost | The finite-support comparison completing Wκ empirical convergence is still open; no full iid transport LLN is claimed |
+| `Symmetrization.lean` | Generator equivariance; uniform permutation average; equal empirical measures iff a relabeling exists; genuine exchangeable symmetrized measure with deterministic empirical state | Stochastic exchangeability still needs process construction and uniqueness |
+| `EmpiricalGenerator.lean` | Countable space of actual empirical measures; representative-independent symmetrization Markov kernel; pushforward is the prescribed Dirac law; quotient generator; Bα=αA intertwining | Does not assert the empirical process is Markov or supply a Feller semigroup |
+| `LyapunovTails.lean` | Actual uniform integral tails from superlinear Ψ; affine-envelope uniform integrability; empirical-transport in-measure to L1 upgrade using expected empirical Ψ bound | Common probability space; explicit integrability is required to avoid totalized-integral loopholes; the initial in-probability convergence is an input |
 | `Framework.lean` | Correct birth/death/type-transition maps, boundary rates, generators; original total-variation growth/Lipschitz assumptions; extension's positive-increment coupling, activity, and Lyapunov hypotheses | These are assumption structures, not proofs that arbitrary rates satisfy them; initialization and full nonlinear forward equation are not encoded |
-| `FiniteGenerator.lean` | Exact 1/N empirical-generator identity and averaged Lyapunov drift | Empirical-law interpretation, Dynkin, and expectation bounds remain separate |
+| `FiniteGenerator.lean` | Exact 1/N empirical-generator identity and averaged Lyapunov drift | The empirical-law interpretation is proved in EmpiricalMeasure; Dynkin and process expectation bounds remain separate |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
+| `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Full Poisson count law and independent increments remain open |
+| `FrozenProcess.lean` | Actual independent iid uniform labels and thinning marks; measurable recursion and time evaluations from deterministic initial states; finite range; right continuity and left limits a.s.; permanent freezing | No filtration/adaptedness, compensator, or compatibility across different clock rates |
+| `PoissonClockLaw.lean` | Survival multiplication, conditional residual exponential law, and exact zero-count probability | Not the complete Poisson-process characterization |
+| `ThinningKernel.lean` | Finite positive bound on active rates; exact accepted-label mass; expected proposal increment times card(J) C equals the frozen generator | Requires positive C and 0≤q≤C; continuous-time generator identification still needs compensation |
 | `LimitArguments.lean` | Successive population-then-cutoff limits, reciprocal cutoff removal, scalar three-region convergence criterion; explicit failure of arbitrary diagonal limits | Inputs are already-obtained scalar error/tail bounds; does not derive stochastic coupling or uniform integrability estimates |
 | `Models.lean` | Boundary-aware scalar first/second/third generator identities; weighted activity; full three-term positive coupling cost including common births; birth/death estimates; affine feedback; cubic Lyapunov domination, drift and superlinearity; integrated generator identities under integrability | Covers scalar computations and r=3 Lyapunov control, not the general multitype application, every real r>2, stochastic forward identities, or limit corollaries |
 | `ModelTransport.lean` | Actual-law moment-feedback coefficient comparison and scalar quadratic coupling/activity/drift inequalities for any nonnegative globally Lipschitz mortality on [0,∞) | No stochastic existence or mean-field limit is asserted; the framework bridge is provided by `QuadraticModel` |
@@ -151,15 +163,22 @@ patched process, remain separate proof obligations.
 
 ## Next connections to formalize
 
-1. Construct the empirical `MomentLaw` and its integrals. Connect
-   `FiniteGenerator`'s abstract environment map and averages to it.
-2. Prove Wasserstein separation and triangle via gluing,
-   and completeness, plus the transport topology needed for time-dependent
-   moment laws. The current moment bound is already proved independently.
-3. Formalize PRM local finiteness, chronological marked events, adapted frozen
-   processes, compensation/Dynkin, and stopped Gronwall. Only after deriving the
-   reciprocal exit estimate can the checked measure/patching results supply
-   non-explosion for the actual stochastic system.
-4. Continue with the nonlinear law and empirical coupling route in the
-   dependency list. Preserve the original theorem's weaker initialization as a
-   distinct target.
+1. Complete the Poisson characterization and construct a common marked driving
+   noise for every cutoff level. The checked exponential paths and thinning
+   probabilities supply components, not yet a PRM SDE theorem.
+2. Prove filtration adaptedness, compensation/Dynkin, and stopped Gronwall.
+   Derive reciprocal exit estimates before applying the existing a.e. patching
+   theorem to the actual stochastic system.
+3. Use the complete moment-law space to construct the deterministic-environment
+   forward law, its uniqueness, the invariant flow space, and nonlinear fixed point.
+4. Connect iid empirical laws, optimal initial matching, localized coupling,
+   time-grid convergence, and Skorokhod/path-space chaos. Preserve the original
+   theorem's weaker initialization as a distinct target.
+
+The immediate empirical-LLN bridge is concrete: for two laws supported on the
+same finite set S, construct the common-mass coupling and bound transport by
+`diam(S) * (1/2) * sum_{x in S} |μ{x} - ν{x}|`. Apply this to the finite-range
+truncations in `EmpiricalLLN`, then use the checked singleton strong laws,
+fixed-cutoff tail strong laws, vanishing target tails, and transport triangle
+inequality. This statement remains a proof target, not an imported hypothesis
+or completed result.
