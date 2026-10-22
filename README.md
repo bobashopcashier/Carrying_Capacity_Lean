@@ -1,16 +1,17 @@
 # Lean formalization of carrying-capacity mean-field models
 
-**Status: partial formalization, with checked proofs and an explicit boundary.**
-The current target is Kenny Xie's *Mean-Field Limits for Multitype Birth–Death Systems with
+**Status: the numbered theorem package of Kenny Xie's specified manuscript is formalized.**
+The target is *Mean-Field Limits for Multitype Birth–Death Systems with
 Unbounded Moment Feedback*
-([manuscript source](https://github.com/bobashopcashier/Carrying_Capacity_fixed/blob/c7688113e4a92910b6403fdd8ecb14fb0f3ce6a9/new.tex)). It does **not** yet
-prove either paper's complete theorem package. All canonical Section 6
-conclusions are now proved for Xie's manuscript, including uniform empirical
-convergence, empirical J1 path-law convergence and finite-particle J1 chaos.
-The real-power Wp comparisons, model hypotheses and globally well-posed closed
-mean ODE are also proved. The prescribed-PRM construction and convergence
-transfers are now available; remaining work includes the full general stopped
-comparison lemma and the prescribed-space localization and martingale statements.
+([manuscript source](https://github.com/bobashopcashier/Carrying_Capacity_fixed/blob/c7688113e4a92910b6403fdd8ecb14fb0f3ce6a9/new.tex)). The checked results include
+strong construction on specified Poisson measures, frozen compatibility and
+nonexplosion, nonlinear well-posedness, uniform empirical and moment convergence,
+fixed-time and J1 path-space chaos, the real-power Wp comparisons, and the
+carrying-capacity models and closed mean ODE.
+The general stopped comparison lemma is also proved for arbitrary adapted
+càdlàg environments. Its finite-state real expectation bound follows from
+ordinary rate integrability; no weighted comparison estimate is assumed.
+The source-by-source inventory is in [PAPER_MAP.md](docs/PAPER_MAP.md).
 Existing results for
 [DeWitt, Evans, Hiesmayr, and Hummel (2024)](https://arxiv.org/html/2307.06010v2)
 are retained as shared infrastructure and separately documented coverage;
@@ -77,7 +78,7 @@ the stochastic processes.
 
 The complete repository-wide build passed without warnings, and its exhaustive
 audit checked
-**4,309 theorem declarations and 5,614 safe declarations across 315 modules**.
+**4,579 theorem declarations and 5,992 safe declarations across 349 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. The counts include the
 prescribed-space, real-power transport, model and mean-equation modules. Separate negative
@@ -98,10 +99,22 @@ check the rejection behavior without adding invalid proofs to project sources.
 | [UsualFiltration](CarryingCapacity/UsualFiltration.lean), [CanonicalUsualFiltration](CarryingCapacity/CanonicalUsualFiltration.lean) | Minimal completed right-continuous augmentation of the actual history; completeness of the restricted law; actual particle, driven and nonlinear paths adapted there; exact localization exits are stopping times | Canonical histories; arbitrary supplied inputs require the transfer below |
 | [MarkedNoiseReconstruction](CarryingCapacity/MarkedNoiseReconstruction.lean), [MarkedNoiseObservation](CarryingCapacity/MarkedNoiseObservation.lean), [MarkedPastReconstruction](CarryingCapacity/MarkedPastReconstruction.lean), [CountingMeasureStrongFunction](CarryingCapacity/CountingMeasureStrongFunction.lean) | Measurable recovery of canonical noise from its actual counts; a separate past-only decoder; exact equality of completed count and indexed histories; entire paths are measurable functions of initial data and actual measures | Reconstruction is derived on probability-one events; no extra random input or assumed decoder identity |
 | [PoissonObservationLaw](CarryingCapacity/PoissonObservationLaw.lean) | Standard independent Poisson count laws determine the entire countable observation law, via disjoint Boolean atoms and finite-cylinder uniqueness | Supplies the law bridge for prescribed-noise realization; path properties and adaptation need separate transfer |
-| [PrescribedPoissonRealization](CarryingCapacity/PrescribedPoissonRealization.lean), [PrescribedPoissonFiltration](CarryingCapacity/PrescribedPoissonFiltration.lean), [PrescribedJumpProcess](CarryingCapacity/PrescribedJumpProcess.lean) | Supplied PRMs reconstruct the exact original initial/noise product law; actual natural count filtration and usual augmentation; measurable strong paths, nonexplosion, left limits, supplied-measure counting equations and pathwise uniqueness | Global construction; explicit frozen-level/exit and martingale consumers remain separate |
-| [PrescribedConfigurationProcess](CarryingCapacity/PrescribedConfigurationProcess.lean), [PrescribedNonlinearProcess](CarryingCapacity/PrescribedNonlinearProcess.lean) | Concrete interacting and nonlinear strong processes on the supplied space; exact empirical/own-marginal equations, usual-natural adaptedness, finite activity and pathwise uniqueness | Nonlinear equation fixes the proved limiting law curve, as in Corollary 4.4; general deterministic-environment and frozen-level consumers remain separate |
+| [PrescribedPoissonRealization](CarryingCapacity/PrescribedPoissonRealization.lean), [PrescribedPoissonFiltration](CarryingCapacity/PrescribedPoissonFiltration.lean), [PrescribedJumpProcess](CarryingCapacity/PrescribedJumpProcess.lean) | Supplied PRMs reconstruct the exact original initial/noise product law; actual natural count filtration and usual augmentation; measurable strong paths, nonexplosion, left limits, supplied-measure counting equations and pathwise uniqueness | Global construction; explicit frozen-level/exit and usual-martingale consumers are supplied by the modules below |
+| [PrescribedConfigurationProcess](CarryingCapacity/PrescribedConfigurationProcess.lean), [PrescribedNonlinearProcess](CarryingCapacity/PrescribedNonlinearProcess.lean) | Concrete interacting and nonlinear strong processes on the supplied space; exact empirical/own-marginal equations, usual-natural adaptedness, finite activity and pathwise uniqueness | Nonlinear equation fixes the proved limiting law curve, as in Corollary 4.4; exact finite-horizon uniqueness is supplied below |
+| [PrescribedConfigurationLocalization](CarryingCapacity/PrescribedConfigurationLocalization.lean), [PrescribedConfigurationFrozenEquation](CarryingCapacity/PrescribedConfigurationFrozenEquation.lean), [PrescribedConfigurationCompatibility](CarryingCapacity/PrescribedConfigurationCompatibility.lean) | Actual supplied frozen paths, finite enlargement, natural-history stopping times, true exit attainment and stopped compatibility including the exit jump; stopped moments, reciprocal exits, exhaustion and global patch agreement | The path is confined to the finite enlargement when initially active; otherwise it stays at its actual initial state |
+| [PrescribedConfigurationEstimates](CarryingCapacity/PrescribedConfigurationEstimates.lean) | Exact empirical weighted and total activity before the genuine exit; global integrability; actual all-real running-supremum measurability and tail; literal population/horizon suprema of Corollary 3.6 | Constants depend on model and horizon, not population size or initial law; only the manuscript initial moment bound is used |
+| [UsualMartingale](CarryingCapacity/UsualMartingale.lean), [ConfigurationUsualMartingale](CarryingCapacity/ConfigurationUsualMartingale.lean), [PrescribedMartingale](CarryingCapacity/PrescribedMartingale.lean), [PrescribedConfigurationMartingale](CarryingCapacity/PrescribedConfigurationMartingale.lean) | Genuine generator martingale in the supplied completed right-continuous natural filtration; reverse causal event pullback and dominated right-limit argument | Finite-support test functions; the actual time-dependent supplied realization uses the manuscript initial moment |
+| [PrescribedConfigurationExchangeability](CarryingCapacity/PrescribedConfigurationExchangeability.lean) | Actual initial/noise relabeling and separate coordinate-equation uniqueness prove supplied-system exchangeability at every nonnegative time | Exchangeable initial law and independent standard labelled PRMs |
+| [PrescribedDeterministicEnvironment](CarryingCapacity/PrescribedDeterministicEnvironment.lean), [PrescribedNonlinearExit](CarryingCapacity/PrescribedNonlinearExit.lean), [PrescribedNonlinearFiniteHorizon](CarryingCapacity/PrescribedNonlinearFiniteHorizon.lean) | Full prescribed deterministic-environment realization and forward uniqueness; nonlinear whole-horizon Lyapunov tail; uniqueness using competing equations only on the stated finite horizon | Deterministic environments are held at the endpoint after the selected horizon, exactly as in the manuscript |
+| [IndependenceLimit](CarryingCapacity/IndependenceLimit.lean), [UsualPoissonIndependence](CarryingCapacity/UsualPoissonIndependence.lean), [PrescribedCountingKernel](CarryingCapacity/PrescribedCountingKernel.lean) | Future rectangle-count independence in the usual natural filtration, actual s-finite counting kernel and predictable compensation for supplied PRMs | Derived from genuine Poisson laws and initial independence; no compensator assumption |
+| [RightContinuousProcessMeasurability](CarryingCapacity/RightContinuousProcessMeasurability.lean), [StoppedComparisonLocalization](CarryingCapacity/StoppedComparisonLocalization.lean) | Joint measurable versions from right-grid observations, simultaneous path agreement, actual stopped-supremum measurability; Fatou removal of exhausting localization and derived real integrability | Generic analytic ingredients; the separate thinning equations are discharged in `PrescribedRandomEnvironmentComparison` |
 | [PrescribedObservableLaws](CarryingCapacity/PrescribedObservableLaws.lean), [PrescribedPopulationLimits](CarryingCapacity/PrescribedPopulationLimits.lean), [PrescribedPathLimits](CarryingCapacity/PrescribedPathLimits.lean) | Exact laws of AE-measurable observables; uniform empirical, scalar-moment and vector-moment convergence on the supplied space; actual empirical and focal J1 path maps and limiting laws | The record and output laws are proved from genuine PRM laws and initial independence, not assumed |
-| [PredictableStoppingMask](CarryingCapacity/PredictableStoppingMask.lean), [IndependentIncrementCompensation](CarryingCapacity/IndependentIncrementCompensation.lean) | Inclusive arbitrary-stopping-time mask is predictable; full nonnegative predictable compensation on any filtered space derived from unweighted intensity and independent future counts | Does not yet prove full Lemma 4.1's arbitrary random-environment pathwise comparison or its localization-removal step |
+| [PredictableStoppingMask](CarryingCapacity/PredictableStoppingMask.lean), [IndependentIncrementCompensation](CarryingCapacity/IndependentIncrementCompensation.lean) | Inclusive arbitrary-stopping-time mask is predictable; full nonnegative predictable compensation on any filtered space derived from unweighted intensity and independent future counts | Compensation ingredients; the full arbitrary-environment comparison is supplied below |
+| [CadlagRateRegularity](CarryingCapacity/CadlagRateRegularity.lean), [CadlagCompactBounds](CarryingCapacity/CadlagCompactBounds.lean), [CadlagFiniteRange](CarryingCapacity/CadlagFiniteRange.lean), [FiniteHorizonCountingUniqueness](CarryingCapacity/FiniteHorizonCountingUniqueness.lean) | Rate observables agree with genuine left limits almost everywhere; compact-time rate bounds and finite discrete ranges; candidate uniqueness from separate coordinate equations only through the chosen horizon | Environments may have infinitely many jumps; no assumed finite activity |
+| [UniversalFrozenNoise](CarryingCapacity/UniversalFrozenNoise.lean), [UniversalThinningComparison](CarryingCapacity/UniversalThinningComparison.lean), [UniversalStoppedComparison](CarryingCapacity/UniversalStoppedComparison.lean), [RandomEnvironmentPathwise](CarryingCapacity/RandomEnvironmentPathwise.lean) | One full noise event supports every later coefficient/path choice; candidate equations imply the true stopped running-supremum positive-increment bound, including the stopping jump | Finite sets and rate caps are derived samplewise from càdlàg paths |
+| [RandomEnvironmentCompensation](CarryingCapacity/RandomEnvironmentCompensation.lean), [RateTableCompensation](CarryingCapacity/RateTableCompensation.lean), [RateTableSumCompensation](CarryingCapacity/RateTableSumCompensation.lean), [RandomEnvironmentComparison](CarryingCapacity/RandomEnvironmentComparison.lean) | Predictable left versions, exact three-region compensation, measurable stopped suprema and their full expected comparison | Countable scalar-rate tables avoid an extra Polish assumption on the environment law space |
+| [PrescribedRandomEnvironmentCompensation](CarryingCapacity/PrescribedRandomEnvironmentCompensation.lean), [RandomEnvironmentActivityIntegral](CarryingCapacity/RandomEnvironmentActivityIntegral.lean), [FiniteStateActivityIntegrability](CarryingCapacity/FiniteStateActivityIntegrability.lean), [PrescribedRandomEnvironmentComparison](CarryingCapacity/PrescribedRandomEnvironmentComparison.lean) | Full Lemma 4.1 on the specified Poisson space, exact κ distance and coupling activity; ordinary real expectation and derived integrability; finite-state case follows from ordinary rates | No compensator, paired-equation or stochastic-comparison premise; no finite-state restriction in the general finite-RHS result |
+| [PrescribedFixedTimeChaos](CarryingCapacity/PrescribedFixedTimeChaos.lean) | Exact first-k vector law of the supplied finite system and its weak convergence to the product nonlinear marginal | Corollary 6.4 uses the original initialization assumptions and actual supplied inputs |
 | [LinearCoordinateApproximation](CarryingCapacity/LinearCoordinateApproximation.lean), [LinearCoordinateForward](CarryingCapacity/LinearCoordinateForward.lean), [LinearMeanGenerator](CarryingCapacity/LinearMeanGenerator.lean), [LinearMeanEquation](CarryingCapacity/LinearMeanEquation.lean), [LinearMeanLipschitz](CarryingCapacity/LinearMeanLipschitz.lean), [LinearMeanUniqueness](CarryingCapacity/LinearMeanUniqueness.lean) | Finite-support coordinate approximation and activity-dominated state/time limits justify the true mean equation; exact birth/death/mutation drift; actual global nonnegative solution; local Lipschitz bounds and compact-time Gronwall prove uniqueness | Completes Proposition 7.5's ODE conclusion without assuming bounded candidate means or an unbounded-test equation |
 | [AdaptedCoordinateForward](CarryingCapacity/AdaptedCoordinateForward.lean), [QuadraticMeanEquation](CarryingCapacity/QuadraticMeanEquation.lean) | Ordinary coordinate tests justified for general normalized κ by actual adapted activity; quadratic-feedback first-mean integral and differential equations, genuine time integrability and right derivative at zero | The quadratic first mean retains second-moment feedback; no autonomous first-mean closure is asserted |
 | [LinearCarryingCapacity](CarryingCapacity/LinearCarryingCapacity.lean), [LinearCarryingCapacityBounds](CarryingCapacity/LinearCarryingCapacityBounds.lean), [LinearJumpGeometry](CarryingCapacity/LinearJumpGeometry.lean), [LinearCarryingCapacityHypotheses](CarryingCapacity/LinearCarryingCapacityHypotheses.lean), [LinearCarryingCapacityApplication](CarryingCapacity/LinearCarryingCapacityApplication.lean) | Exact multitype vector-mean mortality and mutation rates; full activity/coupling bounds; Lyapunov powers for every real p>1; canonical nonexplosion, nonlinear uniqueness, uniform empirical and vector-mean convergence, and J1 chaos | Proposition 7.3 and the canonical Corollary 7.4 application; Proposition 7.5's closed ODE remains separate |
@@ -487,8 +500,8 @@ chosen interval is identified. `DeterministicEnvironmentGeneralLaw` packages
 these actual marginals as MomentLaw values and proves their Wκ continuity from
 fixed-time path continuity and genuine uniform superlinear moments. The
 canonical construction therefore includes Proposition 4.2's general output-law
-continuity. Its formulation on an arbitrary supplied PRM space with a completed
-right-continuous filtration remains separate.
+continuity. `PrescribedDeterministicEnvironment` supplies its formulation on
+an arbitrary supplied PRM space with a completed right-continuous filtration.
 
 `AtomicTransportContinuity` derives Wκ continuity for any moment-bounded
 nonlinear weak solution. It uses atomic continuity from the tested equation,
@@ -560,26 +573,35 @@ The quadratic coupling calculation includes the shared-jump contribution.
 For a nonlinear κ, even a simultaneous birth can increase the distance;
 controlling only unmatched jumps would miss this term.
 
-## Remaining work for Kenny's complete theorem package
+## Completed manuscript scope and boundaries
 
-1. Finish explicit prescribed-space consumers for the frozen systems,
-   compatibility, localization stopping times and stopped moment/exit estimates,
-   the full deterministic-environment formulation of Proposition 4.2 and
-   Corollary 4.4's whole-horizon Lyapunov exit bound.
-   The global strong construction and its usual-natural adaptedness, exact
-   supplied-measure equation, pathwise uniqueness, and uniform/J1 population
-   convergence transfer are proved.
-2. Export the full standalone Lemma 4.1 for arbitrary adapted càdlàg environment
-   pairs and a common stopping time, including removal of finite-state stopping
-   under the stated integrable domination. Its actual deterministic-environment
-   and population-exit instances, positive-increment algebra and required
-   compensation estimates are proved; they do not alone establish that full
-   general statement.
-3. Prove the finite-support generator martingale statement in the prescribed
-   usual-natural filtration, and finish the corresponding prescribed-system
-   exchangeability statement. The canonical raw-filtration martingale and
-   actual noise/initial relabeling are proved; enlarging the filtration requires
-   an additional argument.
+All numbered results in manuscript snapshot `c768811` have checked proofs under
+the stated model and initialization hypotheses. The full standalone Lemma 4.1
+now applies to arbitrary adapted càdlàg environment pairs and a common stopping
+time. Separate coordinate equations imply the pathwise positive-increment
+bound; actual Poisson compensation yields its expectation. The finite-state
+case derives the required integrability from ordinary jump rates, while the
+general bound and Fatou localization passage cover an integrably controlled
+right-hand side.
+
+The supplied-space frozen paths, true exit compatibility, stopping times,
+stopped moments and exit estimates are proved. Lemma 3.5 and Corollary 3.6
+now have their exact supplied-space activity and population-uniform moment
+and maximal bounds. Proposition 4.2 now has its
+explicit prescribed-input formulation. Corollary 4.4 has its actual
+whole-horizon maximal bound and pathwise uniqueness using candidate equations
+only on the stated finite horizon. The generator martingale in the prescribed
+usual-natural filtration and supplied-system exchangeability are proved;
+right continuity is handled by dominated limits of genuine past-event
+integrals, rather than inferred from adaptedness.
+
+Future bounded-height Poisson counts remain independent of the usual natural
+past. A genuine s-finite counting kernel equals the supplied measures almost
+surely, so predictable compensation there follows from their actual Poisson
+laws and initial independence. The universal noise event quantifies over arbitrary candidate coefficients
+and paths afterward. Compact-horizon càdlàg bounds then give the samplewise
+finite sets and rate caps needed for the comparison, without imposing extra
+finite-state or finite-activity assumptions on the general result.
 
 Proposition 7.5's closed first-moment ODE is proved with genuine unbounded-test
 justification and global nonnegative uniqueness. The multitype hypotheses for
@@ -591,8 +613,7 @@ the genuine ordinary Wp metric and equality of convergence topologies.
 
 Optional sampling, semigroup/strong Markov results and stronger joint-future
 independence assertions may be useful extensions, but they are not additional
-mandatory Kenny targets beyond the prescribed-space and filtration obligations
-above. All canonical Section 6 conclusions are now proved.
+mandatory targets of the specified Kenny manuscript. All canonical Section 6 conclusions are now proved.
 
 The original paper remains a separate, inactive completion target: Feller/core
 and empirical Markov identification, and the mean-field and chaos results under

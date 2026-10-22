@@ -318,6 +318,43 @@ import CarryingCapacity.LinearMeanUniqueness
 import CarryingCapacity.AdaptedCoordinateForward
 import CarryingCapacity.QuadraticMeanEquation
 
+import CarryingCapacity.CadlagCompactBounds
+import CarryingCapacity.CadlagRateRegularity
+import CarryingCapacity.ConfigurationUsualMartingale
+import CarryingCapacity.FiniteHorizonCountingUniqueness
+import CarryingCapacity.IndependenceLimit
+import CarryingCapacity.PrescribedConfigurationCompatibility
+import CarryingCapacity.PrescribedConfigurationEstimates
+import CarryingCapacity.PrescribedConfigurationExchangeability
+import CarryingCapacity.PrescribedConfigurationFrozenEquation
+import CarryingCapacity.PrescribedConfigurationLocalization
+import CarryingCapacity.PrescribedConfigurationMartingale
+import CarryingCapacity.PrescribedCountingKernel
+import CarryingCapacity.PrescribedDeterministicEnvironment
+import CarryingCapacity.PrescribedMartingale
+import CarryingCapacity.PrescribedNonlinearExit
+import CarryingCapacity.PrescribedNonlinearFiniteHorizon
+import CarryingCapacity.PrescribedRandomEnvironmentCompensation
+import CarryingCapacity.RandomEnvironmentCompensation
+import CarryingCapacity.RateTableCompensation
+import CarryingCapacity.StoppedComparisonLocalization
+import CarryingCapacity.UniversalFrozenNoise
+import CarryingCapacity.UniversalStoppedComparison
+import CarryingCapacity.UniversalThinningComparison
+import CarryingCapacity.UsualMartingale
+import CarryingCapacity.UsualPoissonIndependence
+
+import CarryingCapacity.CadlagFiniteRange
+import CarryingCapacity.RandomEnvironmentComparison
+import CarryingCapacity.RandomEnvironmentPathwise
+import CarryingCapacity.RateTableSumCompensation
+import CarryingCapacity.RightContinuousProcessMeasurability
+
+import CarryingCapacity.FiniteStateActivityIntegrability
+import CarryingCapacity.PrescribedFixedTimeChaos
+import CarryingCapacity.PrescribedRandomEnvironmentComparison
+import CarryingCapacity.RandomEnvironmentActivityIntegral
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
@@ -362,8 +399,13 @@ time changes and deterministic step approximations establish Borel measurability
 of the actual random paths. Uniform empirical convergence yields weak path-law
 convergence to the deterministic nonlinear curve. Fixed-focal coupling yields
 weak convergence in the vector-valued J1 space to independent nonlinear paths,
-with one common time change for all coordinates. Arbitrary external-space
-realization, the usual filtration formulation, the general stopped-coupling
-lemma and the paper's application package also remain;
-see README.md and docs/PAPER_MAP.md for exact coverage.
+with one common time change for all coordinates. Actual supplied Poisson
+measures now support the strong construction, uniform and path-space limits,
+frozen compatibility and usual-filtration martingale. The real-power transport
+comparisons, model hypotheses and closed mean ODE are also proved. The general
+stopped-coupling lemma is proved for arbitrary adapted càdlàg environments,
+including the finite-state integrable-rate case and removal of localization.
+All numbered conclusions of the targeted Kenny manuscript are covered; see
+README.md and docs/PAPER_MAP.md for the exact snapshot and the separate
+original-paper boundary.
 -/
