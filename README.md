@@ -44,7 +44,7 @@ rejects proof placeholders. The permitted foundational axioms are Lean's
 the stochastic processes.
 
 The complete build passed without warnings, and the exhaustive audit checked
-**1,166 theorem declarations and 1,528 safe declarations across 46 modules**.
+**1,358 theorem declarations and 1,752 safe declarations across 61 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. Separate negative
 checks confirmed that the audit rejects
@@ -81,17 +81,32 @@ custom project axioms and both public and private placeholder proofs.
 | [PoissonRestart](CarryingCapacity/PoissonRestart.lean) | Whole-clock restart under survival of the first wait; exact two-count law; actual count/increment product law; stationary increment law and independence from the starting count | Independence from a count alone does not establish independence from its entire history |
 | [PoissonFiniteDimensional](CarryingCapacity/PoissonFiniteDimensional.lean) | Full mutual independence of all increments on every finite monotone time grid; actual product Poisson law, including repeated times and arbitrary nonnegative starting time | Full-past independence is supplied below; the marked PRM law remains separate |
 | [PoissonMoments](CarryingCapacity/PoissonMoments.lean) | Poisson first-moment series, finite extended moment, genuine integrability, and exact expectations for actual clock counts and increments | Does not identify a marked-noise compensator |
+| [PoissonTransform](CarryingCapacity/PoissonTransform.lean) | Absolute integrability and exact complex power transforms for Poisson laws, actual clock counts and increments, and finite products, for every complex argument | Distributional transforms alone do not give independence from a filtration |
+| [CountVectorTransform](CarryingCapacity/CountVectorTransform.lean) | Finite count-vector laws are determined by their power integrals on the unit torus, using characteristic-function uniqueness | A uniqueness theorem for supplied finite measures, not a count-law construction |
+| [PoissonSuperposition](CarryingCapacity/PoissonSuperposition.lean) | Independent vectors with product Poisson laws sum to a product Poisson vector with summed coordinate rates; exact transform and integrability | Full-vector independence and each component law are explicit hypotheses, discharged for actual strips below |
 | [PoissonPastIndependence](CarryingCapacity/PoissonPastIndependence.lean) | Future clock increment independent of the entire past count filtration, proved from finite-vector laws and a directed union; exact conditional increment expectation | This is the clock's raw natural filtration; the larger marked-noise history still needs its own independence proof |
 | [PoissonMartingale](CarryingCapacity/PoissonMartingale.lean) | Actual compensated clock N_t−rt is an integrable adapted martingale with zero mean; stopping at a deterministic horizon preserves it | Does not assert random optional sampling or a marked-process compensator |
 | [MarkedNoise](CarryingCapacity/MarkedNoise.lean) | One actual counting-measure family for every cutoff, built from independent unit strips; measurable noise; simultaneous local finiteness and absence of coincident arrival times | Full marked PRM characterization and compensation remain open |
 | [MarkedIntensity](CarryingCapacity/MarkedIntensity.lean) | Exact expected counting measure equals product Lebesgue measure on the nonnegative quadrant; counts have the correct expected area on every measurable set; full nonnegative deterministic Campbell identity | Does not prove the marked Poisson law or compensation for random predictable integrands |
+| [MarkedProducts](CarryingCapacity/MarkedProducts.lean) | Exact iid uniform-mark product integrals; integration over marks reduces the actual bounded clock-product expectation to a power of the single-mark mean | One common horizon; no random predictable-integrand formula |
+| [MarkedStripCounts](CarryingCapacity/MarkedStripCounts.lean) | Measurable category prefix and window counts; finite disjoint-union additivity; actual translated strip and common-noise rectangle masses identified with those counts almost surely | Identifications alone do not establish their distributions or time independence |
+| [MarkedThinning](CarryingCapacity/MarkedThinning.lean) | A measurable category in an actual strip has Poisson law with parameter T times its uniform-mark probability, including zero intensity | One category at one nonnegative horizon |
+| [MarkedSplitting](CarryingCapacity/MarkedSplitting.lean) | Full product Poisson law and mutual independence for finitely many disjoint measurable categories in one actual strip | All categories use the same nonnegative horizon; the strip's finite-grid extension is supplied below |
+| [MarkedBlockProducts](CarryingCapacity/MarkedBlockProducts.lean) | Actual iid law at distinct mark coordinates; exact product integrals over disjoint finite index sets and consecutive blocks with arbitrary starting index | Deterministic mark-index blocks; random time blocks are supplied below |
+| [MarkedTimeCounts](CarryingCapacity/MarkedTimeCounts.lean) | Measurable actual grid counts; identification with disjoint consecutive mark blocks; block lengths are clock increments; translated strip masses agree with those counts almost surely | These identifications alone do not establish a distributional law |
+| [MarkedTimeProducts](CarryingCapacity/MarkedTimeProducts.lean) | Exact exponential transform for bounded measurable mark products on the actual random blocks of a finite monotone nonnegative time grid | Integrates deterministic factors assigned to each window; no predictable random-integrand formula |
+| [MarkedGridLaw](CarryingCapacity/MarkedGridLaw.lean) | Full product Poisson law for actual strip counts on a finite time grid, with any finite category type and categories varying between windows | Categories must be disjoint within each window; the full common-noise extension is supplied below |
+| [MarkedBoundedCounts](CarryingCapacity/MarkedBoundedCounts.lean) | Bounded-height common-noise prefix and window counts are finite sums of actual strip counts; translated category probabilities sum to positive Lebesgue mass | Categories have a common strict natural upper bound; this module does not identify their joint law |
+| [MarkedRectangleLaw](CarryingCapacity/MarkedRectangleLaw.lean) | Actual masses of disjoint bounded-height rectangles have the joint product Poisson law with parameters T times positive Lebesgue masses | One fixed label and a common horizon T≥0; general disjoint space-time sets and independence from marked history remain open |
+| [MarkedGridRectangles](CarryingCapacity/MarkedGridRectangles.lean) | Actual common counting-measure masses on finite-grid rectangles have the full product Poisson law, with parameters window length times positive Lebesgue category mass | One fixed label, monotone grid with nonnegative start, and measurable categories disjoint per window under a common strict natural height bound; arbitrary finite-intensity planar sets and full marked-past independence remain open |
 | [FrozenCompatibility](CarryingCapacity/FrozenCompatibility.lean) | Nested frozen recursions agree through their actual first exit, including the exit jump; exit indices are monotone; stopped continuous-time paths agree under a common locally finite clock | This module uses a common proposal sequence; actual cutoff-list compatibility is supplied below |
 | [ChronologicalEvents](CarryingCapacity/ChronologicalEvents.lean) | Jointly measurable chronological lists from actual time-height boxes; strict ordering, exact membership, time prefixes, and height filtering simultaneously for all cutoffs almost surely | Local finiteness and distinct times come from the constructed common noise |
 | [RejectedProposals](CarryingCapacity/RejectedProposals.lean), [CommonFrozenProcess](CarryingCapacity/CommonFrozenProcess.lean) | Actual shared-noise frozen paths; joint measurability and finite range; almost-sure invariance under changing a valid rate bound, permanent freezing, and nested-path agreement through the exit jump | Countable state space, finitely many directions, deterministic initial state, and time-homogeneous rates; generator identification still needs compensation |
 | [CommonFrozenRegularity](CarryingCapacity/CommonFrozenRegularity.lean), [CommonFrozenExit](CarryingCapacity/CommonFrozenExit.lean) | Genuine first exits as infima; almost-sure càdlàg paths, initial interval, finite-exit attainment, monotone exits, and stopped-larger-path equality with the smaller frozen path | Exit probability estimates remain open; stopping-time properties are supplied below |
 | [CommonNoiseFiltration](CarryingCapacity/CommonNoiseFiltration.lean) | Genuine filtration of arrived labelled noise points; exact all-sample factorization of frozen paths through observed history; adaptedness, including initial information measurable at time zero | Independence of marked future increments remains open |
 | [CommonFrozenStopping](CarryingCapacity/CommonFrozenStopping.lean) | Minimal augmentation of noise histories by ambient null sets; actual completed probability law; exact first exits are stopping times and measurable in the completed space, AE-measurable in the original space | No right-continuity or optional-stopping theorem is asserted; Lyapunov exit estimates still require compensation |
-| [CommonInitialNoise](CarryingCapacity/CommonInitialNoise.lean) | Actual product of an arbitrary initial-record law and the full noise law; exact marginals and independence; prescribed initial-state law; joint measurability, adaptedness, and almost-sure càdlàg paths and stopped compatibility | Accepts the constructed paired initial laws through measurable projections; completion and stopping-time identification on this enlarged product filtration remain separate |
+| [CommonInitialNoise](CarryingCapacity/CommonInitialNoise.lean) | Actual product of an arbitrary initial-record law and the full noise law; exact marginals and independence; prescribed initial-state law; joint measurability, adaptedness, and almost-sure càdlàg paths and stopped compatibility | Accepts the constructed paired initial laws through measurable projections; continuous-time generator and comparison estimates remain open |
+| [CommonInitialStopping](CarryingCapacity/CommonInitialStopping.lean) | Minimal null augmentation of the actual initial-record/noise product histories; exact first exits are stopping times, completed-measurable and raw AE-measurable; measurable truncated exits and adapted paths | The terminal history is the supremum of finite histories; no right continuity, optional sampling, or compensator is asserted |
 | [ThinningKernel](CarryingCapacity/ThinningKernel.lean) | Exact accepted-label probabilities; mean one-proposal increment; clock-rate normalization equals the frozen generator; finite active sets admit positive rate bounds | One-step expectation identities do not replace continuous-time compensation |
 | [Models](CarryingCapacity/Models.lean) | Scalar birth–death generator identities through cubic order; full three-term positive-increment coupling bounds; activity growth; cubic Lyapunov domination, drift and superlinearity; integrals of generator identities | Scalar model only; integrated identities are not time derivatives of stochastic expectations |
 | [ModelTransport](CarryingCapacity/ModelTransport.lean) | Actual generalized moments control arbitrary nonnegative Lipschitz mortality; quadratic-feedback coupling and activity estimates follow from transport | Uses the concrete cubic Lyapunov choice, rather than every real exponent greater than two |
@@ -139,10 +154,20 @@ nested active sets give monotone actual exit times and stopped-path compatibilit
 including the exit jump. The frozen paths are almost surely càdlàg and are
 adapted to the filtration generated by arrived labelled
 noise points. The exact first exits are stopping times after the minimal null
-augmentation. The underlying exponential clock has its full finite-grid Poisson
-law and future increments independent of the entire past count history. The
-marked measure has the correct Lebesgue intensity and deterministic Campbell
-identity. The marked PRM characterization, predictable compensation, and exit
+augmentation, also on the actual product space with an arbitrary independent
+initial law. The underlying exponential clock has its full finite-grid Poisson
+law and future increments independent of the entire past count history.
+
+The marked measure has the correct Lebesgue intensity and deterministic Campbell
+identity. For one fixed label and a common horizon T≥0, its masses on disjoint
+bounded-height rectangles have the joint product Poisson law. Within one strip,
+the full marked finite-grid law is proved, allowing categories to vary between
+windows and requiring disjointness only within each window. The same full joint
+law is proved for bounded-height grid rectangles in the original common counting
+measure, for one fixed label. Its parameters are window length times the
+positive Lebesgue mass of each category. The full marked PRM characterization on
+arbitrary finite-intensity measurable planar sets, independence from marked
+history, predictable compensation, and exit
 bounds from the model's Lyapunov drift remain outstanding, as does applying the
 patching theorem to those bounds.
 
@@ -162,7 +187,8 @@ with N, without requiring those arrays to be initial segments of one sequence.
 of the entire common noise and constructs the corresponding adapted frozen
 paths. A paired-array law from `InitialCoupling` can serve as that initial record,
 preserving its complete joint law while either vector projection initializes a
-process.
+process. `CommonInitialStopping` supplies the completion and exact first-exit
+stopping-time statements for that enlarged product filtration.
 
 The quadratic coupling calculation includes the shared-jump contribution.
 For a nonlinear κ, even a simultaneous birth can increase the distance;
@@ -170,11 +196,13 @@ controlling only unmatched jumps would miss this term.
 
 ## Remaining work for complete paper formalizations
 
-1. Full marked PRM law, independence from the marked past, predictable
-   compensation, Dynkin's formula, and Lyapunov exit estimates. Shared-noise
-   frozen paths, stopped compatibility, and completed-filtration first-exit
-   stopping times on the noise-only space are proved. The arbitrary-initial
-   product space still needs the completion and stopping-time extension.
+1. Extend the proved common-noise grid-rectangle laws to the independently
+   scattered law on arbitrary finite-intensity measurable planar sets.
+   Prove independence from the entire marked past, predictable compensation,
+   Dynkin's formula, and Lyapunov exit estimates.
+   Shared-noise frozen paths, stopped compatibility, and completed-filtration
+   first-exit stopping times are proved, including the arbitrary-initial product
+   space. Applying the patching theorem still requires the exit estimates.
 2. For the original theorem: Feller generation, the Markov empirical process,
    Yule domination, tightness, and convergence under its weaker initial data.
 3. For the extension: deterministic-environment forward uniqueness, preservation
