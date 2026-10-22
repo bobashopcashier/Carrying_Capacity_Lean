@@ -82,15 +82,15 @@ theorem finite_sublevel (hN : 0 < N) (R : ℝ) :
     (fun x => (le_add_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 1)).trans (control.dominates x)) R
 
 /-- One single-lineage drift constant works for every positive particle number. -/
-def driftConstant : ℝ := Classical.choose control.drift
+def driftConstant : ℝ := control.drift.val
 
 theorem driftConstant_nonnegative : 0 ≤ driftConstant control :=
-  (Classical.choose_spec control.drift).1
+  control.drift.property.1
 
 theorem single_drift_empirical (hN : 0 < N) (z : Configuration N D) (i : Fin N) :
     q.generator (empiricalLaw κ hN z) control.function (z i) ≤
       driftConstant control * (1 + control.function (z i) + lyapunov control z) := by
-  have hd := (Classical.choose_spec control.drift).2 (z i) (empiricalLaw κ hN z)
+  have hd := control.drift.property.2 (z i) (empiricalLaw κ hN z)
     (integrable_empiricalMeasure hN z control.function)
   simpa only [integral_empiricalLaw, lyapunov, driftConstant] using hd
 

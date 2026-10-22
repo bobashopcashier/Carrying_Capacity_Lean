@@ -34,11 +34,11 @@ theorem finite_sublevels (R : ℝ) : {x : State D | control.function x < R}.Fini
   finite_lyapunov_sublevel κ control.function (fun x =>
     (le_add_of_nonneg_left (by norm_num : (0 : ℝ) ≤ 1)).trans (control.dominates x)) R
 
-/-- The constant selected from the stated Lyapunov drift assumption. -/
-def driftConstant : ℝ := Classical.choose control.drift
+/-- The exact constant supplied with the Lyapunov drift assumption. -/
+def driftConstant : ℝ := control.drift.val
 
 theorem driftConstant_nonnegative : 0 ≤ driftConstant control :=
-  (Classical.choose_spec control.drift).1
+  control.drift.property.1
 
 /-- A finite genuine Lyapunov bound includes integrability, rather than using
 an ordinary integral's default value on nonintegrable laws. -/
@@ -51,7 +51,7 @@ theorem integrable_and_bound (μ : MomentLaw κ D) (B : ℝ) (hB : 0 ≤ B)
 theorem generator_le (μ : MomentLaw κ D) (hμ : Integrable control.function μ.measure)
     (x : State D) : q.generator μ control.function x ≤
       driftConstant control * (1 + control.function x + ∫ y, control.function y ∂μ.measure) :=
-  (Classical.choose_spec control.drift).2 x μ hμ
+  control.drift.property.2 x μ hμ
 
 /-- A uniformly bounded genuine environmental Lyapunov moment gives the
 additive drift bound used before Gronwall. -/

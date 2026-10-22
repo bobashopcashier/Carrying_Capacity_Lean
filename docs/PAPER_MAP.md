@@ -210,8 +210,8 @@ many population rows smaller than k are handled explicitly.
 
 These results cover every canonical conclusion of Section 6 in source
 `c768811`, including both path-space limits and fixed-time chaos. The complete
-349-module build passed without warnings; the exhaustive audit checked 4,579
-theorem declarations and 5,992 safe declarations, including the J1,
+354-module build passed without warnings; the exhaustive audit checked 4,632
+theorem declarations and 6,096 safe declarations, including the J1,
 prescribed-space, real-power model, mean-equation and transport modules.
 The negative audit fixtures also passed.
 
@@ -368,7 +368,7 @@ Rerun the project build and axiom audit after subsequent source edits.
 | `PoissonSuperposition.lean` | Finite sums of independent vectors with product Poisson laws have product Poisson laws with summed coordinate parameters; exact transform and integrability for all complex arguments | Independence is between complete vectors, not merely pairwise counts; component laws and independence must be supplied |
 | `PoissonPastIndependence.lean` | Full past-count sigma algebra built from directed finite observation families; actual future increment independent of that entire past; natural-filtration identification; conditional increment expectation r·t | Raw scalar clock filtration only; the marked noise has a larger observation history and still needs its own independence proof |
 | `PoissonMartingale.lean` | Actual compensated count N_t−rt is a martingale on nonnegative times; integrability, adaptedness, zero conditional increments and zero mean; deterministic-horizon stopped martingale | Does not assert random optional sampling or a compensator for the marked counting measure |
-| `MarkedNoise.lean` | A single actual probability space and measurable counting-measure family from independent unit vertical strips; a common probability-one event gives local finiteness for every real time/height cutoff and no simultaneous arrivals | Full marked PRM characterization remains separate; predictable compensation is supplied below |
+| `MarkedNoise.lean` | A single actual probability space and measurable counting-measure family from independent unit vertical strips; a common probability-one event gives local finiteness for every real time/height cutoff and no simultaneous arrivals | The full marked PRM law is proved by `MarkedFullPoissonLaw.countingMeasure_arrays_map`; predictable compensation is supplied below |
 | `MarkedIntensity.lean` | Actual mark/clock product probabilities, count expectations, translated uniform-strip decomposition, and exact expected counting measure equal to quadrant Lebesgue measure; full nonnegative deterministic Campbell identity and expected mass of every measurable set | First-moment identities do not establish the full marked Poisson law, past independence, or predictable random-integrand compensation |
 | `MarkedProducts.lean` | Finite iid uniform-mark product integrals; measurable and integrable actual clock products for bounded factors; Fubini reduces their expectation to the clock expectation of a power of the single-mark mean | One common horizon; does not assert a formula for random predictable integrands |
 | `MarkedStripCounts.lean` | Measurable natural-valued category prefix and window counts, finite disjoint-union additivity, and a.s. identification with genuine translated strip-measure rectangle and time-window masses; common counting measure equals the sum of strip counts | Time-window mass identification is pathwise and is not a time-increment distribution theorem |
@@ -924,6 +924,24 @@ separate extensions.
 
 
 ## Completed Kenny theorem package
+
+The complete four-clause statement is `MainTheorem.main_theorem`, whose
+`Conclusions` contains the actual supplied strong solutions, unique nonlinear
+law, uniform empirical and moment limits, genuine J1 laws, and independent
+nonlinear limiting paths. `ModelCorollaries.corollary_7_4` and
+`corollary_7_8` specialize the complete statement on supplied Poisson spaces;
+the latter also displays the empirical second-moment statistic explicitly.
+`PowerWassersteinUniform.measure_runningError_gt_tendsto_zero` states Remark
+2.8 for the actual all-real-time supremum in ordinary Wp, including exact
+quadratic and linear scale bridges.
+
+The drift witness in `LyapunovControl` is explicit data, so both configuration
+and deterministic-environment drift constants are exactly its supplied value.
+`ExplicitLyapunovConstant.solution_envelope` also proves the envelope for any
+other admissible constant and any existing solution. The genuine supplied-space
+first-exit formulation of (3.18) is
+`PrescribedConfigurationExit.firstExit_probability_le`, with simultaneous
+almost-sure crossing/exit equivalence for all real thresholds and horizons.
 
 Every numbered result of the specified manuscript now has checked proofs.
 `PrescribedRandomEnvironmentComparison` gives Lemma 4.1's exact κ-distance
