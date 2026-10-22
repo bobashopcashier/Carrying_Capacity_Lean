@@ -158,6 +158,28 @@ import CarryingCapacity.TimeDependentPreStateTime
 import CarryingCapacity.TimeDependentPredictable
 import CarryingCapacity.TimeDependentRateLocalization
 
+import CarryingCapacity.DeterministicEnvironmentEnvelope
+import CarryingCapacity.DeterministicEnvironmentEvolution
+import CarryingCapacity.DeterministicEnvironmentLaw
+import CarryingCapacity.DeterministicEnvironmentLyapunov
+import CarryingCapacity.DeterministicEnvironmentProcess
+import CarryingCapacity.IntegralGronwallComparison
+import CarryingCapacity.LawCurveContinuity
+import CarryingCapacity.TimeDependentEquationUniqueness
+import CarryingCapacity.TimeDependentExpectation
+import CarryingCapacity.TimeDependentGlobalActivity
+import CarryingCapacity.TimeDependentGlobalComparison
+import CarryingCapacity.TimeDependentGlobalCounting
+import CarryingCapacity.TimeDependentGlobalMoment
+import CarryingCapacity.TimeDependentGlobalProcess
+import CarryingCapacity.TimeDependentGlobalUniqueness
+import CarryingCapacity.TimeDependentInitialExit
+import CarryingCapacity.TimeDependentLocalization
+import CarryingCapacity.TimeDependentLyapunovBound
+import CarryingCapacity.TimeDependentLyapunovComparison
+import CarryingCapacity.TimeDependentNonexplosion
+import CarryingCapacity.TimeDependentStochasticContinuity
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
@@ -165,6 +187,8 @@ This is a partial formalization of DeWitt--Evans--Hiesmayr--Hummel (2024)
 and Kenny Xie's moment-feedback manuscript. All imported theorems are proved.
 Actual autonomous global particle paths, coordinate-equation pathwise uniqueness,
 finite-support generator martingales, and weak forward equations are proved,
-including arbitrary independent initial laws. Nonlinear-flow, mean-field,
+including arbitrary independent initial laws. The actual prescribed-environment
+evolution is a continuous, moment-envelope-preserving self-map of the manuscript
+curve space. Its stochastic contraction estimate and the nonlinear-flow, mean-field,
 and chaos theorems remain open; see README.md and docs/PAPER_MAP.md for exact coverage.
 -/
