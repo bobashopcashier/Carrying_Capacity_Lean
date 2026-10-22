@@ -113,16 +113,23 @@ The actual untruncated finite-support weak forward equation is now proved.
 Prescribed-environment linear law uniqueness holds against every probability-valued
 weak solution with genuinely integrable tested drift, with no candidate moment
 bound. General continuous environments with uniformly bounded genuine Ψ moments
-are covered; their initial value need not equal the initial law. The nonlinear
-fixed curve satisfies its own-law weak equation, and any weak solution already
-in ManuscriptCurves equals that curve by linear law identification. These are
-components of Proposition 4.2, Theorem 4.3 and Corollary 4.4, not their complete
-statement for the broader moment-bounded nonlinear class. Compatibility across
-horizons, arbitrary external-PRM realization, weighted-activity estimates and
-the mean-field statements remain open. Proposition 4.2's general output-law Wκ
-continuity is not yet packaged by a general-environment wrapper; the existing
-transport continuity theorem is instantiated for ManuscriptCurves. Its arbitrary
-supplied PRM space and completed right-continuous filtration are also separate.
+are covered; their initial value need not equal the initial law. Their actual
+output MomentLaw curve is now proved Wκ-continuous as well. For the nonlinear
+problem, atomic continuity and uniform superlinear tails derive transport
+continuity of every uniformly Ψ-bounded weak candidate. Linear identification
+and actual shared-noise comparison then give full-class uniqueness by Gronwall.
+The already constructed fixed curve supplies existence and the exact envelope,
+so Theorem 4.3's law well-posedness statement is proved, including its full
+moment-bounded uniqueness class. Genuine tested time integrability is explicit
+in the formal definition of the weak equation.
+
+The fixed law curves and actual process marginals are also consistent across
+construction horizons. This does not assert that separately constructed paths
+agree on overlaps or provide one all-time nonlinear realization. Proposition
+4.2 and Corollary 4.4 still retain their arbitrary supplied PRM-space and
+completed right-continuous filtration obligations. Weighted-activity variation
+estimates, interacting-particle comparison and both papers' mean-field and
+path-space chaos conclusions remain open.
 
 ## Dependency order
 
@@ -135,9 +142,11 @@ supplied PRM space and completed right-continuous filtration are also separate.
 5. Use the proved actual deterministic-environment laws, finite-support weak
    forward equation and finite-state minimality to identify every probability
    weak solution with the constructed law, without candidate moment assumptions.
-6. Use the proved linear law identification and actual Bielecki fixed curve to
-   identify nonlinear weak solutions within ManuscriptCurves. Extend uniqueness
-   to the entire moment-bounded class, beyond that invariant curve space.
+6. Use the proved atomic-to-transport continuity, linear law identification and
+   actual synchronous comparison to identify every moment-bounded nonlinear
+   weak solution with the Bielecki fixed curve. The exact envelope and
+   consistency of laws across construction horizons are proved; pathwise
+   all-horizon and arbitrary external-PRM realization remain separate.
 7. Formalize initial matching, uniform-integrability upgrades, empirical LLNs,
    localized population coupling, and the successive N-then-R limit.
 8. Formalize the time-grid argument, Skorokhod transfer, and independence of
@@ -187,15 +196,19 @@ any subsequent edits.
 | `VolterraGronwall.lean`, `DeterministicEnvironmentVolterra.lean` | Integrating factor and FTC give the explicit forced convolution; actual extended compensation and independent moment bounds give a finite real integral inequality; fixed-time expected-distance and output-law Volterra bounds follow | Exactly the estimate needed by the Bielecki theorem; running-supremum control is supplied separately below |
 | `SynchronousRunningSupremum.lean` | Actual uncountable running supremum agrees almost surely with rational observations plus the endpoint; measurability follows from that countable version; actual positive-jump compensation bounds its extended expectation | Genuine localization derives right-local constancy; no continuity of arbitrary cost functions or finite expected supremum is assumed |
 | `DeterministicEnvironmentRunningSupremum.lean` | Exact manuscript exponential-convolution estimate for the expected supremum over all real times in [0,t]; actual supremum is AE measurable, has finite expectation and is almost surely finite; its real version is integrable and obeys the same estimate | Uses only the original manuscript assumptions and constructed processes. No finite-supremum or expected-coupling hypothesis is supplied |
-| `NonlinearFixedPoint.lean` | Concrete Bielecki weight 2A+1; actual invariant evolution has exactly one fixed curve; canonical process has that exact marginal law and moment envelope, is jointly measurable, raw-adapted, càdlàg and nonexplosive, and satisfies its own-marginal counting equation with the true left state | Requires a genuine finite initial Ψ moment; uniqueness is within ManuscriptCurves. Self-consistency is on the selected [0,T], with endpoint-held environment afterward; weak-equation uniqueness within ManuscriptCurves is supplied below; broader nonlinear uniqueness and arbitrary external PRM realization remain open |
+| `NonlinearFixedPoint.lean` | Concrete Bielecki weight 2A+1; actual invariant evolution has exactly one fixed curve; canonical process has that exact marginal law and moment envelope, is jointly measurable, raw-adapted, càdlàg and nonexplosive, and satisfies its own-marginal counting equation with the true left state | Requires a genuine finite initial Ψ moment; uniqueness is within ManuscriptCurves. Self-consistency is on the selected [0,T], with endpoint-held environment afterward; full moment-bounded law uniqueness and law consistency across horizons are supplied below; arbitrary external PRM realization remains open |
 | `FiniteGenerator.lean` | Exact 1/N empirical-generator identity and averaged Lyapunov drift | The empirical-law interpretation is proved in EmpiricalMeasure; Dynkin and process expectation bounds remain separate |
 | `FiniteJumpForward.lean` | Probability-valued weak solution definition with explicit genuine time integrability for each finite-support tested drift; atomic continuity derived from its integral equation; finite fibers give finite generator influence | No candidate moment, continuity, Markov or uniqueness conclusion is assumed |
 | `TimeDependentFrozenForward.lean`, `DeterministicEnvironmentFrozenForward.lean` | Actual singleton expectations are genuine probabilities, have the initial values and finite-mass bounds, and satisfy the finite forward system by proved Dynkin/Fubini; Lipschitz mass continuity; exact matrix leakage and self-loop cancellation; derived manuscript coefficient bounds | The closed internal system concerns targets in the finite active set; no actual law equation is supplied as input |
 | `FiniteForwardComparison.lean`, `FiniteJumpRestriction.lean`, `FrozenForwardMinimality.lean` | Last-nonpositive-time comparison for genuine finite integral systems; weak-law finite restriction with derived nonnegative finite external inflow; actual frozen probability minimality inside the active set | All-subinterval inequalities come from integrable equalities; a one-sided inequality anchored only at zero is not substituted |
 | `TimeDependentFrozenLawLimit.lean`, `TimeDependentForwardUniqueness.lean` | Actual horizon agreement and bounded convergence identify frozen atom limits; real atomic domination forces probability-measure equality; constructed global law equals every probability weak solution | Generic exhaustion, local rate bounds, finite jump fibers and continuous coefficients are explicit; paper assumptions discharge them below |
 | `DeterministicEnvironmentFiniteSupport.lean`, `DeterministicEnvironmentForward.lean` | Finite actual predecessor sets bound the unrestricted increment and generator; derived signed compensation and sample-time integrability/Fubini; actual original-rate weak forward solution and canonical nonlinear own-law equation | Finite-support tests, no unbounded-test extension; original coefficients and self-consistency hold on [0,T] |
-| `DeterministicEnvironmentGeneralForward.lean` | Actual original-rate weak forward existence for every continuous prescribed environment with uniformly bounded genuine Ψ moment; finite-support increment integrability, signed compensation and Fubini derived for the existing global process | Finite initial Ψ moment; no manuscript envelope membership or v(0)=ν hypothesis; original-rate equation on [0,T]. General output-law Wκ continuity is not yet packaged |
-| `DeterministicEnvironmentForwardUniqueness.lean` | Actual prescribed-environment existence and linear uniqueness on [0,T] without any competing-law moment bound; nonlinear weak solution in ManuscriptCurves is the actual evolution fixed point; exactly one nonlinear weak solution in that curve space | General prescribed environment has Wκ continuity and bounded genuine Ψ moment, with finite initial Ψ moment; broader moment-bounded nonlinear uniqueness remains open |
+| `DeterministicEnvironmentGeneralForward.lean` | Actual original-rate weak forward existence for every continuous prescribed environment with uniformly bounded genuine Ψ moment; finite-support increment integrability, signed compensation and Fubini derived for the existing global process | Finite initial Ψ moment; no manuscript envelope membership or v(0)=ν hypothesis; original-rate equation on [0,T]. General output-law Wκ continuity is supplied below |
+| `DeterministicEnvironmentForwardUniqueness.lean` | Actual prescribed-environment existence and linear uniqueness on [0,T] without any competing-law moment bound; nonlinear weak solution in ManuscriptCurves is the actual evolution fixed point; exactly one nonlinear weak solution in that curve space | General prescribed environment has Wκ continuity and bounded genuine Ψ moment, with finite initial Ψ moment; full-class nonlinear uniqueness is supplied below |
+| `DeterministicEnvironmentGeneralLaw.lean` | Genuine actual pushforward MomentLaw for general prescribed environments, exact initial law, derived affine-exponential Ψ bounds, and Wκ-continuous outputCurve by stochastic continuity and superlinear uniform integrability | Continuous environment with bounded genuine Ψ moment and a separate finite-Ψ initial law; no v(0)=ν hypothesis; canonical product-space realization |
+| `AtomicTransportContinuity.lean` | Actual finite truncation handles retained atoms and zero normalization; genuine uniform superlinear moments make truncation costs small; atomic convergence gives Wκ convergence for arbitrary filters; weak solutions are automatically Wκ-continuous | The candidate supplies no continuity or rate-regularity premise; true extended Lyapunov bounds give integrability before ordinary moments are used |
+| `DeterministicEnvironmentGeneralCoupling.lean`, `NonlinearForwardUniqueness.lean` | Proved linear identification realizes general nonlinear candidates; common-noise compensation and actual endpoint moments give a finite expected-distance inequality; Gronwall proves full bounded-Ψ law uniqueness; actual existence, exact envelope and exact interval-domain unique existence | Theorem 4.3's law statement under the original manuscript hypotheses and finite initial Ψ moment; no candidate continuity, sharp envelope or stochastic comparison assumption |
+| `FiniteJumpForwardRestriction.lean`, `NonlinearHorizonConsistency.lean` | Genuine weak-solution integrability and equations restrict to smaller horizons and transfer under local coefficient/law equality; actual fixed curves, deterministic environments and process marginal laws agree on overlapping construction intervals | Includes zero horizons and endpoints; establishes laws only, not sample-path agreement or a single all-time nonlinear realization |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -674,20 +687,48 @@ matching existence theorem for that general environment, with all finite-test
 integrability proved from the constructed process. The combined
 `actualLaw_isSolution_and_unique` theorem identifies all competing laws on
 `[0,T]`; it does not identify their arbitrary continuations beyond that interval.
-Atomic continuity follows from the weak equation. The Wκ-continuity theorem is
-currently instantiated for manuscript-space environments; general output-law
-Wκ continuity still needs its own wrapper. This leaves part of Proposition 4.2,
-together with its arbitrary external-space and completed right-continuous
-filtration formulation, outside the checked statement.
+`DeterministicEnvironmentGeneralLaw` now supplies the general actual output-law
+Wκ continuity as well. It first derives genuine integrable Ψ and weight moments,
+packages the exact pushforward, then combines the uniform affine-exponential
+bound with diffuse proposal times and superlinear uniform integrability.
+The initial value is exactly the separately supplied initial law. The arbitrary
+external-space and completed right-continuous filtration formulation of
+Proposition 4.2 remains outside this canonical construction.
 
-For a nonlinear candidate already in ManuscriptCurves, linear law identification
-proves it is a fixed point of the actual evolution. The existing Bielecki
-uniqueness then proves equality with the constructed fixed curve. The canonical
-curve supplies existence, so the module proves exactly one nonlinear weak
-solution in that invariant space. Uniqueness in the broader moment-bounded
-nonlinear class and compatibility across construction horizons remain open.
-No arbitrary externally supplied PRM probability space is substituted for the
-canonical product space.
+`AtomicTransportContinuity` upgrades atomic convergence to actual Wκ convergence.
+Nonzero atoms of a finite truncation are either preserved or absent, while its
+collapsed zero atom follows from finite retained masses and normalization.
+Both approximating and target laws have uniformly small truncation costs under
+a genuine superlinear Ψ bound. This proves transport continuity of every
+moment-bounded weak candidate from its tested integral equation, without a
+candidate-continuity assumption.
+
+`DeterministicEnvironmentGeneralCoupling` identifies each such candidate with
+its actual prescribed-environment process by linear uniqueness. Its genuine
+Ψ bound therefore controls the actual endpoint moments. The two processes
+share the initial record and driving noise; predictable compensation gives the
+extended distance inequality, and superlinear uniform integrability derives
+continuity of their expected distance. A continuous finite dominating function
+justifies conversion to the real integral inequality. The actual joint law
+bounds input transport by expected distance.
+`NonlinearForwardUniqueness` takes a common B bounding the two candidate moments,
+sets A=L(1+2B), and applies Gronwall to m(t)≤2A∫₀ᵗm(s)ds. Thus every
+moment-bounded weak solution equals the constructed fixed curve on [0,T].
+The exact K(t) envelope is a consequence of that equality; no unbounded-test
+forward equation is assumed or used. The canonical curve provides existence,
+and `existsUnique_interval_solution` is an exact unique-existence statement
+on the interval domain for arbitrary law functions with genuine tested time
+integrability.
+
+`FiniteJumpForwardRestriction` preserves genuine integrability when shrinking
+a horizon and changing coefficients or laws only outside it.
+`NonlinearHorizonConsistency` restricts a larger fixed curve, retaining the
+same pointwise K(t) envelope, and transfers its actual weak equation. The proved
+uniqueness identifies the restriction with the smaller fixed curve. Actual
+process marginals and deterministic environments consequently agree on every
+overlap, including endpoints and zero horizons. No sample-path identification
+across horizons, single all-time nonlinear realization or arbitrary externally
+supplied PRM probability space is asserted.
 
 For the autonomous configuration construction, `InitialFrozenExpectation`
 supplies genuine Fubini and
@@ -747,16 +788,23 @@ right continuity of the completed filtration remain open.
    generator martingale and weak forward equation are now proved, including
    arbitrary independent initial laws. Lyapunov expectation bounds retain their
    initial-moment assumptions.
-3. Extend the proved nonlinear weak-solution uniqueness from ManuscriptCurves
-   to the entire moment-bounded nonlinear class. The actual finite-support weak
-   forward equation and prescribed-environment linear uniqueness, with no
-   candidate moments, are now proved. Package Wκ continuity of the general
-   prescribed-environment output law, establish compatibility of the canonical
-   nonlinear realizations across horizons, and extend realization to arbitrary
-   externally supplied PRM spaces.
-4. Use the proved initialization coupling and empirical-error limits to derive
-   localized interacting-particle versus nonlinear process coupling, time-grid convergence, and Skorokhod/path-space
-   chaos. Preserve the original theorem's weaker initialization as a distinct target.
+3. Establish sample-path consistency of the canonical nonlinear realizations
+   across horizons and construct a single all-time nonlinear process; extend
+   realization to arbitrary externally supplied PRM spaces with the required
+   augmented filtration. General prescribed-environment output-law continuity,
+   full moment-bounded nonlinear law uniqueness, the exact envelope and
+   consistency of laws across horizons are proved.
+4. Prove the grouped-input bridge on
+   `γ_N.prod (MarkedNoise.law (Fin N × Jump D))`, with γ_N supplied by
+   `InitialCoupling`: each record consists of the nonlinear initial coordinate
+   and the noise restricted to that particle's jump labels. The entire record
+   array must have exactly the product of `CommonInitialNoise.law ν.measure
+   (Jump D)`, with an exact projected counting-measure identity. Applying the
+   existing nonlinear process would then give iid trajectories and connect
+   `EmpiricalArrayError` to their empirical discrepancy. This bridge is not yet
+   proved. Next derive stopped interacting-particle comparison, time-grid
+   convergence and Skorokhod/path-space chaos. Preserve the original theorem's
+   weaker initialization as a distinct target.
 
 The empirical transport LLN bridge is now proved: `FiniteTransport` constructs
 the common-mass coupling and bounds transport by

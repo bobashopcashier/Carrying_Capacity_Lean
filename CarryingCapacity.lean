@@ -207,6 +207,13 @@ import CarryingCapacity.TimeDependentForwardUniqueness
 import CarryingCapacity.TimeDependentFrozenForward
 import CarryingCapacity.TimeDependentFrozenLawLimit
 
+import CarryingCapacity.AtomicTransportContinuity
+import CarryingCapacity.DeterministicEnvironmentGeneralCoupling
+import CarryingCapacity.DeterministicEnvironmentGeneralLaw
+import CarryingCapacity.FiniteJumpForwardRestriction
+import CarryingCapacity.NonlinearForwardUniqueness
+import CarryingCapacity.NonlinearHorizonConsistency
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
@@ -219,8 +226,11 @@ evolution is a continuous, moment-envelope-preserving self-map of the manuscript
 curve space. Synchronous coupling proves its Volterra estimate and constructs a
 unique fixed curve there, with an actual self-consistent common-noise realization
 on each selected finite horizon. Actual finite-support forward equations and
-linear forward-law uniqueness identify the unique nonlinear weak solution within
-that curve space. Uniqueness in the broader moment-bounded class, mean-field
-limits and chaos theorems remain open; see README.md and docs/PAPER_MAP.md for
-exact coverage.
+linear forward-law uniqueness identify the nonlinear weak solution. Atomic
+continuity and genuine Lyapunov bounds derive transport continuity for every
+moment-bounded weak candidate, and actual synchronous coupling proves uniqueness
+in that full class and the exact envelope. Fixed law curves agree across horizons.
+Arbitrary external-space realization, global pathwise horizon consistency,
+mean-field limits and chaos theorems remain open; see README.md and
+docs/PAPER_MAP.md for exact coverage.
 -/
