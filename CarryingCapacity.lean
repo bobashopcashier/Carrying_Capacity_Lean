@@ -267,6 +267,16 @@ import CarryingCapacity.PopulationEmpiricalLimit
 import CarryingCapacity.CoupledLawConvergence
 import CarryingCapacity.PopulationFixedTimeChaos
 import CarryingCapacity.SkorokhodJ1
+import CarryingCapacity.AdaptedStateSpace
+import CarryingCapacity.CanonicalSkorokhodPaths
+import CarryingCapacity.ConcentratingLaw
+import CarryingCapacity.CoupledPathLawConvergence
+import CarryingCapacity.FiniteTimeChange
+import CarryingCapacity.NonlinearSkorokhodArray
+import CarryingCapacity.PopulationPathChaos
+import CarryingCapacity.PopulationSkorokhodLimit
+import CarryingCapacity.SkorokhodPathOperations
+import CarryingCapacity.SkorokhodStepApproximation
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -307,9 +317,13 @@ The actual nonlinear paths agree across horizons and define a single all-time
 canonical process with its own-marginal counting equation and unique global
 moment-bounded weak law. Exact initial-record projection transfers uniform
 empirical and generalized-moment convergence to the original vector law.
-Fixed-time propagation of chaos is proved. A genuine Skorokhod J1 metric and
-time-change criterion are constructed, but measurable random path maps and
-path-space chaos remain open. Arbitrary external-space realization, the usual
-filtration formulation, and the paper's application package also remain;
+Fixed-time propagation of chaos is proved. Genuine Skorokhod J1 metrics, finite
+time changes and deterministic step approximations establish Borel measurability
+of the actual random paths. Uniform empirical convergence yields weak path-law
+convergence to the deterministic nonlinear curve. Fixed-focal coupling yields
+weak convergence in the vector-valued J1 space to independent nonlinear paths,
+with one common time change for all coordinates. Arbitrary external-space
+realization, the usual filtration formulation, the general stopped-coupling
+lemma and the paper's application package also remain;
 see README.md and docs/PAPER_MAP.md for exact coverage.
 -/

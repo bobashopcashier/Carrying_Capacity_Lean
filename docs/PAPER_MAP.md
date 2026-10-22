@@ -64,7 +64,7 @@ the original paper's numbering.
 | Source location | Exact objects or result | Required formal ingredients |
 |---|---|---|
 | `sections/04_wasserstein_model_and_theorem.tex:10` | `E = ℕ₀ᴰ`; κ(0)=0; κ(n+1)−κ(n)≥1; Kκ=sum of coordinate κ values; Mκ=integral Kκ; ρκ=sum of absolute transformed-coordinate differences; Wκ=infimum coupling cost | Discrete geometry; integrals; probability couplings; infima |
-| same file, Remark 2.1 | Wp^p≤Wκ and Wκ≤p(Mκ(μ)^((p−1)/p)+Mκ(ν)^((p−1)/p))Wp | Real powers, Hölder, transport couplings |
+| same file, Remark 2.1 | Wp^p≤Wκ and Wκ≤p(Mκ(μ)^((p−1)/p)+Mκ(ν)^((p−1)/p))Wp; equality of convergence topologies | Real powers, Hölder, transport couplings and moment convergence |
 | same file, lines 103–153 | Admissible birth/death/type-transition maps; single and empirical generators; positive-increment coupling cost Cκ | Finite sums and admissibility |
 | same file, Assumptions 2.2–2.6 | Weighted synchronous bound; weighted activity; superlinear Lyapunov drift; exchangeable initialization | Exact hypotheses, not consequences |
 | Theorem 2.7 | Non-explosive strong finite systems; unique nonlinear flow in the moment class; uniform empirical and moment convergence; fixed-focal path chaos | All subsequent stochastic infrastructure |
@@ -181,9 +181,36 @@ population with the original vector law. `CoupledLawConvergence` and
 `PopulationFixedTimeChaos` give weak convergence of each fixed-k vector at each
 fixed time to the product nonlinear marginal, the fixed-time part of Corollary
 6.4. `SkorokhodJ1` constructs the genuine path metric, its Borel structure and
-time-change convergence criterion, including uniform-to-J1 convergence. The
-actual random path maps have not yet been proved measurable for that Borel
-structure, so Skorokhod path-space chaos is not asserted.
+time-change convergence criterion, including uniform-to-J1 convergence.
+`FiniteTimeChange` and `SkorokhodStepApproximation` construct finite-grid
+approximants and actual time changes aligning the finitely many event times.
+Their J1 convergence proves Borel AE measurability of the true path restrictions,
+including the terminal value, without assuming a random-path measurability theorem.
+`CanonicalSkorokhodPaths` supplies those restrictions for the actual processes.
+`AdaptedStateSpace` retains exactly the state measurable sets while providing
+the manuscript metric and its maximum finite-vector metric.
+
+`PopulationSkorokhodLimit.canonical_laws_tendsto` proves the empirical path laws
+converge weakly to the Dirac law of the continuous nonlinear curve. Its J1
+concentration follows from the already proved all-real uniform transport limit;
+`ConcentratingLaw` derives weak convergence through bounded continuous tests.
+`NonlinearSkorokhodArray` constructs one vector-valued J1 path from exact iid
+full particle records and proves that its coordinate trajectories are mutually
+independent with the actual common nonlinear path law.
+`PopulationPathChaos.canonical_laws_tendsto` proves finite-particle chaos in
+that vector J1 space, with one common time change. A focal error at most 1/2
+forces equality of all coordinate states at every time because distinct states
+have adapted distance at least one. Thus the entire paths agree outside a
+proved null-measurable event of vanishing probability. Exact initial-record
+projection transfers the result to the canonical original-vector law without
+assuming a separate trajectory-law identity. Empty vectors and the finitely
+many population rows smaller than k are handled explicitly.
+
+These results cover every canonical conclusion of Section 6 in source
+`c768811`, including both path-space limits and fixed-time chaos. The complete
+275-module build passed without warnings; the exhaustive audit checked 3,789
+theorem declarations and 4,901 safe declarations, including this ten-module J1
+batch. The negative audit fixtures also passed.
 
 ## Dependency order
 
@@ -205,10 +232,11 @@ structure, so Skorokhod path-space chaos is not asserted.
    localized population coupling, and the successive N-then-R limit are proved
    for the canonical systems. Actual paired-path relabeling gives the stopped
    coordinate symmetry and fixed-focal comparison as well.
-8. The time-grid argument, canonical uniform interacting empirical limit and
-   fixed-time finite-particle chaos are proved. Connect actual random paths to
-   the constructed J1 Borel space, prove path-space chaos, and complete the
-   model corollaries and Wp comparisons.
+8. The time-grid argument, canonical uniform interacting empirical limit, genuine
+   Borel J1 path maps, empirical weak Dirac limit, vector path-space chaos and
+   fixed-time finite-particle chaos are proved. Remaining Kenny obligations are
+   the prescribed-PRM/usual-filtration formulation, full general Lemma 4.1,
+   the model applications and closed mean ODE, and the Wp comparisons.
 
 The original proof has a different route through Feller generation, Markov
 mapping, Yule domination, frozen-process convergence, and tightness. Its weaker
@@ -287,7 +315,7 @@ any subsequent edits.
 | `PopulationCouplingProbability.lean`, `PopulationCouplingConvergence.lean` | Actual real probability bound; fixed-R stopped expectation converges to zero, then reciprocal actual exit tails give vanishing unstopped running-cost event probabilities | Family version takes genuine initial expected pairing-error convergence; final wrapper discharges it |
 | `PopulationEmpiricalCoupling.lean`, `PopulationSynchronousApproximation.lean` | Actual uniform empirical discrepancy bounded by averaged coordinate running suprema; original initialization implies canonical coupled systems with both discrepancy limits and exact initial vector marginals | First two conclusions of Theorem 5.4; the focal conclusion is supplied below and Section 6 is tracked separately |
 | `ParticleRelabeling.lean`, `ConfigurationRelabeling.lean`, `PopulationStoppedExchangeability.lean` | Full paired-input measure preservation and exact noise identities; counting equations and pathwise uniqueness give actual configuration relabeling; genuine common exit invariance and equal coordinate stopped expectations | Initial exchangeability is the only symmetry premise; arbitrary localization cap choices need not be equivariant. No external whole-trajectory law identification |
-| `PopulationFocalProbability.lean`, `PopulationFocalConvergence.lean`, `PopulationFocalApproximation.lean` | Actual focal event probability is bounded by one C/R exit term plus k times the stopped expectation divided by the threshold; successive limits prove fixed-focal comparison; one initialization family satisfies all three canonical Theorem 5.4 conclusions | Exact first-k event when N is at least k; Section 6's canonical nonlinear-law and fixed-time chaos limits are supplied below; Skorokhod path-space chaos remains separate |
+| `PopulationFocalProbability.lean`, `PopulationFocalConvergence.lean`, `PopulationFocalApproximation.lean` | Actual focal event probability is bounded by one C/R exit term plus k times the stopped expectation divided by the threshold; successive limits prove fixed-focal comparison; one initialization family satisfies all three canonical Theorem 5.4 conclusions | Exact first-k event when N is at least k; Section 6's canonical uniform, fixed-time and J1 path-law limits are supplied below |
 | `IndependentArrayLLN.lean` | Exact product-law transfer from a constructed infinite iid sequence yields centered scalar empirical-mean probability limits for arbitrary integrable observables, including merely AE-measurable ones | Applies to varying row spaces without any across-row premise; actual interval-variation integrability is supplied below |
 | `EmpiricalTimeGrid.lean`, `RightContinuousSupremum.lean` | Actual empirical-law cell and finite-grid inequalities; exact equal mesh; right-continuous costs have rational-plus-terminal suprema and derived AE measurability | The deterministic grid bridge has explicit displacement and law-modulus premises; the actual stochastic application below discharges them |
 | `NonlinearEmpiricalSupremum.lean` | Genuine nonlinear particle path regularity and continuity of the environment give simultaneous right continuity of the actual independent empirical error; its exact uncountable running supremum is AE measurable | No assumed error continuity or supremum measurability; uniform convergence is supplied below |
@@ -296,8 +324,14 @@ any subsequent edits.
 | `NonlinearEmpiricalUniform.lean` | Finite-grid error bounds and exact record-product LLN prove the true uniform independent empirical probability limit, including the zero horizon | Proposition 6.2 under the manuscript assumptions; no stochastic variation, uniform convergence or across-row independence premise |
 | `PopulationEmpiricalLimit.lean` | Exact initial-record/noise projection transfers the actual paired-space limit to the canonical original-vector-law population; uniform empirical Wκ and generalized-moment errors tend to zero in probability | Theorem 6.3's canonical uniform conclusions; no external trajectory identification or J1 path-map measurability is assumed |
 | `CoupledLawConvergence.lean` | Genuine measurable coupling with vanishing mismatch controls bounded continuous tests and gives weak convergence of pushforward probability laws | Countable state spaces, varying row spaces, and exact comparison marginals; no weak-limit premise |
-| `PopulationFixedTimeChaos.lean` | Actual canonical fixed-k laws at each fixed time converge weakly to the product nonlinear marginal from manuscript initialization | Fixed-time Corollary 6.4 only; no joint-time or Skorokhod path-space conclusion |
-| `SkorokhodJ1.lean` | Genuine time-change J1 metric and Borel structure on actual càdlàg paths; separation, triangle inequality, convergence criterion, and uniform-to-J1 convergence | Actual random path-map measurability and path-space chaos remain open; no path-space completeness claim |
+| `PopulationFixedTimeChaos.lean` | Actual canonical fixed-k laws at each fixed time converge weakly to the product nonlinear marginal from manuscript initialization | Fixed-time Corollary 6.4; the stronger vector J1 path-law conclusion is supplied by `PopulationPathChaos` |
+| `SkorokhodJ1.lean` | Genuine time-change J1 metric and Borel structure on actual càdlàg paths; separation, triangle inequality, convergence criterion, and uniform-to-J1 convergence | Actual Borel path maps and path-law convergence are supplied below; no path-space completeness claim |
+| `SkorokhodPathOperations.lean`, `FiniteTimeChange.lean`, `SkorokhodStepApproximation.lean` | Actual restrictions, continuous state transformations and piecewise-affine knot-matching time changes; measurable finite-grid paths converge in J1 and derive Borel AE measurability of actual finite-activity paths | Includes zero horizon and the terminal value; no path-space completeness assertion |
+| `CanonicalSkorokhodPaths.lean`, `AdaptedStateSpace.lean` | Actual constructed configuration and nonlinear paths have genuine J1 Borel AE-measurable restrictions; adapted metric with unchanged state measurable sets, maximum finite-vector metric and uniformly continuous empirical map | Regularity and finite activity are proved from the processes; exceptional non-càdlàg samples use a constant fallback |
+| `CoupledPathLawConvergence.lean`, `ConcentratingLaw.lean` | Explicit null-measurable bad events or distance concentration imply weak convergence of actual AE-measurable pushforward probability laws by bounded continuous tests | Generic probability-limit premises, with varying sample spaces and no target separability/completeness requirement; actual consumers discharge them below |
+| `NonlinearSkorokhodArray.lean` | Exact iid full input records define one vector-valued J1 random path; its full coordinate trajectories are mutually independent with the actual common nonlinear path law | A single common time change on the finite product state space, without a product-of-paths topology assumption |
+| `PopulationSkorokhodLimit.lean` | Actual empirical J1 distance is dominated by the proved uniform transport error, giving weak convergence of canonical empirical path laws to the deterministic nonlinear curve's Dirac law | Theorem 6.3 empirical path-space conclusion for each finite horizon, including zero |
+| `PopulationPathChaos.lean` | Actual focal estimates force whole-path equality outside a vanishing null-measurable event; exact canonical initial projection gives weak vector-path chaos in the maximum adapted metric | Theorem 6.3 focal path-space conclusion; fixed k, including k=0, with finitely many N<k rows explicitly padded |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -864,34 +898,33 @@ statements, the configuration specialization of forward-law uniqueness, and
 right continuity of the completed filtration remain open.
 
 
-## Next connections to formalize
+## Remaining Kenny obligations
 
-1. Extend bounded-rectangle independence from the whole common marked
-   history to joint future windows/categories within strips. The complete
-   measurable-set Poisson laws, including infinite-intensity masses and
-   simultaneous distinct labels, are now proved.
-   Scalar future rectangle independence already suffices for the proved
-   predictable compensation theorem; this stronger law is not a prerequisite
-   for the next drift argument.
-2. Prove the usual right-continuous filtration, optional sampling, and required
-   semigroup/strong Markov statements. Actual nonexplosion, global counting
-   equations, coordinate-equation pathwise uniqueness, the finite-support
-   generator martingale and weak forward equation are now proved, including
-   arbitrary independent initial laws. Lyapunov expectation bounds retain their
-   initial-moment assumptions.
-3. Extend the actual all-time canonical nonlinear process to arbitrary externally
-   supplied PRM spaces with the required usual filtration. Pathwise horizon
-   compatibility, own-marginal equations, global moment-bounded law uniqueness
-   and the exact envelope are already proved.
-4. Prove the actual random path maps measurable for the constructed Skorokhod
-   J1 Borel structure, then establish path-space chaos. The canonical uniform
-   empirical and generalized-moment limits and fixed-time finite-particle chaos
-   are proved from the manuscript initialization assumptions. Preserve the
-   original paper's weaker initialization as a separate, unfinished target.
-5. Complete the carrying-capacity application package, including unbounded-test
-   justification for the closed mean ODE, the stated general Lyapunov exponents,
-   and the Wp comparison of Remark 2.1. The existing scalar/quadratic checks do
-   not yet constitute those application corollaries.
+1. Transfer the strong construction to arbitrary spaces carrying the specified
+   initial variable and PRMs, and establish the completed, right-continuous
+   natural filtration formulation. The canonical Poisson characterization,
+   raw predictable compensation, global paths, actual equations and law
+   uniqueness are already proved.
+2. Prove the full standalone Lemma 4.1 for arbitrary adapted càdlàg environments
+   and a common stopping time, with the stated integrable-domination passage
+   beyond finite-state stopping. The exact positive-increment algebra and the
+   deterministic-environment/population-exit instances used in the current
+   canonical proof are proved, but do not replace this broader statement.
+3. Complete Proposition 7.3 and Corollary 7.4 for the multitype linear model and
+   every real p>1; Proposition 7.5's unbounded-test mean closure and globally
+   well-posed ODE; and Proposition 7.7/Corollary 7.8 for every real r>2 in the
+   quadratic model. Existing scalar checks and the quadratic cubic-Lyapunov
+   verification remain partial model coverage.
+4. Prove the two real-power Wp comparison inequalities of Remark 2.1 and the
+   resulting equivalence of the Wκ and ordinary Wp convergence topologies.
+
+All canonical Section 6 conclusions are proved, including true Borel J1 path
+laws, empirical weak Dirac convergence and vector-valued path-space chaos.
+Optional sampling, semigroup/strong Markov statements and stronger joint-future
+independence results are possible extensions, not additional mandatory Kenny
+targets. The original paper's Feller/core, empirical Markov and weaker-initial-data
+convergence/chaos obligations remain separately documented and are not the active
+target.
 
 The empirical transport LLN bridge is now proved: `FiniteTransport` constructs
 the common-mass coupling and bounds transport by
