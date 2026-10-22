@@ -2,7 +2,7 @@
 
 A Lean 4 formalization of
 
-> Kenny Xie, *Mean-Field Limits for Multitype Birth–Death Systems with
+> Steven N. Evans, Kenny Xie, *Mean-Field Limits for Multitype Birth–Death Systems with
 > Unbounded Moment Feedback*
 > ([manuscript source](https://github.com/bobashopcashier/Carrying_Capacity_fixed/blob/c7688113e4a92910b6403fdd8ecb14fb0f3ce6a9/new.tex),
 > commit `c768811`).
