@@ -96,11 +96,28 @@ import CarryingCapacity.PredictableIntegral
 import CarryingCapacity.PredictableSets
 import CarryingCapacity.PredictableStepApproximation
 
+import CarryingCapacity.ActualGlobalMoment
+import CarryingCapacity.ActualNonexplosion
+import CarryingCapacity.ConfigurationLocalization
+import CarryingCapacity.ConfigurationNonexplosion
+import CarryingCapacity.FrozenLyapunovBound
+import CarryingCapacity.GlobalLocalizedActivity
+import CarryingCapacity.GlobalLocalizedCountingIdentity
+import CarryingCapacity.GlobalLocalizedProcess
+import CarryingCapacity.GlobalLyapunovMoment
+import CarryingCapacity.InitialFrozenExpectation
+import CarryingCapacity.InitialLyapunovExit
+import CarryingCapacity.IntegralGronwall
+import CarryingCapacity.LyapunovLocalization
+
+import CarryingCapacity.ActualGlobalCounting
+
 /-!
 # Checked foundations for carrying-capacity mean-field models
 
 This is a partial formalization of DeWitt--Evans--Hiesmayr--Hummel (2024)
 and Kenny Xie's moment-feedback manuscript. All imported theorems are proved.
-The process-level existence, nonlinear-flow, mean-field, and chaos theorems
+Actual Lyapunov non-explosion and global particle paths are constructed.
+The full strong-solution, nonlinear-flow, mean-field, and chaos theorems
 remain open; see README.md and docs/PAPER_MAP.md for exact coverage.
 -/

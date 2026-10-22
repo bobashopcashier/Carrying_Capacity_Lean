@@ -72,9 +72,14 @@ The initial-coupling assertion of Lemma 5.1 is supplied by
 `InitialCoupling.exists_initial_coupling`. The independent empirical-error
 conclusions of Lemma 5.2 are supplied for measurable iid arrays and a continuous
 law curve with the required Lyapunov bound by `EmpiricalArrayError`; constructing
-those processes and that curve remains separate. The other full stochastic
-results in this table remain **not yet formalized**. Algebraic sublemmas and
-pathwise frozen constructions do not prove a full stochastic proposition.
+those processes and that curve remains separate. Proposition 3.3's actual
+frozen Lyapunov expectation and reciprocal exit estimates are now proved,
+including their empirical configuration specialization. The exhaustion,
+measurable adapted patch, cadlag regularity and finite activity parts of
+Proposition 3.4 are proved, as is the unrestricted test-function counting equation
+for the constructed global path. The global Lyapunov expectation part of Corollary 3.6
+follows by Fatou. Full global equation uniqueness, weighted-activity estimates,
+and the remaining nonlinear/mean-field theorem statements are not claimed.
 
 ## Dependency order
 
@@ -185,6 +190,13 @@ any subsequent edits.
 | `FrozenPreStateTime.lean` | Current state equals predictable pre-jump state outside countably many actual proposal times; all restricted time integrals agree, including on the initial product space | Time-null equality; no claim of equality at proposal times |
 | `FrozenDynkin.lean` | Genuine fixed-horizon Dynkin expectation formula for actual frozen paths and the existing current-state generator; test-function and time-integrated drift integrability derived | Deterministic initial state; no stopped Gronwall, Lyapunov exit bound, or non-explosion claim |
 | `InitialFrozenDynkin.lean` | Actual initialized change-expectation Dynkin identity and integrability without an initial test moment; usual separate-expectation identity under integrable initial test value; generator evaluated at actual current state | Autonomous finite-active-set construction and fixed horizon; no Gronwall, exit bound or non-explosion claim |
+| `IntegralGronwall.lean`, `InitialFrozenExpectation.lean` | Integral Gronwall from continuity; finite-active generator gives sample-time integrability, Fubini, the actual expectation primitive and Lipschitz continuity | No stochastic continuity or differential inequality of the original expectation is assumed |
+| `FrozenLyapunovBound.lean`, `InitialLyapunovExit.lean` | Actual affine-exponential frozen Lyapunov bound; actual first-exit Markov bound; reciprocal tail exhaustion | Drift, nonnegative Lyapunov function and initial integrability are model hypotheses |
+| `LyapunovLocalization.lean`, `ConfigurationLocalization.lean` | Canonical {V<n+1} active sets, derived finite positive rate bounds, simultaneous exit monotonicity/compatibility, exact actual empirical generator and drift | The configuration drift is derived from LyapunovControl, not supplied as a separate assumption |
+| `GlobalLocalizedProcess.lean`, `GlobalLocalizedActivity.lean` | Raw jointly measurable and adapted patch; correct initial value; actual finite proposal-list representation, finite activity/range and cadlag paths | Generic regularity bridge uses actual exit exhaustion, discharged in the next layer |
+| `ActualNonexplosion.lean`, `ConfigurationNonexplosion.lean` | Genuine exit bounds and exhaustion from the raw generator drift; actual nonexplosive global configuration construction with measurable adapted paths | No given moment bound or exhaustion conclusion; does not claim global SDE uniqueness or the full mean-field theorem |
+| `GlobalLyapunovMoment.lean`, `ActualGlobalMoment.lean` | Fatou gives integrability and exponential expectation control of the actual global Lyapunov value | Current-time expectation, not expected running maximum or all weighted activity bounds |
+| `GlobalLocalizedCountingIdentity.lean`, `ActualGlobalCounting.lean` | Predictable global pre-state identified with its actual left limit; genuine global rate-threshold counting equation and pathwise integrability; configuration specialization from LyapunovControl | No active-set or height cutoff in the global integrand; full planar PRM law and global equation uniqueness remain separate |
 | `InitialPredictableIntegral.lean` | Actual initialized counting kernel and Campbell measure; predictable integrability equivalence; signed/vector compensation and random-integral integrability | Raw product filtration; full completed-predictable extension is separate |
 | `ThinningKernel.lean` | Finite positive bound on active rates; exact accepted-label mass; expected proposal increment times card(J) C equals the frozen generator | Requires positive C and 0≤q≤C for this one-step normalization; actual continuous-time Dynkin is proved above |
 | `LimitArguments.lean` | Successive population-then-cutoff limits, reciprocal cutoff removal, scalar three-region convergence criterion; explicit failure of arbitrary diagonal limits | Inputs are already-obtained scalar error/tail bounds; does not derive stochastic coupling or uniform integrability estimates |
@@ -383,9 +395,26 @@ It covers state feedback in a finite interacting configuration, but has not yet
 been extended to rates with a deterministic time-dependent environment. Its
 finite-box path regularity needs no rate sign or dominance condition; interpreting
 the path as the desired intensity-driven system still requires nonnegative rates
-and a valid rate bound. The first-exit identities above are pathwise statements. The frozen Dynkin
-result below is a fixed-horizon expectation identity; neither optional
-sampling nor a stopped Lyapunov estimate is yet asserted.
+and a valid rate bound. `InitialFrozenExpectation` supplies genuine Fubini and
+Lipschitz expectation continuity; `IntegralGronwall` and `FrozenLyapunovBound`
+derive the actual affine-exponential bound. `InitialLyapunovExit` identifies
+the genuine exit event with the threshold event and applies Markov's inequality.
+`ActualNonexplosion` combines these results with canonical sublevels and
+common-noise compatibility, discharging all exit and exhaustion premises.
+`ConfigurationNonexplosion` instantiates this chain from the manuscript's
+single-lineage LyapunovControl and actual empirical rates. The global process
+is raw jointly measurable and adapted, and `GlobalLocalizedActivity` derives a
+finite actual proposal list containing every change on each bounded horizon.
+`ActualGlobalMoment` retains the exponential moment estimate by Fatou.
+`GlobalLocalizedCountingIdentity` identifies the global predictable pre-state
+with the actual left limit. Before a sufficiently high genuine exit, that
+pre-state lies in the active region and its rate is below the derived height
+bound, so the freezing indicator and height cap disappear pointwise from the
+accepted increment. The actual finite-level equation and pathwise integrability
+then transfer to the global path. `ActualGlobalCounting` discharges exhaustion
+from the Lyapunov assumptions, including the empirical configuration model.
+Optional sampling, global equation pathwise uniqueness, the state-process
+martingale problem and right continuity of the completed filtration remain open.
 
 
 ## Next connections to formalize
@@ -397,12 +426,11 @@ sampling nor a stopped Lyapunov estimate is yet asserted.
    Scalar future rectangle independence already suffices for the proved
    predictable compensation theorem; this stronger law is not a prerequisite
    for the next drift argument.
-2. Apply the actual frozen Dynkin identity to the model's Lyapunov function,
-   using expectation/time Fubini and Gronwall on the initial-record/noise
-   product space. Predictability, the counting identity, signed compensation,
-   finite-region integrability and generator identification are proved.
-   Its completion and first-exit stopping times are also proved. Derive reciprocal exit estimates before applying the
-   existing a.e. patching theorem to the actual stochastic system.
+2. Prove global equation pathwise uniqueness for the actual nonexplosive patch,
+   then the state-process martingale problem
+   and the usual right-continuous filtration. Actual Lyapunov expectation and
+   exit bounds, exhaustion, global finite activity, moment integrability and the
+   unrestricted test-function counting equation are now derived, including their empirical configuration specialization.
 3. Construct the deterministic-environment forward law and its uniqueness;
    prove preservation of the complete Lyapunov curve space and the actual
    stochastic Volterra estimate, then apply the proved Bielecki contraction and
