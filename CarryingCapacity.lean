@@ -221,6 +221,19 @@ import CarryingCapacity.NonlinearParticleContinuation
 import CarryingCapacity.NonlinearParticleEmpirical
 import CarryingCapacity.PredictableExitMask
 import CarryingCapacity.DeterministicEnvironmentConfiguration
+import CarryingCapacity.ConfigurationTimeDependent
+import CarryingCapacity.ExitTimeMeasurability
+import CarryingCapacity.GlobalLyapunovExit
+import CarryingCapacity.IntegrableGronwall
+import CarryingCapacity.NonlinearParticleConfiguration
+import CarryingCapacity.PopulationCouplingAlgebra
+import CarryingCapacity.StoppedPathMeasurability
+import CarryingCapacity.SynchronousStoppedCompensation
+import CarryingCapacity.SynchronousStoppedRunningSupremum
+import CarryingCapacity.PopulationStoppedCoupling
+import CarryingCapacity.PopulationStoppedIntegrability
+import CarryingCapacity.PopulationCouplingExit
+import CarryingCapacity.PopulationCouplingRemoval
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -242,6 +255,10 @@ Actual independent nonlinear particle arrays use projected records of the shared
 particle-labelled noise. Their full product laws, raw adaptedness, counting
 equations and time-integrated empirical error convergence are proved. Rational
 past observations justify compensation through the genuine first-exit jump.
+The actual population comparison now has a measurable stopped averaged running
+cost, a compensated expected-activity inequality, derived finite expectation,
+uniform common-exit tails and a cutoff-removal probability estimate. The sharp
+stopped Gronwall estimate and the subsequent convergence remain to be assembled.
 Arbitrary external-space realization, global pathwise horizon consistency,
 mean-field limits and chaos theorems remain open; see README.md and
 docs/PAPER_MAP.md for exact coverage.

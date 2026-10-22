@@ -90,7 +90,11 @@ arrays by `NonlinearParticleArray` and `NonlinearParticleEmpirical`. The exact
 product input law and original-noise identities come from `ParticleInputRecords`
 and `ParticleNoiseProjection`; genuine integrability is proved before both the
 fixed-time and real time-integrated error limits. This does not establish the
-stopped interacting-particle comparison of Proposition 5.3. Proposition 3.3's actual
+complete stopped interacting-particle comparison of Proposition 5.3. Its actual
+compensated averaged stopped-cost inequality, derived finite expectation and real
+integrability, uniform common-exit tail, and cutoff-removal probability bound are
+now proved by the population coupling modules. The sharp Gronwall estimate and
+its convergence consequence remain to be assembled. Proposition 3.3's actual
 frozen Lyapunov expectation and reciprocal exit estimates are now proved,
 including their empirical configuration specialization. The exhaustion,
 measurable adapted patch, cadlag regularity and finite activity parts of
@@ -218,7 +222,12 @@ any subsequent edits.
 | `NonlinearParticleArray.lean`, `NonlinearParticleContinuation.lean` | Constructed nonlinear copies on the original particle noise; full product fixed-time laws, trajectory independence, raw adaptedness, simultaneous path regularity and left limits; actual initial values and integrable all-horizon counting equations | Path independence is for the coordinate sigma algebra; nonlinear self-consistency is on [0,T], with endpoint-held rates afterward |
 | `CompactIntervalIntegration.lean`, `NonlinearParticleEmpirical.lean` | Interval-subtype Lebesgue measure and exact integral/integrability transfer; actual beta_N integrability, twice-moment/envelope bounds, fixed-time convergence and genuine real time-integrated convergence | Supplies the independent-array empirical-error component of Lemma 5.2, not comparison to the interacting configuration |
 | `PredictableExitMask.lean` | Raw predictability of rational strict-past survival; simultaneous pathwise identification with the inclusive genuine-exit mask; AE measurability and nonnegative compensation of the stopped counting integral | Retains the exit jump and covers initial-outside/no-exit cases; the stopped synchronous running-cost estimate remains separate |
-| `DeterministicEnvironmentConfiguration.lean` | Actual prescribed-environment configuration; exact normalized generator and activity, N-independent Lyapunov drift, derived local rate caps, nonexplosion, moments, predictable left states and coordinate counting equations | Does not yet identify its coordinates with the independent nonlinear array or prove stopped population comparison |
+| `DeterministicEnvironmentConfiguration.lean`, `ConfigurationTimeDependent.lean`, `NonlinearParticleConfiguration.lean` | Actual interacting/configuration constructions use the common time-dependent framework; the constructed independent nonlinear array equals the prescribed-environment configuration and its pre-states on one full-probability event | Genuine input laws and scalar equations discharge the identification; full population convergence remains separate |
+| `ExitTimeMeasurability.lean`, `StoppedPathMeasurability.lean` | Actual exit attainment and AE measurability from rational observations; jointly AE measurable stopped paths and measurable running-cost versions | No usual-filtration or optional-sampling assertion |
+| `SynchronousStoppedCompensation.lean`, `SynchronousStoppedRunningSupremum.lean` | Genuine joint-exit compensation and actual expected stopped supremum inequality; includes the exit jump and derives supremum measurability | Extended integrals need not yet be finite; the population specialization establishes finiteness |
+| `PopulationCouplingAlgebra.lean`, `PopulationStoppedCoupling.lean`, `PopulationStoppedIntegrability.lean` | Exact averaged coupling activity with N-independent coefficient, actual stopped expected-cost inequality, finite extended expectation and genuine real integrability from initial Lyapunov hypotheses | Proposition 5.3's sharp Gronwall estimate and convergence remain to be assembled |
+| `GlobalLyapunovExit.lean`, `PopulationCouplingExit.lean`, `PopulationCouplingRemoval.lean` | Genuine whole-horizon joint exit tail C/R uniform in N under uniform initial moments; pointwise stopped/unstopped agreement and actual probability bound by exit plus stopped Markov term | Supplies the cutoff-removal inequality; no final convergence or focal exchangeability theorem is asserted |
+| `IntegrableGronwall.lean` | Exponential comparison for integrable subsolutions and integrable nonnegative forcing, without continuity hypotheses | The actual population subsolution must still be connected |
 | `RateControl.lean` | Admissible jumps have ρκ-length at least one; total rate ≤ weighted activity; empirical Lyapunov sublevels of N-lineage configurations are finite for N>0 | Does not yet construct a finite-strip PRM event list or derive its stochastic properties |
 | `Freezing.lean` | Finite proposal recursion, retention of exit jump, permanent freezing, compatible path patching, a.e. exhaustion from reciprocal exit tails, a.e. unique pointwise patch | No PRM construction, derivation of exit bounds, or measurability/adaptedness of the patched process |
 | `CountableJumpProcess.lean` | Independent exponential waiting times on an infinite product; a.s. positive waits and strictly increasing divergent arrivals; measurable arrival counting measure; a.s. finite mass on bounded time intervals | Distributional count identities are supplied below |
@@ -804,9 +813,11 @@ right continuity of the completed filtration remain open.
    augmented filtration. General prescribed-environment output-law continuity,
    full moment-bounded nonlinear law uniqueness, the exact envelope and
    consistency of laws across horizons are proved.
-4. Assemble stopped interacting-particle comparison from the actual shared-noise
-   constructions, synchronous positive-increment bounds and inclusive exit-mask
-   compensation. Remove stopping using the uniform exit tails, then prove
+4. Assemble the sharp stopped Gronwall estimate from the actual compensated
+   population inequality and the derived finite expectation. The N-independent
+   common-exit tail and exact cutoff-removal event estimate are now proved.
+   Use these bounds to remove stopping and prove population convergence, then
+   establish focal exchangeability,
    time-grid convergence and Skorokhod/path-space chaos. The grouped-input law,
    actual iid trajectories, their exact noise identities and the real
    time-integrated independent empirical-error limit are now proved. Preserve
