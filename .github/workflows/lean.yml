@@ -28,3 +28,5 @@ jobs:
         run: lake exe cache get
       - name: Build and audit every proof
         run: python3 scripts/check_proofs.py
+      - name: Check audit rejection fixtures
+        run: python3 scripts/test_audit.py

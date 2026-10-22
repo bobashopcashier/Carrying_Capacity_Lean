@@ -23,6 +23,7 @@ Install [elan](https://github.com/leanprover/elan), then run from this directory
 lake exe cache get
 lake build
 python3 scripts/check_proofs.py
+python3 scripts/test_audit.py
 ```
 
 `lean-toolchain` pins Lean **4.19.0**, and `lake-manifest.json` locks mathlib and
@@ -44,11 +45,15 @@ rejects proof placeholders. The permitted foundational axioms are Lean's
 the stochastic processes.
 
 The complete build passed without warnings, and the exhaustive audit checked
-**1,358 theorem declarations and 1,752 safe declarations across 61 modules**.
+**1,472 theorem declarations and 1,884 safe declarations across 71 modules**.
 These counts include private helpers and compiler-generated declarations;
 they are not counts of distinct results from the papers. Separate negative
 checks confirmed that the audit rejects
-custom project axioms and both public and private placeholder proofs.
+custom project axioms, both public and private placeholder proofs, and a
+forbidden dependency imported transitively through a safe definition. The
+audit retains the upstream Lean axiom traversal state across declarations,
+avoiding repeated traversal of shared dependencies. Temporary fixture tests
+check the rejection behavior without adding invalid proofs to project sources.
 
 ## What is formalized
 
@@ -97,8 +102,15 @@ custom project axioms and both public and private placeholder proofs.
 | [MarkedTimeProducts](CarryingCapacity/MarkedTimeProducts.lean) | Exact exponential transform for bounded measurable mark products on the actual random blocks of a finite monotone nonnegative time grid | Integrates deterministic factors assigned to each window; no predictable random-integrand formula |
 | [MarkedGridLaw](CarryingCapacity/MarkedGridLaw.lean) | Full product Poisson law for actual strip counts on a finite time grid, with any finite category type and categories varying between windows | Categories must be disjoint within each window; the full common-noise extension is supplied below |
 | [MarkedBoundedCounts](CarryingCapacity/MarkedBoundedCounts.lean) | Bounded-height common-noise prefix and window counts are finite sums of actual strip counts; translated category probabilities sum to positive Lebesgue mass | Categories have a common strict natural upper bound; this module does not identify their joint law |
-| [MarkedRectangleLaw](CarryingCapacity/MarkedRectangleLaw.lean) | Actual masses of disjoint bounded-height rectangles have the joint product Poisson law with parameters T times positive Lebesgue masses | One fixed label and a common horizon T≥0; general disjoint space-time sets and independence from marked history remain open |
-| [MarkedGridRectangles](CarryingCapacity/MarkedGridRectangles.lean) | Actual common counting-measure masses on finite-grid rectangles have the full product Poisson law, with parameters window length times positive Lebesgue category mass | One fixed label, monotone grid with nonnegative start, and measurable categories disjoint per window under a common strict natural height bound; arbitrary finite-intensity planar sets and full marked-past independence remain open |
+| [MarkedRectangleLaw](CarryingCapacity/MarkedRectangleLaw.lean) | Actual masses of disjoint bounded-height rectangles have the joint product Poisson law with parameters T times positive Lebesgue masses | One fixed label and a common horizon T≥0; general disjoint space-time sets remain open; bounded future-rectangle independence is supplied below |
+| [MarkedGridRectangles](CarryingCapacity/MarkedGridRectangles.lean) | Actual common counting-measure masses on finite-grid rectangles have the full product Poisson law, with parameters window length times positive Lebesgue category mass | One fixed label, monotone grid with nonnegative start, and measurable categories disjoint per window under a common strict natural height bound; arbitrary finite-intensity planar sets and joint future-grid independence from the past remain separate |
+| [NullAugmentedIndependence](CarryingCapacity/NullAugmentedIndependence.lean), [ClockPastObservation](CarryingCapacity/ClockPastObservation.lean) | Independence survives ambient-null augmentation; exact censored arrivals and arrival masks are measurable in the augmented full count history; the next clock increment remains independent | Retains the actual samples, including exceptional values; does not assert right continuity of the filtration |
+| [MarkedPastProducts](CarryingCapacity/MarkedPastProducts.lean), [MarkedObservation](CarryingCapacity/MarkedObservation.lean) | Deterministic disjoint mark products factor; actual censored arrival-time/mark observations have explicit measurable clock means; past/future mark factors separate after fixing a good clock | Random-index independence is derived by integration, not assumed |
+| [MarkedPastTransform](CarryingCapacity/MarkedPastTransform.lean) | Exact factorization of finite observed-past test products against a future-window mark transform, using proved clock-past independence | Deterministic window and mark factors; no predictable compensation |
+| [CountRestriction](CarryingCapacity/CountRestriction.lean), [CylinderIndependence](CarryingCapacity/CylinderIndependence.lean) | Power transforms identify restricted count laws, including zero-mass events; finite-cylinder factorization generates independence of the whole product-valued observation | Generic bridge lemmas with explicit transform or event-factorization hypotheses, applied to the actual strip below |
+| [MarkedPastIndependence](CarryingCapacity/MarkedPastIndependence.lean) | The actual future category count has its Poisson law and is independent of the full indexed history of censored arrival times and marks in one strip | One future category count and one strip; the common-noise lift is supplied below, while joint future windows/categories within a strip remain separate |
+| [IndependentProductHistory](CarryingCapacity/IndependentProductHistory.lean) | Coordinatewise past/future independence lifts through the actual infinite product law to independence of complete observation and future arrays | Uses proved coordinate independence and measurable coordinate functions; does not infer joint independence from pairwise independence |
+| [CommonMarkedPastIndependence](CarryingCapacity/CommonMarkedPastIndependence.lean) | Future strip-category arrays, bounded strip sums, and actual bounded rectangle masses are independent of the full existing common-noise history, including its null augmentation and completed law | One deterministic window and one category per strip; joint future windows/categories within a strip and predictable compensation remain separate |
 | [FrozenCompatibility](CarryingCapacity/FrozenCompatibility.lean) | Nested frozen recursions agree through their actual first exit, including the exit jump; exit indices are monotone; stopped continuous-time paths agree under a common locally finite clock | This module uses a common proposal sequence; actual cutoff-list compatibility is supplied below |
 | [ChronologicalEvents](CarryingCapacity/ChronologicalEvents.lean) | Jointly measurable chronological lists from actual time-height boxes; strict ordering, exact membership, time prefixes, and height filtering simultaneously for all cutoffs almost surely | Local finiteness and distinct times come from the constructed common noise |
 | [RejectedProposals](CarryingCapacity/RejectedProposals.lean), [CommonFrozenProcess](CarryingCapacity/CommonFrozenProcess.lean) | Actual shared-noise frozen paths; joint measurability and finite range; almost-sure invariance under changing a valid rate bound, permanent freezing, and nested-path agreement through the exit jump | Countable state space, finitely many directions, deterministic initial state, and time-homogeneous rates; generator identification still needs compensation |
@@ -198,8 +210,10 @@ controlling only unmatched jumps would miss this term.
 
 1. Extend the proved common-noise grid-rectangle laws to the independently
    scattered law on arbitrary finite-intensity measurable planar sets.
-   Prove independence from the entire marked past, predictable compensation,
-   Dynkin's formula, and Lyapunov exit estimates.
+   Extend the proved bounded-rectangle independence from the full common
+   marked past to joint future windows/categories within strips. Derive
+   predictable compensation, Dynkin's formula, and Lyapunov exit estimates
+   on the actual initial-record/noise product space.
    Shared-noise frozen paths, stopped compatibility, and completed-filtration
    first-exit stopping times are proved, including the arbitrary-initial product
    space. Applying the patching theorem still requires the exit estimates.

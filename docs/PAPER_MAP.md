@@ -150,8 +150,18 @@ any subsequent edits.
 | `MarkedTimeProducts.lean` | Measurability and integrability of actual random time-block products for measurable factors of norm at most one; exact exponential transform from deterministic block integration and the full clock increment law | Finite monotone grids with nonnegative starting time and deterministic per-window factors; no predictable compensation |
 | `MarkedGridLaw.lean` | Actual multivariate transform and product Poisson law for all strip window/category counts on a finite monotone grid; arbitrary finite category type, varying categories per window, repeated times and arbitrary nonnegative first time | Requires measurable categories disjoint within each window; categories may overlap across different windows; the full common-noise bounded-height grid extension is supplied below |
 | `MarkedBoundedCounts.lean` | On one probability-one event, actual common-noise prefix and window masses below a strict natural height cutoff equal finite sums of strip counts for all measurable categories and ordered nonnegative endpoints; finite sums of category probabilities equal positive Lebesgue mass | Negative-height portions have zero mass; no independence or distribution is asserted by this module alone |
-| `MarkedRectangleLaw.lean` | Complete category vectors from actual distinct strips are independent; finite superposition gives the product Poisson law for bounded-height category counts and for the genuine rectangle masses embedded in extended nonnegative reals | One fixed label j, a common horizon T≥0, and pairwise disjoint measurable Bᵢ⊆(−∞,m); the grid extension is supplied below, while general disjoint space-time sets and marked-past independence remain open |
-| `MarkedGridRectangles.lean` | Entire actual strip grid vectors are independent across strips; finite superposition gives the full product Poisson law for bounded window/category arrays and the genuine common counting-measure grid-rectangle masses embedded in extended nonnegative reals | One fixed label j, finite monotone grid u with u₀≥0, measurable B[a,i]⊆(−∞,m) for a common natural m, and category disjointness within each window; parameters are Δuₐ times positive Lebesgue mass; arbitrary finite-intensity planar sets and full marked-past independence remain open |
+| `MarkedRectangleLaw.lean` | Complete category vectors from actual distinct strips are independent; finite superposition gives the product Poisson law for bounded-height category counts and for the genuine rectangle masses embedded in extended nonnegative reals | One fixed label j, a common horizon T≥0, and pairwise disjoint measurable Bᵢ⊆(−∞,m); the grid extension is supplied below, while general disjoint space-time sets remain open; bounded future-rectangle independence is supplied below |
+| `MarkedGridRectangles.lean` | Entire actual strip grid vectors are independent across strips; finite superposition gives the full product Poisson law for bounded window/category arrays and the genuine common counting-measure grid-rectangle masses embedded in extended nonnegative reals | One fixed label j, finite monotone grid u with u₀≥0, measurable B[a,i]⊆(−∞,m) for a common natural m, and category disjointness within each window; parameters are Δuₐ times positive Lebesgue mass; arbitrary finite-intensity planar sets and joint future-grid independence from the past remain separate |
+| `NullAugmentedIndependence.lean` | Exact independence survives ambient-null augmentation on either or both sigma algebras and passage to the completed ambient measure; measurable functions of augmented independent histories are independent | Augmentation uses the original ambient law, not its trim to the smaller history; no filtration right-continuity claim |
+| `ClockPastObservation.lean` | Actual censored arrivals and arrival masks are measurable in the augmented full count history; raw count masks are measurable and match arrival masks a.s.; the next count increment is independent of the augmented history | Exact exceptional samples are retained; nonnegative deterministic observation and future-window times |
+| `MarkedPastProducts.lean` | Distinct past mark factors and future deterministic index blocks have factorized integrals; unarrived past coordinates contribute constants; unit bounds give genuine integrability | No stopped-index independence hypothesis; arbitrary empty blocks are included |
+| `MarkedObservation.lean` | Actual full pair-valued censored strip observations; measurable bounded finite products; explicit clock means; exact mark integration; good-clock past/future factorization; clock means measurable in the augmented count past | The observable retains arrival times and marks, not merely aggregate counts |
+| `MarkedPastTransform.lean` | Genuine strip-product Fubini and the proved augmented-clock independence yield factorization of finite observed-past products against a future-window mark transform | One deterministic future window with a deterministic measurable mark factor; no random predictable integrands |
+| `CountRestriction.lean` | Weighted complex-power transforms identify the actual restricted natural-count pushforward and event probabilities, including zero-mass conditioning events | A generic implication from an explicit transform identity; no division by the conditioning probability |
+| `CylinderIndependence.lean` | Finite intersections of coordinate events generate independence of the full product-valued observation; arbitrary observation index type is allowed | Explicit finite-cylinder event-factorization hypotheses are discharged for the actual strip in the next module |
+| `MarkedPastIndependence.lean` | Actual future strip-category counts have the Poisson law with parameter t times uniform-mark category probability and are independent of the full censored indexed strip history; exact restricted cylinder laws precede the pi-system extension | One strip and one future category-count variable; the common-noise lift is supplied below, while joint future windows/categories within a strip remain separate |
+| `IndependentProductHistory.lean` | Exact masses of paired finite cylinders under the actual infinite product law; coordinatewise observation/future independence implies independence of the entire two arrays | Arbitrary index and dependent sample types; requires only measurable coordinate functions and the stated per-coordinate independence |
+| `CommonMarkedPastIndependence.lean` | Complete strip-observation and future-count arrays are independent; an exact guarded height translation recovers the existing common view; finite sums and a.s. mass identification give independence of actual bounded future rectangle masses from the full raw and completed common-noise histories | One deterministic future window and one category per strip; no joint future windows/categories within a strip or predictable compensation is asserted |
 | `FrozenCompatibility.lean` | Actual first-exit indices for nested frozen recursions; agreement including the exit jump; monotone exit indices; stopped larger recursion equals the permanently frozen smaller one; stopped continuous-time agreement under a common clock | Uses the same decoder and proposal sequence; cutoff-list compatibility is supplied below |
 | `ChronologicalEvents.lean` | Measurable finite-set selection and chronological sorting; jointly measurable actual bounded-box event lists; exact membership and strict ordering; time-prefix and height-filter identities simultaneously for all boxes almost surely | Does not by itself identify the stochastic intensity of the counting measure |
 | `RejectedProposals.lean` | Removing proposals rejected at every active state preserves the actual frozen recursion, including its accepted exit jump; height-bound specialization | Deterministic list identities, used to compare actual bounded-box paths |
@@ -276,8 +286,32 @@ masses of `(u[a],u[a+1]] × B[a,i]` have the full product Poisson law with
 parameters `(u[a+1] - u[a]) * positiveVolume.real B[a,i]`. The natural-valued
 product law is embedded into extended nonnegative reals in the exact measure
 identity. The independently scattered law on arbitrary finite-intensity
-measurable planar sets, and independence from the
-entire marked history, remain separate.
+measurable planar sets remains separate.
+
+`MarkedPastIndependence.independent_stripView_windowCount` now proves that one
+future category count in `(s,s+t]` is independent of the entire indexed
+arrival-time/mark observation of its strip up to time s, for s,t≥0 and any
+measurable mark category. The observation reveals `(arrival,mark)` only after
+the arrival and otherwise returns `(s+1,0)`. Its finite cylinders depend on
+both times and marks. Fixing the clock separates the past and future mark
+indices; `ClockPastObservation` makes the remaining mean measurable in the
+null-augmented clock past, and the proved clock-increment independence factors
+the outer integral. Power-transform uniqueness and a generating pi-system
+then extend the result to the complete strip observation. No random-index
+independence is assumed.
+
+`IndependentProductHistory.indepFun_observations_futures` lifts the per-strip
+result through the actual infinite product probability law. It proves joint
+independence of complete past and future arrays by factoring paired finite
+cylinders, rather than inferring it from pairwise independence.
+`CommonMarkedPastIndependence` then recovers the existing common-noise view by
+translating arrived heights and preserving the unseen sentinel. Consequently
+the genuine mass of `(s,s+t] × B`, for measurable B below a strict natural
+height bound, is independent of the complete common observation at s, across
+all labels and strips. The result also holds for the null-augmented history
+under the completed ambient law. It covers one category per strip in one
+future window; joint future windows/categories within a strip, and extension
+to the independent initial-record product space, remain separate.
 
 The shared-noise construction currently uses autonomous rates `J → E → ℝ`.
 It covers state feedback in a finite interacting configuration, but has not yet
@@ -291,8 +325,9 @@ not optional-stopping or martingale identities.
 ## Next connections to formalize
 
 1. Extend the proved common-noise grid-rectangle laws to the independently
-   scattered law on arbitrary finite-intensity measurable planar sets and prove
-   independence from the entire marked past.
+   scattered law on arbitrary finite-intensity measurable planar sets and
+   extend bounded-rectangle independence from the whole common marked
+   history to joint future windows/categories within strips.
    The scalar clock's full-past independence and compensated martingale, the
    marked intensity, and the deterministic Campbell formula are proved. These
    results do not yet supply the marked predictable compensator.

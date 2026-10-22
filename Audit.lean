@@ -21,6 +21,11 @@ run_cmd do
   let mut declarationCount := 0
   let mut theoremCount := 0
   let mut modules : Array Name := #[]
+  -- A completed traversal certifies all visited dependencies. Reusing the state
+  -- avoids expanding shared library proofs once for every project declaration.
+  -- Only newly discovered axioms need checking; the outer loop still checks and
+  -- counts every safe declaration, even when a previous root already visited it.
+  let mut collected : Lean.CollectAxioms.State := {}
   for (name, info) in env.constants.toList do
     let some index := env.getModuleIdxFor? name | continue
     let moduleName := env.header.moduleNames[index.toNat]!
@@ -30,8 +35,11 @@ run_cmd do
     -- never theorem proofs. Handwritten unsafe declarations are source-rejected.
     if info.isUnsafe then continue
     if info.isAxiom then throwError "Project axiom is forbidden: {name}"
-    let dependencies ← Lean.collectAxioms name
-    for dependency in dependencies do
+    let previousAxiomCount := collected.axioms.size
+    let (_, next) := ((Lean.CollectAxioms.collect name).run env).run collected
+    collected := next
+    for i in [previousAxiomCount:collected.axioms.size] do
+      let dependency := collected.axioms[i]!
       unless allowed.contains dependency do
         throwError "{name} depends on forbidden axiom {dependency}"
     declarationCount := declarationCount + 1
