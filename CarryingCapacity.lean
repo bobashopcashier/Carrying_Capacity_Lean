@@ -213,6 +213,147 @@ import CarryingCapacity.DeterministicEnvironmentGeneralLaw
 import CarryingCapacity.FiniteJumpForwardRestriction
 import CarryingCapacity.NonlinearForwardUniqueness
 import CarryingCapacity.NonlinearHorizonConsistency
+import CarryingCapacity.ParticleNoiseProjection
+import CarryingCapacity.ParticleInputRecords
+import CarryingCapacity.CompactIntervalIntegration
+import CarryingCapacity.NonlinearParticleArray
+import CarryingCapacity.NonlinearParticleContinuation
+import CarryingCapacity.NonlinearParticleEmpirical
+import CarryingCapacity.PredictableExitMask
+import CarryingCapacity.DeterministicEnvironmentConfiguration
+import CarryingCapacity.ConfigurationTimeDependent
+import CarryingCapacity.ExitTimeMeasurability
+import CarryingCapacity.GlobalLyapunovExit
+import CarryingCapacity.IntegrableGronwall
+import CarryingCapacity.NonlinearParticleConfiguration
+import CarryingCapacity.PopulationCouplingAlgebra
+import CarryingCapacity.StoppedPathMeasurability
+import CarryingCapacity.SynchronousStoppedCompensation
+import CarryingCapacity.SynchronousStoppedRunningSupremum
+import CarryingCapacity.PopulationStoppedCoupling
+import CarryingCapacity.PopulationStoppedIntegrability
+import CarryingCapacity.PopulationCouplingExit
+import CarryingCapacity.PopulationCouplingRemoval
+import CarryingCapacity.PopulationCouplingInitialization
+import CarryingCapacity.PopulationCouplingTime
+import CarryingCapacity.PopulationNonlinearError
+import CarryingCapacity.PopulationStoppedVolterra
+import CarryingCapacity.PopulationStoppedGronwall
+import CarryingCapacity.PopulationCouplingProbability
+import CarryingCapacity.PopulationCouplingConvergence
+import CarryingCapacity.PopulationEmpiricalCoupling
+import CarryingCapacity.PopulationSynchronousApproximation
+import CarryingCapacity.ParticleRelabeling
+import CarryingCapacity.ConfigurationRelabeling
+import CarryingCapacity.PopulationStoppedExchangeability
+import CarryingCapacity.PopulationFocalProbability
+import CarryingCapacity.PopulationFocalConvergence
+import CarryingCapacity.PopulationFocalApproximation
+import CarryingCapacity.EmpiricalTimeGrid
+import CarryingCapacity.IndependentArrayLLN
+import CarryingCapacity.RightContinuousSupremum
+import CarryingCapacity.NonlinearEmpiricalSupremum
+import CarryingCapacity.NonlinearActivityBound
+import CarryingCapacity.NonlinearPathVariation
+import CarryingCapacity.NonlinearVariationDisplacement
+import CarryingCapacity.NonlinearVariationBounds
+import CarryingCapacity.NonlinearEmpiricalUniform
+import CarryingCapacity.TimeDependentLocalUniqueness
+import CarryingCapacity.NonlinearPathConsistency
+import CarryingCapacity.NonlinearGlobalProcess
+import CarryingCapacity.NonlinearGlobalCounting
+import CarryingCapacity.NonlinearGlobalForward
+import CarryingCapacity.PopulationEmpiricalLimit
+import CarryingCapacity.CoupledLawConvergence
+import CarryingCapacity.PopulationFixedTimeChaos
+import CarryingCapacity.SkorokhodJ1
+import CarryingCapacity.AdaptedStateSpace
+import CarryingCapacity.CanonicalSkorokhodPaths
+import CarryingCapacity.ConcentratingLaw
+import CarryingCapacity.CoupledPathLawConvergence
+import CarryingCapacity.FiniteTimeChange
+import CarryingCapacity.NonlinearSkorokhodArray
+import CarryingCapacity.PopulationPathChaos
+import CarryingCapacity.PopulationSkorokhodLimit
+import CarryingCapacity.SkorokhodPathOperations
+import CarryingCapacity.SkorokhodStepApproximation
+import CarryingCapacity.RealPowerMoment
+import CarryingCapacity.RealPowerIntegrals
+import CarryingCapacity.PowerWasserstein
+import CarryingCapacity.PowerWassersteinMetric
+import CarryingCapacity.PowerWassersteinTopology
+import CarryingCapacity.RealPowerLyapunov
+import CarryingCapacity.QuadraticRealLyapunov
+import CarryingCapacity.QuadraticFeedbackApplication
+import CarryingCapacity.CoordinateMoments
+import CarryingCapacity.PopulationCoordinateMoments
+import CarryingCapacity.LinearCarryingCapacity
+import CarryingCapacity.LinearCarryingCapacityBounds
+import CarryingCapacity.LinearJumpGeometry
+import CarryingCapacity.LinearCarryingCapacityHypotheses
+import CarryingCapacity.LinearCarryingCapacityApplication
+import CarryingCapacity.UsualFiltration
+import CarryingCapacity.CanonicalUsualFiltration
+import CarryingCapacity.MarkedNoiseReconstruction
+import CarryingCapacity.MarkedNoiseObservation
+import CarryingCapacity.CountingMeasureStrongFunction
+import CarryingCapacity.MarkedPastReconstruction
+import CarryingCapacity.PoissonObservationLaw
+import CarryingCapacity.PrescribedPoissonRealization
+import CarryingCapacity.PrescribedPoissonFiltration
+import CarryingCapacity.PrescribedJumpProcess
+import CarryingCapacity.PrescribedConfigurationProcess
+import CarryingCapacity.PrescribedNonlinearProcess
+import CarryingCapacity.PrescribedObservableLaws
+import CarryingCapacity.PrescribedPopulationLimits
+import CarryingCapacity.PrescribedPathLimits
+import CarryingCapacity.PredictableStoppingMask
+import CarryingCapacity.IndependentIncrementCompensation
+import CarryingCapacity.LinearMeanGenerator
+import CarryingCapacity.LinearCoordinateApproximation
+import CarryingCapacity.LinearCoordinateForward
+import CarryingCapacity.LinearMeanEquation
+import CarryingCapacity.LinearMeanLipschitz
+import CarryingCapacity.LinearMeanUniqueness
+import CarryingCapacity.AdaptedCoordinateForward
+import CarryingCapacity.QuadraticMeanEquation
+
+import CarryingCapacity.CadlagCompactBounds
+import CarryingCapacity.CadlagRateRegularity
+import CarryingCapacity.ConfigurationUsualMartingale
+import CarryingCapacity.FiniteHorizonCountingUniqueness
+import CarryingCapacity.IndependenceLimit
+import CarryingCapacity.PrescribedConfigurationCompatibility
+import CarryingCapacity.PrescribedConfigurationEstimates
+import CarryingCapacity.PrescribedConfigurationExchangeability
+import CarryingCapacity.PrescribedConfigurationFrozenEquation
+import CarryingCapacity.PrescribedConfigurationLocalization
+import CarryingCapacity.PrescribedConfigurationMartingale
+import CarryingCapacity.PrescribedCountingKernel
+import CarryingCapacity.PrescribedDeterministicEnvironment
+import CarryingCapacity.PrescribedMartingale
+import CarryingCapacity.PrescribedNonlinearExit
+import CarryingCapacity.PrescribedNonlinearFiniteHorizon
+import CarryingCapacity.PrescribedRandomEnvironmentCompensation
+import CarryingCapacity.RandomEnvironmentCompensation
+import CarryingCapacity.RateTableCompensation
+import CarryingCapacity.StoppedComparisonLocalization
+import CarryingCapacity.UniversalFrozenNoise
+import CarryingCapacity.UniversalStoppedComparison
+import CarryingCapacity.UniversalThinningComparison
+import CarryingCapacity.UsualMartingale
+import CarryingCapacity.UsualPoissonIndependence
+
+import CarryingCapacity.CadlagFiniteRange
+import CarryingCapacity.RandomEnvironmentComparison
+import CarryingCapacity.RandomEnvironmentPathwise
+import CarryingCapacity.RateTableSumCompensation
+import CarryingCapacity.RightContinuousProcessMeasurability
+
+import CarryingCapacity.FiniteStateActivityIntegrability
+import CarryingCapacity.PrescribedFixedTimeChaos
+import CarryingCapacity.PrescribedRandomEnvironmentComparison
+import CarryingCapacity.RandomEnvironmentActivityIntegral
 
 /-!
 # Checked foundations for carrying-capacity mean-field models
@@ -230,7 +371,41 @@ linear forward-law uniqueness identify the nonlinear weak solution. Atomic
 continuity and genuine Lyapunov bounds derive transport continuity for every
 moment-bounded weak candidate, and actual synchronous coupling proves uniqueness
 in that full class and the exact envelope. Fixed law curves agree across horizons.
-Arbitrary external-space realization, global pathwise horizon consistency,
-mean-field limits and chaos theorems remain open; see README.md and
-docs/PAPER_MAP.md for exact coverage.
+Actual independent nonlinear particle arrays use projected records of the shared
+particle-labelled noise. Their full product laws, raw adaptedness, counting
+equations and time-integrated empirical error convergence are proved. Rational
+past observations justify compensation through the genuine first-exit jump.
+The actual population comparison now has a measurable stopped averaged running
+cost, a compensated expected-activity inequality, derived finite expectation,
+uniform common-exit tails and a cutoff-removal probability estimate. The sharp
+stopped Gronwall estimate and independent empirical-error limit prove vanishing
+averaged path discrepancy and uniform empirical transport discrepancy between
+the paired systems under the manuscript's initialization assumptions. Actual
+initial/noise relabeling and pathwise uniqueness give equal stopped-coordinate
+expectations; the same cutoff limit proves fixed-focal approximation. All three
+canonical synchronous conclusions are assembled on the same paired laws.
+The actual independent empirical running error is AE measurable through its
+right-continuous paths. Predictable compensation and the actual nonlinear
+marginals give finite expected weighted jump variation, integrable real
+variation and a Wasserstein time modulus. A finite time grid and the
+integrable-observable iid-row law of large numbers then prove uniform
+independent empirical convergence to the nonlinear law.
+The actual nonlinear paths agree across horizons and define a single all-time
+canonical process with its own-marginal counting equation and unique global
+moment-bounded weak law. Exact initial-record projection transfers uniform
+empirical and generalized-moment convergence to the original vector law.
+Fixed-time propagation of chaos is proved. Genuine Skorokhod J1 metrics, finite
+time changes and deterministic step approximations establish Borel measurability
+of the actual random paths. Uniform empirical convergence yields weak path-law
+convergence to the deterministic nonlinear curve. Fixed-focal coupling yields
+weak convergence in the vector-valued J1 space to independent nonlinear paths,
+with one common time change for all coordinates. Actual supplied Poisson
+measures now support the strong construction, uniform and path-space limits,
+frozen compatibility and usual-filtration martingale. The real-power transport
+comparisons, model hypotheses and closed mean ODE are also proved. The general
+stopped-coupling lemma is proved for arbitrary adapted càdlàg environments,
+including the finite-state integrable-rate case and removal of localization.
+All numbered conclusions of the targeted Kenny manuscript are covered; see
+README.md and docs/PAPER_MAP.md for the exact snapshot and the separate
+original-paper boundary.
 -/
